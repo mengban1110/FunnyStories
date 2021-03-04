@@ -28,7 +28,7 @@ public class GetUserDateServlet {
 	public void getUserDate(HttpServletRequest request, HttpServletResponse response) {
 		
 		// json对象
-		JSONObject jsonObject = null;
+		JSONObject jsonObject = new JSONObject();
 		PrintWriter writer = null;
 		try {
 			writer = response.getWriter();
@@ -42,7 +42,7 @@ public class GetUserDateServlet {
 		
 		//判断参数
 		try {
-			if (token == null ||token.length() == 0) {
+			if (token ==null || "".equals(token) || tokenDao.queryRootByToken(token)==null) {
 				jsonObject = new JSONObject();
 				jsonObject.put("code", "-1");
 				jsonObject.put("msg", "未登录");
@@ -56,16 +56,15 @@ public class GetUserDateServlet {
 				writer.write(jsonObject.toString());
 				return;
 			}
-			if (tokenDao.queryUserByToken(token)==null) {
-				jsonObject = new JSONObject();
-				jsonObject.put("code", "-2");
-				jsonObject.put("msg", "非法调用");
-				writer.write(jsonObject.toString());
-				return;
-			}
 			
 			//存值
 			Map<String, Object> map = userDao.findUserById(uid);
+			if (map == null) {
+				jsonObject.put("code", -3);
+				jsonObject.put("msg", "用户不存在");
+				writer.write(jsonObject.toJSONString());
+				return;
+			}
 			Map<String, Object>user = new HashMap<String, Object>();
 			
 			user.put("userid", map.get("uid"));
@@ -82,7 +81,6 @@ public class GetUserDateServlet {
 			writer.write(jsonObject.toJSONString());
 			return;
 		}catch (Exception e) {
-			e.printStackTrace();
 			jsonObject = new JSONObject();
 			jsonObject.put("code", "-2");
 			jsonObject.put("msg", "非法调用");

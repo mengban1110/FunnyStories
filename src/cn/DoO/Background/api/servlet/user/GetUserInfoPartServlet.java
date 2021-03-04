@@ -21,6 +21,7 @@ import cn.DoO.Utils.Dao.Token.TokenDao;
  * @author 孙雨桐
  * 
  * @Time 2021年3月4日19点15分
+ * 
  *
  */
 public class GetUserInfoPartServlet {
@@ -31,7 +32,7 @@ public class GetUserInfoPartServlet {
 	public void getUserInfoPart(HttpServletRequest request, HttpServletResponse response) {
 		
 		// json对象
-		JSONObject jsonObject = null;
+		JSONObject jsonObject = new JSONObject();
 		PrintWriter writer = null;
 		try {
 			writer = response.getWriter();
@@ -49,26 +50,15 @@ public class GetUserInfoPartServlet {
 		int size = 0;
 		
 		try {
-			if (token == null ||token.length() == 0) {
+			if (token == null || "".equals(token) || tokenDao.queryRootByToken(token)==null) {
 				jsonObject = new JSONObject();
 				jsonObject.put("code", "-1");
 				jsonObject.put("msg", "未登录");
 				writer.write(jsonObject.toString());
 				return;
 			}
-			if (world == null || world.length() == 0) {
-				jsonObject = new JSONObject();
-				jsonObject.put("code", "-2");
-				jsonObject.put("msg", "非法调用");
-				writer.write(jsonObject.toString());
-				return;
-			}
-			if (tokenDao.queryUserByToken(token)==null) {
-				jsonObject = new JSONObject();
-				jsonObject.put("code", "-2");
-				jsonObject.put("msg", "非法调用");
-				writer.write(jsonObject.toString());
-				return;
+			if (world == null) {
+				world = "";
 			}
 			
 			//判断page 和 size 是否为空
@@ -103,6 +93,7 @@ public class GetUserInfoPartServlet {
 			}
 			
 			JSONObject jsonObject2 = new JSONObject();
+			System.out.println(users);
 			jsonObject2.put("users", users);
 			
 			
@@ -113,7 +104,6 @@ public class GetUserInfoPartServlet {
 			return;
 			}
 		catch (Exception e) {
-			e.printStackTrace();
 			jsonObject = new JSONObject();
 			jsonObject.put("code", "-2");
 			jsonObject.put("msg", "非法调用");

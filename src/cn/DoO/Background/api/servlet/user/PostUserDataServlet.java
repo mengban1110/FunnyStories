@@ -28,7 +28,7 @@ public class PostUserDataServlet {
 	public void postUserData(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException {
 		
 		// json对象
-		JSONObject jsonObject = null;
+		JSONObject jsonObject = new JSONObject();
 		PrintWriter writer = null;
 		try {
 			writer = response.getWriter();
@@ -49,14 +49,14 @@ public class PostUserDataServlet {
 		
 		Map<String, Object> user = null;
 		try {
-			if (token == null ||token.length() == 0) {
+			if (token ==null || "".equals(token) || tokenDao.queryRootByToken(token)==null) {
 				jsonObject = new JSONObject();
 				jsonObject.put("code", "-1");
 				jsonObject.put("msg", "未登录");
 				writer.write(jsonObject.toString());
 				return;
 			}
-			if (tokenDao.queryUserByToken(token)==null) {
+			if (tokenDao.queryRootByToken(token)==null) {
 				jsonObject = new JSONObject();
 				jsonObject.put("code", "-2");
 				jsonObject.put("msg", "非法调用");
@@ -70,29 +70,36 @@ public class PostUserDataServlet {
 				jsonObject.put("msg", "非法调用");
 				writer.write(jsonObject.toString());
 				return;
+			}else if(userDao.findUserById(uid) == null){
+				jsonObject = new JSONObject();
+				jsonObject.put("code", "-3");
+				jsonObject.put("msg", "没有此用户");
+				writer.write(jsonObject.toString());
+				return;
 			}else {
 				user = userDao.findUserById(uid);
 			}
+			
 			if (username == null || username.equals("")) {
-				username = (String)user.get("username");
+				username = user.get("username").toString();
 			}
 			if (useravatar == null || useravatar.equals("")) {
-				useravatar = (String)user.get("useravatar");
+				useravatar = user.get("useravatar").toString();
 			}
 			if (usersex == null || usersex.equals("")) {
-				usersex = (String)user.get("usersex");
+				usersex = user.get("usersex").toString();
 			}
 			if (userbir == null || userbir.equals("")) {
-				userbir = (String)user.get("userbirth");
+				userbir = user.get("userbirth").toString();
 			}
 			if (usersign == null || username.equals("")) {
-				usersign = (String)user.get("usersign");
+				usersign = user.get("usersign").toString();
 			}
 			if (userstatus == null || username.equals("")) {
-				userstatus = (String)user.get("userstatus");
+				userstatus = user.get("userstatus").toString();
 			}
 			if (password == null || username.equals("")) {
-				password = (String)user.get("password");
+				password = user.get("password").toString();
 			}
 			
 			userDao.update(uid,username,useravatar,usersex,userbir,usersign,userstatus,password);
@@ -102,7 +109,6 @@ public class PostUserDataServlet {
 			writer.write(jsonObject.toJSONString());
 			
 		}catch (Exception e) {
-			e.printStackTrace();
 			jsonObject = new JSONObject();
 			jsonObject.put("code", "-2");
 			jsonObject.put("msg", "非法调用");

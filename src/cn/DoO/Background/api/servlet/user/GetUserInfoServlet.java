@@ -31,7 +31,7 @@ public class GetUserInfoServlet {
 		
 		
 		// json对象
-		JSONObject jsonObject = null;
+		JSONObject jsonObject = new JSONObject();
 		PrintWriter writer = null;
 		try {
 			writer = response.getWriter();
@@ -48,17 +48,10 @@ public class GetUserInfoServlet {
 		int size = 0;
 		
 		try {
-			if (token == null ||token.length() == 0) {
+			if (token ==null || "".equals(token) || tokenDao.queryRootByToken(token)==null) {
 				jsonObject = new JSONObject();
 				jsonObject.put("code", "-1");
 				jsonObject.put("msg", "未登录");
-				writer.write(jsonObject.toString());
-				return;
-			}
-			if (tokenDao.queryUserByToken(token)==null) {
-				jsonObject = new JSONObject();
-				jsonObject.put("code", "-2");
-				jsonObject.put("msg", "非法调用");
 				writer.write(jsonObject.toString());
 				return;
 			}
@@ -104,7 +97,6 @@ public class GetUserInfoServlet {
 			return;
 			
 		} catch (Exception e) {
-			e.printStackTrace();
 			jsonObject = new JSONObject();
 			jsonObject.put("code", "-2");
 			jsonObject.put("msg", "非法调用");

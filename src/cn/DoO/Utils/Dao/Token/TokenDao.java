@@ -53,4 +53,24 @@ public class TokenDao {
 		return 0;
 	}
 
+	
+	
+	/**
+	 * 根据token查询管理员
+	 * @param token
+	 * @return
+	 */
+	public Map<String, Object> queryRootByToken(String token) {
+
+		String sql = "SELECT * FROM `root` WHERE token = ?";
+		Map<String, Object> data = null;
+		try {
+			data = dao.executeQueryForMap(sql, new int[] { Types.VARCHAR }, new Object[] { token });
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return data;
+	}
+	
 }
