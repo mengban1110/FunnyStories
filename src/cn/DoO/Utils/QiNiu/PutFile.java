@@ -77,7 +77,7 @@ public class PutFile {
 		System.out.println(Putimgs(byteInputStream, "txt"));
 		System.out.println();
 		
-		
+		 
 	}
 
 }
