@@ -6,8 +6,8 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.Map;
 
-import cn.DoO.Utils.Dao.Dao;
-import cn.DoO.Utils.Dao.DaoImpl;
+import cn.DoO.Utils.Dao.DataConnect.Dao;
+import cn.DoO.Utils.Dao.DataConnect.DaoImpl;
 
 /**
  * @Desc token验证、修改

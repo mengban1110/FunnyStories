@@ -1,4 +1,4 @@
-package cn.DoO.Utils.Dao;
+package cn.DoO.Utils.Dao.DataConnect;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
