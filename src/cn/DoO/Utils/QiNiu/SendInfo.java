@@ -16,5 +16,9 @@ public class SendInfo {
 	public static String getTimeMillis() {
 		return System.currentTimeMillis() + "";
 	}
+	
+	public static void main(String[] args) {
+		
+	}
 
 }
