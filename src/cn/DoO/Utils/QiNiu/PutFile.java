@@ -76,8 +76,7 @@ public class PutFile {
 		ByteArrayInputStream byteInputStream = new ByteArrayInputStream(uploadBytes);
 		System.out.println(Putimgs(byteInputStream, "txt"));
 		System.out.println();
-		
-		 
+
 	}
 
 }

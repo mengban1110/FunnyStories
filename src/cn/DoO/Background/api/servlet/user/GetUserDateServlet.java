@@ -73,6 +73,7 @@ public class GetUserDateServlet {
 			user.put("userbir", map.get("userbirth"));
 			user.put("email", map.get("email"));
 			user.put("usersign", map.get("usersign"));
+			user.put("usersex", map.get("usersex"));
 			
 			
 			jsonObject.put("code", 200);

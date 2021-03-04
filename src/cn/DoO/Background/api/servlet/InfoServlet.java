@@ -18,7 +18,6 @@ import com.sun.management.OperatingSystemMXBean;
 import cn.DoO.Background.api.dao.RootDaoImpl;
 import cn.DoO.Utils.Tools.DateUtils;
 
-
 /**
  * @desc 首页数据之文本数据
  * 
@@ -31,7 +30,8 @@ public class InfoServlet {
 	// 管理员用户的dao
 	RootDaoImpl rootDaoImpl = new RootDaoImpl();
 
-	public void getTextInfo(HttpServletRequest request, HttpServletResponse response) throws IOException, ClassNotFoundException, SQLException {
+	public void getTextInfo(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ClassNotFoundException, SQLException {
 		// 获取token
 		String token = request.getParameter("token");
 
@@ -55,10 +55,10 @@ public class InfoServlet {
 		}
 
 		Map<String, Object> dataP = new HashMap<String, Object>();
-		
-		//管理员信息
-		data.put("managername", rootMap.get("username"));//用户名
-		data.put("manageravatar", rootMap.get("rootavatar"));//用户头像的直链
+
+		// 管理员信息
+		data.put("managername", rootMap.get("username"));// 用户名
+		data.put("manageravatar", rootMap.get("rootavatar"));// 用户头像的直链
 
 		/**
 		 * =======================【服务器数据】=======================
@@ -72,6 +72,7 @@ public class InfoServlet {
 		long totalvirtualMemory = osmxb.getTotalSwapSpaceSize(); // 单位是字节数，除以1024是K
 		// 剩余的内存
 		long freePhysicalMemorySize = osmxb.getFreePhysicalMemorySize();
+		
 		// 使用的内存
 		long compare = totalvirtualMemory - freePhysicalMemorySize;
 
@@ -85,7 +86,6 @@ public class InfoServlet {
 		ThreadGroup parentThread;
 		for (parentThread = Thread.currentThread().getThreadGroup(); parentThread
 				.getParent() != null; parentThread = parentThread.getParent()) {
-
 		}
 
 		int totalThread = parentThread.activeCount();
@@ -98,79 +98,74 @@ public class InfoServlet {
 		/**
 		 * =======================服务器数据【结束】=======================
 		 */
-		
-		
-		
-		
+
 		/**
 		 * ============================countinfo========================
 		 */
 		Map<String, Object> countinfoDate = new HashMap<String, Object>();
-		
-		countinfoDate.put("user", rootDaoImpl.getUserCount().get("count"));//用户数
-		countinfoDate.put("posts", rootDaoImpl.getPostsCount().get("count"));//共计发帖数
-		countinfoDate.put("audits", rootDaoImpl.getAuditsCount().get("count"));//待审核帖子数
-		
+
+		countinfoDate.put("user", rootDaoImpl.getUserCount().get("count"));// 用户数
+		countinfoDate.put("posts", rootDaoImpl.getPostsCount().get("count"));// 共计发帖数
+		countinfoDate.put("audits", rootDaoImpl.getAuditsCount().get("count"));// 待审核帖子数
+
 		data.put("countinfo", countinfoDate);
 		/**
 		 * =======================countinfo【结束】=======================
 		 */
-		
+
 		/**
 		 * ============================rootlogs========================
 		 */
-		//时间排序 取最后五个 log表中的数据
-		List<Map<String, Object>> rootlogs = new ArrayList<Map<String,Object>>();
-		
+		// 时间排序 取最后五个 log表中的数据
+		List<Map<String, Object>> rootlogs = new ArrayList<Map<String, Object>>();
+
 		List<Map<String, Object>> log = rootDaoImpl.getAllShop();
 		for (Map<String, Object> map : log) {
-			//创建返回的数据 的容器
-			Map<String, Object>  logMap = new HashMap<String, Object>();
-			logMap.put("username",rootDaoImpl.getRootById(map.get("rootid").toString()).get("rootname"));
+			// 创建返回的数据 的容器
+			Map<String, Object> logMap = new HashMap<String, Object>();
+			logMap.put("username", rootDaoImpl.getRootById(map.get("rootid").toString()).get("rootname"));
 			logMap.put("ip", map.get("ip"));
 			logMap.put("content", map.get("content"));
 			logMap.put("time", DateUtils.MillToHourAndMin(map.get("time").toString()));
 			rootlogs.add(logMap);
 		}
-		//添加数据
+		// 添加数据
 		data.put("rootlogs", rootlogs);
-		
+
 		/**
 		 * =======================rootlogs【结束】=======================
 		 */
-		
-		
+
 		/**
 		 * ============================userlogs========================
 		 */
-		List<Map<String, Object>> userlogs = new ArrayList<Map<String,Object>>();
-		
+		List<Map<String, Object>> userlogs = new ArrayList<Map<String, Object>>();
+
 		List<Map<String, Object>> logs = rootDaoImpl.getAllUserlogs();
 		for (Map<String, Object> map : logs) {
-			//创建返回的数据 的容器
-			Map<String, Object>  logMap = new HashMap<String, Object>();
-			logMap.put("username",rootDaoImpl.getUserById(map.get("uid").toString()).get("username"));
+			// 创建返回的数据 的容器
+			Map<String, Object> logMap = new HashMap<String, Object>();
+			logMap.put("username", rootDaoImpl.getUserById(map.get("uid").toString()).get("username"));
 			logMap.put("ip", map.get("userip"));
 			logMap.put("time", DateUtils.MillToHourAndMin(map.get("logintime").toString()));
 			userlogs.add(logMap);
 		}
-		//添加数据
+		// 添加数据
 		data.put("userlogs", userlogs);
-		
+
 		/**
 		 * =======================userlogs【结束】=======================
 		 */
-		//热词
+		// 热词
 		List<String> hotwords = new ArrayList<String>();
-		//获取5个热词
+		// 获取5个热词
 		List<Map<String, Object>> hots = rootDaoImpl.getAllSearchFrom5();
-		for (Map<String, Object> map : hots) 
-		{
+		for (Map<String, Object> map : hots) {
 			hotwords.add(map.get("word").toString());
 		}
-		
+
 		data.put("hotwords", hotwords);
-		
+
 		dataP.put("code", "200");
 		dataP.put("msg", "请求成功");
 		dataP.put("data", data);
