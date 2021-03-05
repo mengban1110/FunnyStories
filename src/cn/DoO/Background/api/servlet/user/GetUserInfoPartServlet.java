@@ -45,7 +45,7 @@ public class GetUserInfoPartServlet {
 		String token = request.getParameter("token");
 		String pagestr = request.getParameter("page");
 		String sizestr = request.getParameter("size");
-		String world = request.getParameter("world");
+		String word = request.getParameter("word");
 		
 		int page = 0;
 		int size = 0;
@@ -59,18 +59,17 @@ public class GetUserInfoPartServlet {
 				writer.write(NetCodeUtils.ErrorParam());//非法调用
 				return;
 			}
-			if (world == null) {
-				world = "";
+			if (word == null) {
+				word = "";
 			}
-			
 			//判断page 和 size 是否为空
-			if (pagestr == null) {
+			if (pagestr == null || "".equals(pagestr)) {
 				pagestr = "1";
 				page = Integer.parseInt(pagestr);
 			}else{
 				page = Integer.parseInt(pagestr);
 			}
-			if (sizestr == null) {
+			if (sizestr == null || "".equals(sizestr)) {
 				sizestr = "20";
 				size = Integer.parseInt(sizestr);
 			}else{
@@ -78,7 +77,7 @@ public class GetUserInfoPartServlet {
 			}
 			
 			
-			List<Map<String, Object>> userList = userDao.findUserBypageAndSizeAndLike(page,size,world);
+			List<Map<String, Object>> userList = userDao.findUserBypageAndSizeAndLike(page,size,word);
 			
 			//返回数据
 			List<Map<String, Object>> users = new ArrayList<Map<String,Object>>();

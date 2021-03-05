@@ -128,7 +128,7 @@ public class VerifyUtils {
 	 * <p>
 	 * true为包含，false为不包含
 	 */
-	private static boolean containTypesVerify(String password) {
+	public static boolean containTypesVerify(String password) {
 		int contains = 0;
 		// 判断是否包含特殊字符
 		String regEx = "[ _`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]|\n|\r|\t";

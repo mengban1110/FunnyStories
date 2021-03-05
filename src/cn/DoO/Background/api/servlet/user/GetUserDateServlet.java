@@ -44,7 +44,7 @@ public class GetUserDateServlet {
 		//判断参数
 		try {
 			if (token == null || "".equals(token)) {
-				writer.write(NetCodeUtils.isToken());//未登录
+				writer.write(NetCodeUtils.ErrorParam());//非法调用
 				return;
 			}
 			if (tokenDao.queryRootByToken(token)==null) {

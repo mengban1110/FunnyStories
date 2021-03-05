@@ -3,6 +3,7 @@ package cn.DoO.Background.api.servlet.user;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +20,8 @@ import cn.DoO.Background.api.dao.user.UserDao;
 import cn.DoO.Utils.Dao.Token.TokenDao;
 import cn.DoO.Utils.NetCode.NetCodeUtils;
 import cn.DoO.Utils.QiNiu.PutFile;
+import cn.DoO.Utils.Tools.Md5Utils;
+import cn.DoO.Utils.Tools.VerifyUtils;
 
 /**
  * 修改用户指定数据
@@ -153,28 +156,78 @@ public class PostUserDataServlet {
 				writer.write(NetCodeUtils.isToken());//未登录
 				return;
 			}
+			//判断值是否为空
+			if (uid == null) {
+				writer.write(NetCodeUtils.ErrorParam());//非法调用
+				System.out.println("uid 未null");
+				return;
+				
+			}
+			if (usersex == null || usersex.equals("")) {
+				usersex = user.get("usersex").toString();
+			}else if (!usersex.equals("男") && !usersex.equals("女")) {
+				writer.write(NetCodeUtils.ErrorParam());//非法调用
+				System.out.println("性别只能 为 男 女");
+				return;
+			}
+
+			if (userbir == null || userbir.equals("")) {
+				userbir = user.get("userbirth").toString();
+			}else{
+				try {
+					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+					format.parse(userbir);
+				} catch (Exception e) {
+					writer.write(NetCodeUtils.ErrorParam());//非法调用
+					System.out.println("日期格式错误");
+					return;
+				}
+			}
+			
+			if (userstatus == null || userstatus.equals("")) {
+				userstatus = user.get("userstatus").toString();
+			}else if (!userstatus.equals("0")&&
+					  !userstatus.equals("1")&&
+					  !userstatus.equals("2")&&
+					  !userstatus.equals("3")&&
+					  !userstatus.equals("4")) {
+				writer.write(NetCodeUtils.ErrorParam());//非法调用
+				System.out.println("状态只能为 0 1 2 3 4");
+				return;
+			}
+			
+			if (password == null || password.equals("")) {
+				password = user.get("password").toString();
+			}else if(VerifyUtils.isStrSize(password, 5)){
+				System.out.println("密码过短");
+				writer.write(NetCodeUtils.ErrorParam());//非法调用
+				return;
+			}else if (!VerifyUtils.containTypesVerify(password)) {
+				System.out.println("密码不合法");
+				writer.write(NetCodeUtils.otherErrMsg("-2", "密码不合法"));//非法调用
+				return;
+			}
+			else{
+				password = Md5Utils.makeMd5(password);
+			}
 			if (tokenDao.queryRootByToken(token)==null) {
 				writer.write(NetCodeUtils.ErrorParam());//非法调用
 				return;
 			}
+			
+			
 			try {
 				Integer.parseInt(uid);
 			} catch (Exception e) {
 				writer.write(NetCodeUtils.ErrorParam());//非法调用
 				return;
 			}
-			//判断值是否为空
-			if (uid == null) {
-				writer.write(NetCodeUtils.ErrorParam());//非法调用
-				return;
-			}else if(userDao.findUserById(uid) == null){
-				writer.write(NetCodeUtils.userIsNo());
+			if(userDao.findUserById(uid) == null){
+				writer.write(NetCodeUtils.userIsNo());//没有此用户
 				return;
 			}else {
 				user = userDao.findUserById(uid);
 			}
-
-			
 
 			
 			if (username == null || username.equals("")) {
@@ -183,21 +236,14 @@ public class PostUserDataServlet {
 			if (useravatar == null || useravatar.equals("")) {
 				useravatar = user.get("useravatar").toString();
 			}
-			if (usersex == null || usersex.equals("")) {
-				usersex = user.get("usersex").toString();
-			}
-			if (userbir == null || userbir.equals("")) {
-				userbir = user.get("userbirth").toString();
-			}
-			if (usersign == null || username.equals("")) {
+
+			if (usersign == null || usersign.equals("")) {
 				usersign = user.get("usersign").toString();
 			}
-			if (userstatus == null || username.equals("")) {
-				userstatus = user.get("userstatus").toString();
-			}
-			if (password == null || username.equals("")) {
-				password = user.get("password").toString();
-			}
+
+
+			
+			
 			userDao.update(uid,username,useravatar,usersex,userbir,usersign,userstatus,password);
 			
 			jsonObject.put("code", "200");
@@ -210,9 +256,7 @@ public class PostUserDataServlet {
 			writer.write(NetCodeUtils.ErrorParam());//非法调用
 			return;
 		}
-		
-		
-		
+
 	}
 
 }
