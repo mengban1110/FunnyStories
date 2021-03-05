@@ -34,6 +34,7 @@ public class GetinfoController extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		try {
 			info.getTextInfo(request, response);
+		} catch (Exception e) {
 			out.print(NetCodeUtils.errorTomCat());
 		} finally {
 			out.close();
