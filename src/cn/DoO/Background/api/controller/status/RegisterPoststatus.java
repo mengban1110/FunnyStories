@@ -17,6 +17,7 @@ import cn.DoO.Background.api.servlet.login.RootLoginServlet;
 import cn.DoO.Background.api.servlet.status.CommentPoststatusServlet;
 import cn.DoO.Background.api.servlet.status.RegisterPoststatusServlet;
 import cn.DoO.Background.api.servlet.status.WebPoststatusServlet;
+import cn.DoO.Utils.NetCode.NetCodeUtils;
 
 
 
@@ -37,16 +38,12 @@ public class RegisterPoststatus extends HttpServlet{
 	protected void service(HttpServletRequest request , HttpServletResponse response ) throws ServletException, IOException {
 		
 		PrintWriter out = response.getWriter();
-		
+		NetCodeUtils nUtil=new NetCodeUtils();
 		try {
 			registerPoststatusServlet.registerStatus(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
-			
-			Map<String, Object> data = new HashMap<>();
-			data.put("code", "500");
-			data.put("msg", "服务器内部错误");
-			out.print(JSON.toJSONString(data));
+			out.print(nUtil.errorTomCat());
 
 		} finally {
 			out.close();
