@@ -17,7 +17,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-
+import java.util.ResourceBundle;
+import java.util.Set;
 
 public class DaoImpl implements Dao {
 
@@ -30,24 +31,20 @@ public class DaoImpl implements Dao {
 	private static String sConnStr = null;
 	private static String username = null;
 	private static String password = null;
-	
-	static{
+
+	static {
 		try {
-			 Properties prop = new Properties();  
-			 prop.load(new FileInputStream("src/cn/DoO/Config/mysqlconnection.properties"));
-			 sDBDriver = prop.getProperty("driver");
-			 sConnStr = prop.getProperty("connect");
-			 username = prop.getProperty("username");
-			 password = prop.getProperty("password");
-			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}  
-		
+			Properties prop = new Properties();
+			ResourceBundle myResources = ResourceBundle.getBundle("cn.DoO.Config.mysqlconnection");
+			sDBDriver = myResources.getString("driver");
+			sConnStr = myResources.getString("connect");
+			username = myResources.getString("username");
+			password = myResources.getString("password");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
-	
+
 	/**
 	 * 建立连接
 	 * 
@@ -95,6 +92,7 @@ public class DaoImpl implements Dao {
 	 */
 	public Map<String, Object> executeQueryForMap(String sql, int[] types, Object[] values)
 			throws ClassNotFoundException, SQLException {
+		System.out.println("sDBDriver : " + sDBDriver);
 		System.err.println("查询一条：" + sql);
 		this.print(values);
 		Connection connect = this.getConnection();
@@ -424,6 +422,9 @@ public class DaoImpl implements Dao {
 			System.out.println("Close the connection encounter error!\n" + se.getMessage());
 			throw new SQLException("关闭连接异常！");
 		}
+	}
+	public static void main(String[] args) {
+		
 	}
 
 }
