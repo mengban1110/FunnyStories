@@ -12,6 +12,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import cn.DoO.Background.api.dao.user.UserDao;
 import cn.DoO.Utils.Dao.Token.TokenDao;
+import cn.DoO.Utils.NetCode.NetCodeUtils;
 
 /**
  * 获取用户指定数据
@@ -42,27 +43,29 @@ public class GetUserDateServlet {
 		
 		//判断参数
 		try {
-			if (token ==null || "".equals(token) || tokenDao.queryRootByToken(token)==null) {
-				jsonObject = new JSONObject();
-				jsonObject.put("code", "-1");
-				jsonObject.put("msg", "未登录");
-				writer.write(jsonObject.toString());
+			if (token == null || "".equals(token)) {
+				writer.write(NetCodeUtils.isToken());//未登录
+				return;
+			}
+			if (tokenDao.queryRootByToken(token)==null) {
+				writer.write(NetCodeUtils.ErrorParam());//非法调用
+				return;
+			}
+			try {
+				Integer.parseInt(uid);
+			} catch (Exception e) {
+				writer.write(NetCodeUtils.ErrorParam());//非法调用
 				return;
 			}
 			if (uid == null || uid.length() == 0) {
-				jsonObject = new JSONObject();
-				jsonObject.put("code", "-2");
-				jsonObject.put("msg", "非法调用");
-				writer.write(jsonObject.toString());
+				writer.write(NetCodeUtils.ErrorParam());//非法调用
 				return;
 			}
 			
 			//存值
 			Map<String, Object> map = userDao.findUserById(uid);
 			if (map == null) {
-				jsonObject.put("code", -3);
-				jsonObject.put("msg", "用户不存在");
-				writer.write(jsonObject.toJSONString());
+				writer.write(NetCodeUtils.userIsNo());
 				return;
 			}
 			Map<String, Object>user = new HashMap<String, Object>();

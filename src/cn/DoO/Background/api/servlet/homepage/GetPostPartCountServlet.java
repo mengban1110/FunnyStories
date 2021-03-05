@@ -72,7 +72,7 @@ public class GetPostPartCountServlet {
 			
 			data.put("code", "200");
 			data.put("msg", "请求成功");
-			data.put("date", dataList);
+			data.put("data", dataList);
 			out.print(JSON.toJSONString(data));
 			
 		}

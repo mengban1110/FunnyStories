@@ -12,6 +12,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import cn.DoO.Background.api.servlet.user.GetUserInfoPartServlet;
 import cn.DoO.Background.api.servlet.user.GetUserInfoServlet;
+import cn.DoO.Utils.NetCode.NetCodeUtils;
 /**
  * 获取部分用户
  * 
@@ -30,10 +31,7 @@ public class Getinfopart extends HttpServlet{
 		try {
 			getUserInfoPartServlet.getUserInfoPart(request, response);
 		} catch (Exception e) {
-			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("code", "500");
-			jsonObject.put("msg", "服务器内部错误");
-			response.getWriter().write(jsonObject.toJSONString());
+			response.getWriter().write(NetCodeUtils.errorTomCat());
 		}
 	}
 

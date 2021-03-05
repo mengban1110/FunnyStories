@@ -14,6 +14,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import cn.DoO.Background.api.dao.user.UserDao;
 import cn.DoO.Utils.Dao.Token.TokenDao;
+import cn.DoO.Utils.NetCode.NetCodeUtils;
 
 /**
  * 获取部分用户
@@ -50,11 +51,12 @@ public class GetUserInfoPartServlet {
 		int size = 0;
 		
 		try {
-			if (token == null || "".equals(token) || tokenDao.queryRootByToken(token)==null) {
-				jsonObject = new JSONObject();
-				jsonObject.put("code", "-1");
-				jsonObject.put("msg", "未登录");
-				writer.write(jsonObject.toString());
+			if (token == null || "".equals(token)) {
+				writer.write(NetCodeUtils.isToken());//未登录
+				return;
+			}
+			if (tokenDao.queryRootByToken(token)==null) {
+				writer.write(NetCodeUtils.ErrorParam());//非法调用
 				return;
 			}
 			if (world == null) {
