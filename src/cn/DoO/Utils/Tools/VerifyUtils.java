@@ -169,15 +169,19 @@ public class VerifyUtils {
 		if (!containTypesVerify(passwordLowerCase)) {
 			return "密码需要包含特殊字符、大写字母、小写字母、数字中的三种及以上！";
 		}
-		String s1 = containTargetStrVerify(passwordLowerCase);
+		String s1 = containTargetStrVerify(passwordLowerCase.toLowerCase());
 		if (s1 != null) {
 			return "密码包含连续的斜向键盘输入或者常用的数据库、操作系统等词组！内容为：" + s1 + "。";
 		}
-		String s2 = containTargetSequenceVerify(passwordLowerCase, limitCount);
+		String s2 = containTargetSequenceVerify(passwordLowerCase.toLowerCase(), limitCount);
 		if (s2 != null) {
 			return "密码包含连续的横向键盘输入或者连续的数字和字母或者重复的字符输入！";
 		}
 		return null;
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(verify("Wushang816",6));
 	}
 
 }

@@ -31,12 +31,13 @@ import cn.DoO.Utils.Tools.VerifyUtils;
  * @Time 2021年3月4日19点37分
  */
 public class PostUserDataServlet {
-	
+
 	TokenDao tokenDao = new TokenDao();
 	UserDao userDao = new UserDao();
-	
-	public void postUserData(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException {
-		
+
+	public void postUserData(HttpServletRequest request, HttpServletResponse response)
+			throws ClassNotFoundException, SQLException {
+
 		// json对象
 		JSONObject jsonObject = new JSONObject();
 		PrintWriter writer = null;
@@ -45,34 +46,34 @@ public class PostUserDataServlet {
 		} catch (IOException e) {
 			System.out.println("printwriter获取异常");
 		}
-		
-		try{
+
+		try {
 			// 接值
-			String token = null;//token
-			String uid = null; 
+			String token = null;// token
+			String uid = null;
 			String username = null;
-			
+
 			String useravatar = null;// 头像地址
 			FileItem useravatarItem = null;// 头像流
 			String prifixTemp = null;// 后缀
-			
+
 			String usersex = null;
 			String userbir = null;
 			String usersign = null;
 			String userstatus = null;
 			String password = null;
-			
+
 			// 将本次请求的request封装成DiskFileItemFactory对象
 			DiskFileItemFactory factory = new DiskFileItemFactory();
-			
+
 			// 使用ServletFileUpload解析器上传数据，解析结果返回一个List<FileItem>集合，
 			// 每一个FileItem对应一个Form表单
 			List<FileItem> formItemList;
 			ServletFileUpload upload = new ServletFileUpload(factory);
-			
+
 			// 设定中文处理
 			upload.setHeaderEncoding("utf-8");
-			
+
 			formItemList = upload.parseRequest(request);
 			if ((formItemList != null) || (formItemList.size() > 0)) {
 
@@ -103,10 +104,10 @@ public class PostUserDataServlet {
 							useravatarItem = Item;
 							// 获取图片后缀
 							prifixTemp = prifix;
-							
+
 							System.out.println("上传文件的名字:" + useravatarItem.getName());
 							System.out.println("上传文件的后缀:" + prifixTemp);
-							
+
 							// 判断完毕再上传头像--优化
 							useravatar = PutFile.Putimgs(useravatarItem.getInputStream(), prifixTemp);
 							System.out.println(useravatar);
@@ -147,89 +148,85 @@ public class PostUserDataServlet {
 					}
 				}
 			}
-			
+
 			// 获取完信息后
 			// 判空
 			Map<String, Object> user = null;
-			
+
 			if (token == null || "".equals(token)) {
-				writer.write(NetCodeUtils.isToken());//未登录
+				writer.write(NetCodeUtils.isToken());// 未登录
 				return;
 			}
-			//判断值是否为空
+			// 判断值是否为空
 			if (uid == null) {
-				writer.write(NetCodeUtils.ErrorParam());//非法调用
+				writer.write(NetCodeUtils.ErrorParam());// 非法调用
 				System.out.println("uid 未null");
 				return;
-				
+
 			}
 			if (usersex == null || usersex.equals("")) {
 				usersex = user.get("usersex").toString();
-			}else if (!usersex.equals("男") && !usersex.equals("女")) {
-				writer.write(NetCodeUtils.ErrorParam());//非法调用
+			} else if (!usersex.equals("男") && !usersex.equals("女")) {
+				writer.write(NetCodeUtils.ErrorParam());// 非法调用
 				System.out.println("性别只能 为 男 女");
 				return;
 			}
 
 			if (userbir == null || userbir.equals("")) {
 				userbir = user.get("userbirth").toString();
-			}else{
+			} else {
 				try {
 					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 					format.parse(userbir);
 				} catch (Exception e) {
-					writer.write(NetCodeUtils.ErrorParam());//非法调用
+					writer.write(NetCodeUtils.ErrorParam());// 非法调用
 					System.out.println("日期格式错误");
 					return;
 				}
 			}
-			
+
 			if (userstatus == null || userstatus.equals("")) {
 				userstatus = user.get("userstatus").toString();
-			}else if (!userstatus.equals("0")&&
-					  !userstatus.equals("1")&&
-					  !userstatus.equals("2")&&
-					  !userstatus.equals("3")&&
-					  !userstatus.equals("4")) {
-				writer.write(NetCodeUtils.ErrorParam());//非法调用
+			} else if (!userstatus.equals("0") && !userstatus.equals("1") && !userstatus.equals("2")
+					&& !userstatus.equals("3") && !userstatus.equals("4")) {
+				writer.write(NetCodeUtils.ErrorParam());// 非法调用
 				System.out.println("状态只能为 0 1 2 3 4");
 				return;
 			}
-			
+
 			if (password == null || password.equals("")) {
 				password = user.get("password").toString();
-			}else if(VerifyUtils.isStrSize(password, 5)){
-				System.out.println("密码过短");
-				writer.write(NetCodeUtils.ErrorParam());//非法调用
-				return;
-			}else if (!VerifyUtils.containTypesVerify(password)) {
-				System.out.println("密码不合法");
-				writer.write(NetCodeUtils.otherErrMsg("-2", "密码不合法"));//非法调用
-				return;
-			}
-			else{
-				password = Md5Utils.makeMd5(password);
-			}
-			if (tokenDao.queryRootByToken(token)==null) {
-				writer.write(NetCodeUtils.ErrorParam());//非法调用
-				return;
+			}else {
+				String verify = VerifyUtils.verify(password,6);
+				if (verify == null) {
+					password = Md5Utils.makeMd5(password);
+				}else {
+					System.out.println(password);
+					System.out.println(verify);
+					writer.write(NetCodeUtils.otherErrMsg("-3", "密码不合法"));// 非法调用
+					return;
+				}
 			}
 			
 			
+			if (tokenDao.queryRootByToken(token) == null) {
+				writer.write(NetCodeUtils.ErrorParam());// 非法调用
+				return;
+			}
+
 			try {
 				Integer.parseInt(uid);
 			} catch (Exception e) {
-				writer.write(NetCodeUtils.ErrorParam());//非法调用
+				writer.write(NetCodeUtils.ErrorParam());// 非法调用
 				return;
 			}
-			if(userDao.findUserById(uid) == null){
-				writer.write(NetCodeUtils.userIsNo());//没有此用户
+			if (userDao.findUserById(uid) == null) {
+				writer.write(NetCodeUtils.userIsNo());// 没有此用户
 				return;
-			}else {
+			} else {
 				user = userDao.findUserById(uid);
 			}
 
-			
 			if (username == null || username.equals("")) {
 				username = user.get("username").toString();
 			}
@@ -241,19 +238,15 @@ public class PostUserDataServlet {
 				usersign = user.get("usersign").toString();
 			}
 
+			userDao.update(uid, username, useravatar, usersex, userbir, usersign, userstatus, password);
 
-			
-			
-			userDao.update(uid,username,useravatar,usersex,userbir,usersign,userstatus,password);
-			
 			jsonObject.put("code", "200");
 			jsonObject.put("msg", "修改成功调用");
 			writer.write(jsonObject.toJSONString());
 
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			writer.write(NetCodeUtils.ErrorParam());//非法调用
+			writer.write(NetCodeUtils.ErrorParam());// 非法调用
 			return;
 		}
 
