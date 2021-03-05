@@ -47,18 +47,19 @@ public class CommentPoststatusServlet {
 					String token = request.getParameter("token");
 					int status =Integer.parseInt(request.getParameter("status"));
 					
-					if (token == null ||"".equals(token)) {
-						jsonObject = new JSONObject();
-						jsonObject.put("code", "-1");
-						jsonObject.put("msg", "未登录");
-						writer.write(jsonObject.toString());
-						return;
-					}
-					
-					if (tokenDao.queryRootByToken(token)==null || (status!=0 && status!=1 )) {
+					if ((token == null ||"".equals(token))|| (status!=0 && status!=1 )) {
 						jsonObject = new JSONObject();
 						jsonObject.put("code", "-2");
 						jsonObject.put("msg", "非法调用");
+						writer.write(jsonObject.toString());
+						return;
+						
+					}
+					
+					if (tokenDao.queryRootByToken(token)==null) {
+						jsonObject = new JSONObject();
+						jsonObject.put("code", "-1");
+						jsonObject.put("msg", "未登录");
 						writer.write(jsonObject.toString());
 						return;
 					}

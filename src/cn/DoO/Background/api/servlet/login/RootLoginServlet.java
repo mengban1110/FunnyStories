@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 
 import cn.DoO.Background.api.dao.login.loginDao;
 import cn.DoO.Utils.Token.TokenUtils;
@@ -45,11 +46,21 @@ public class RootLoginServlet{
 		String rootName = request.getParameter("rootname");
 		String rootpassWord = request.getParameter("rootpassword");
 		
+		//判断管理员名称和密码是否为空
+		if (rootName == null ||"".equals(rootName)) {
+			print(out, dataP, "-3", "请输入正确的账号");
+			return;
+		}
+		if (rootpassWord == null ||"".equals(rootpassWord)) {
+			print(out, dataP, "-4", "请输入正确的密码");
+			return;
+		}
+		
 		//查询是否存在该用户
 		
 		int rootuserNumber = loginDao.getUserByU(rootName);
 		if (rootuserNumber  != 1) {
-			print(out, dataP, "-3", "请输入正确的账号");
+			print(out, dataP, "-4", "请输入正确的密码");
 			return;
 		}
 		//md5加密
@@ -79,7 +90,7 @@ public class RootLoginServlet{
 		data.put("code", coed);
 		data.put("msg", msg);
 		out.print(JSON.toJSONString(data));
-		System.out.println(JSON.toJSONString(data));
+		
 		out.close(); 
 	}
 	

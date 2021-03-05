@@ -57,7 +57,7 @@ public class InfoServlet {
 		Map<String, Object> dataP = new HashMap<String, Object>();
 
 		// 管理员信息
-		data.put("managername", rootMap.get("username"));// 用户名
+		data.put("managername", rootMap.get("rootname"));// 用户名
 		data.put("manageravatar", rootMap.get("rootavatar"));// 用户头像的直链
 
 		/**
@@ -79,7 +79,7 @@ public class InfoServlet {
 		data.put("serverruntime", getDate(dateTime) + "小时");
 		data.put("servermemory", totalvirtualMemory / 1024 / 1024 + "mb/" + (compare / 1024 / 1204) + "mb");
 		// cpu核数
-		dataP.put("servercores", Runtime.getRuntime().availableProcessors());
+		data.put("servercores", Runtime.getRuntime().availableProcessors());
 		// cpu线程数
 
 		// 获得线程总数
