@@ -33,4 +33,6 @@ public class TokenUtils {
 	public static void updateToken(String token, String email) {
 		t.updateToken(token, getToken(email));
 	}
+	
+	
 }
