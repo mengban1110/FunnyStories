@@ -37,13 +37,14 @@ public class PostPoststatusServlet {
 					System.out.println("printwriter获取异常");
 				}
 				
-		//取值
-		String token = request.getParameter("token");
-		int status =Integer.parseInt(request.getParameter("status")) ;
+		
 		
 		
 		//判断参数
 				try {
+					//取值
+					String token = request.getParameter("token");
+					int status =Integer.parseInt(request.getParameter("status")) ;
 					if (token == null ||"".equals(token)) {
 						jsonObject = new JSONObject();
 						jsonObject.put("code", "-1");
@@ -52,7 +53,7 @@ public class PostPoststatusServlet {
 						return;
 					}
 					
-					if (tokenDao.queryRootByToken(token)==null) {
+					if (tokenDao.queryRootByToken(token)==null || (status!=0 && status!=1 )) {
 						jsonObject = new JSONObject();
 						jsonObject.put("code", "-2");
 						jsonObject.put("msg", "非法调用");

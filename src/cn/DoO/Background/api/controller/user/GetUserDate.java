@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.alibaba.fastjson.JSONObject;
 
 import cn.DoO.Background.api.servlet.user.GetUserDateServlet;
+import cn.DoO.Utils.NetCode.NetCodeUtils;
 
 /**
  * 获取用户指定数据
@@ -28,10 +29,7 @@ public class GetUserDate extends HttpServlet{
 		try {
 			getUserDateServlet.getUserDate(request, response);
 		} catch (Exception e) {
-			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("code", "500");
-			jsonObject.put("msg", "服务器内部错误");
-			response.getWriter().write(jsonObject.toJSONString());
+			response.getWriter().write(NetCodeUtils.errorTomCat());
 		}
 	}
 }

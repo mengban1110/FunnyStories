@@ -55,4 +55,15 @@ public class NetCodeUtils {
 		data.put("msg", "服务器内部错误");
 		return JSON.toJSONString(data);
 	}
+	
+	/**
+	 * @Desc 用户不存在
+	 * @return
+	 */
+	public static String userIsNo() {
+		Map<String, Object> data = new HashMap<>();
+		data.put("code", "-3");
+		data.put("msg", "不存在");
+		return JSON.toJSONString(data);
+	}
 }
