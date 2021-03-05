@@ -14,6 +14,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import cn.DoO.Background.api.dao.user.UserDao;
 import cn.DoO.Utils.Dao.Token.TokenDao;
+import cn.DoO.Utils.NetCode.NetCodeUtils;
 
 /**
  * @desc   获取用户
@@ -38,7 +39,6 @@ public class GetUserInfoServlet {
 		} catch (IOException e) {
 			System.out.println("printwriter获取异常");
 		}
-		
 		// 接值
 		String token = request.getParameter("token");
 		String pagestr = request.getParameter("page");
@@ -48,11 +48,12 @@ public class GetUserInfoServlet {
 		int size = 0;
 		
 		try {
-			if (token ==null || "".equals(token) || tokenDao.queryRootByToken(token)==null) {
-				jsonObject = new JSONObject();
-				jsonObject.put("code", "-1");
-				jsonObject.put("msg", "未登录");
-				writer.write(jsonObject.toString());
+			if (token == null || "".equals(token)) {
+				writer.write(NetCodeUtils.isToken());//未登录
+				return;
+			}
+			if (tokenDao.queryRootByToken(token)==null) {
+				writer.write(NetCodeUtils.ErrorParam());//非法调用
 				return;
 			}
 			//判断page 和 size 是否为空
