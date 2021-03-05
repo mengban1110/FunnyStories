@@ -2,6 +2,7 @@ package cn.DoO.Utils.Dao.DataConnect;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -15,14 +16,38 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+
 
 public class DaoImpl implements Dao {
 
-	private String sDBDriver = "org.gjt.mm.mysql.Driver";
-	private String sConnStr = "jdbc:mysql://127.0.0.1:3306/funnystories?useUnicode=true&characterEncoding=utf-8";
-	private String username = "root"; // 登录数据库用户名
-	private String password = "root"; // 登录数据库密码
+//	private String sDBDriver = "org.gjt.mm.mysql.Driver";
+//	private String sConnStr = "jdbc:mysql://127.0.0.1:3306/funnystories?useUnicode=true&characterEncoding=utf-8";
+//	private String username = "root"; // 登录数据库用户名
+//	private String password = "root"; // 登录数据库密码
 
+	private static String sDBDriver = null;
+	private static String sConnStr = null;
+	private static String username = null;
+	private static String password = null;
+	
+	static{
+		try {
+			 Properties prop = new Properties();  
+			 prop.load(new FileInputStream("src/cn/DoO/Config/mysqlconnection.properties"));
+			 sDBDriver = prop.getProperty("driver");
+			 sConnStr = prop.getProperty("connect");
+			 username = prop.getProperty("username");
+			 password = prop.getProperty("password");
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}  
+		
+	}
+	
 	/**
 	 * 建立连接
 	 * 

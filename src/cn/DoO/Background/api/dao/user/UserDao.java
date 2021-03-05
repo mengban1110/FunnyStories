@@ -114,14 +114,14 @@ public class UserDao {
 	 */
 	public static void main(String[] args) throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
 		UserDao userDao = new UserDao();
-		List<Map<String, Object>> userList = userDao .findUserBypageAndSizeAndLike(1,2,"张");
+		List<Map<String, Object>> userList = userDao .findUserBypageAndSizeAndLike(1,2,"");
 		JSONObject jsonObject = new JSONObject();
-		
-		userDao.update("1", "2","2", "2", "2", "2","2", "2");
+		System.out.println(userList);
+//		userDao.update("1", "2","2", "2", "2", "2","2", "2");
 		
 		
 		//返回数据
-		List<Map<String, Object>> users = new ArrayList<Map<String,Object>>();
+//		List<Map<String, Object>> users = new ArrayList<Map<String,Object>>();
 		/**
 		for (Map<String, Object> map : userList) {
 			Map<String, Object> user = new HashMap<String,Object>();
