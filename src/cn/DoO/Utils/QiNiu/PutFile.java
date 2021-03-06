@@ -3,6 +3,8 @@ package cn.DoO.Utils.QiNiu;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.Properties;
+import java.util.ResourceBundle;
 
 import com.google.gson.Gson;
 import com.qiniu.common.QiniuException;
@@ -20,6 +22,22 @@ import com.qiniu.util.Auth;
  */ 
 public class PutFile {
 
+	private static String accessKey = null;
+	private static String secretKey = null;
+	private static String bucket = null;
+	
+	static {
+		try {
+			Properties prop = new Properties();
+			ResourceBundle myResources = ResourceBundle.getBundle("cn.DoO.Config.qiniu");
+			accessKey = myResources.getString("accessKey");
+			secretKey = myResources.getString("secretKey");
+			bucket = myResources.getString("bucket");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
 	/**
 	 * @desc 上传文件
 	 * @param ImgIO  InputStream
@@ -29,11 +47,7 @@ public class PutFile {
 	public static String Putimgs(InputStream ImgIO, String suffix) {
 		Configuration cfg = new Configuration();
 		UploadManager uploadManager = new UploadManager(cfg);
-		// ...生成上传凭证，然后准备上传
-		String accessKey = "ZpBp-02v6F5Bod37EldpUAtfVHL-manH2t4tIAbk";
-		String secretKey = "pEmx2uT-51KTXaQsOvWaI0bg_4moH_wnL8p3jZ38";
-		String bucket = "funnystories";
-
+		
 		// 默认不指定key的情况下，以文件内容的hash值作为文件名
 		String key = SendInfo.GetUUID() + System.currentTimeMillis() + "." + suffix;
 		try {
@@ -72,10 +86,13 @@ public class PutFile {
 
 	public static void main(String[] args) throws UnsupportedEncodingException {
 
-		byte[] uploadBytes = "hello qiniu cloud".getBytes("utf-8");
-		ByteArrayInputStream byteInputStream = new ByteArrayInputStream(uploadBytes);
-		System.out.println(Putimgs(byteInputStream, "txt"));
-		System.out.println();
+//		byte[] uploadBytes = "hello qiniu cloud".getBytes("utf-8");
+//		ByteArrayInputStream byteInputStream = new ByteArrayInputStream(uploadBytes);
+//		System.out.println(Putimgs(byteInputStream, "txt"));
+//		System.out.println();
+		System.out.println(accessKey);
+		System.out.println(secretKey);
+		System.out.println(bucket);
 
 	}
 
