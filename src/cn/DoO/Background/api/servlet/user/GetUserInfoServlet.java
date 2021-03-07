@@ -31,13 +31,22 @@ public class GetUserInfoServlet {
 	public void getUserInfo(HttpServletRequest request, HttpServletResponse response){
 		
 		
+		
+		
+
+		
+		PrintWriter writer = null;
 		// json对象
 		JSONObject jsonObject = new JSONObject();
-		PrintWriter writer = null;
+		
 		try {
 			writer = response.getWriter();
 		} catch (IOException e) {
 			System.out.println("printwriter获取异常");
+		}
+		if ("POST".equals(request.getMethod())) {
+			writer.write(NetCodeUtils.otherErrMsg("-3", "请求方式有误"));//未登录
+			return;
 		}
 		// 接值
 		String token = request.getParameter("token");

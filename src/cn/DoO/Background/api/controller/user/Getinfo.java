@@ -32,6 +32,7 @@ public class Getinfo extends HttpServlet{
 			getUserInfoServlet.getUserInfo(request, response);
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			response.getWriter().write(NetCodeUtils.errorTomCat());
 		}
 	}

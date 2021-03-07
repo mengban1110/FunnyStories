@@ -36,7 +36,10 @@ public class GetUserDateServlet {
 		} catch (IOException e) {
 			System.out.println("printwriter获取异常");
 		}
-		
+		if ("POST".equals(request.getMethod())) {
+			writer.write(NetCodeUtils.otherErrMsg("-3", "请求方式有误"));//未登录
+			return;
+		}
 		// 接值
 		String token = request.getParameter("token");
 		String uid = request.getParameter("uid");

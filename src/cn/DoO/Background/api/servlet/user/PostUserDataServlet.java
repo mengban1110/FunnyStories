@@ -46,7 +46,10 @@ public class PostUserDataServlet {
 		} catch (IOException e) {
 			System.out.println("printwriter获取异常");
 		}
-
+		if ("GET".equals(request.getMethod())) {
+			writer.write(NetCodeUtils.otherErrMsg("-3", "请求方式有误"));//未登录
+			return;
+		}
 		try {
 			// 接值
 			String token = null;// token
