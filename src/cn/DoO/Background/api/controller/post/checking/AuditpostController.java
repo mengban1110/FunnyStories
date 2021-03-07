@@ -13,33 +13,28 @@ import cn.DoO.Background.api.servlet.post.checking.AuditpostServlet;
 import cn.DoO.Utils.NetCode.NetCodeUtils;
 
 /**
-* @desc 审核指定帖子
-* 
-* @author TianShuo
-* 
-* @version 2021年3月6日 下午11:11:28
-*/
+ * @desc 审核指定帖子
+ * 
+ * @author TianShuo
+ * 
+ * @version 2021年3月6日 下午11:11:28
+ */
 @SuppressWarnings("serial")
 @WebServlet("/api/post/checking/auditpost")
 public class AuditpostController extends HttpServlet {
-	AuditpostServlet  auditPostServlet = new AuditpostServlet();
+	
+	AuditpostServlet auditPostServlet = new AuditpostServlet();
+
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException 
-	{
+			throws ServletException, IOException {
 
 		PrintWriter out = response.getWriter();
-		try 
-		{
+		try {
 			auditPostServlet.auditPost(request, response);
-		}
-		catch (Exception e) 
-		{
-			e.printStackTrace();
+		} catch (Exception e) {
 			out.print(NetCodeUtils.errorTomCat());
-		} 
-		finally 
-		{
+		} finally {
 			out.close();
 		}
 	}

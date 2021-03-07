@@ -4,12 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.alibaba.fastjson.JSONObject;
 
 import cn.DoO.Utils.Dao.DataConnect.Dao;
 import cn.DoO.Utils.Dao.DataConnect.DaoImpl;
@@ -115,7 +111,6 @@ public class UserDao {
 	public static void main(String[] args) throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
 		UserDao userDao = new UserDao();
 		List<Map<String, Object>> userList = userDao .findUserBypageAndSizeAndLike(1,2,"");
-		JSONObject jsonObject = new JSONObject();
 		System.out.println(userList);
 //		userDao.update("1", "2","2", "2", "2", "2","2", "2");
 		

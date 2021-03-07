@@ -10,31 +10,32 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import cn.DoO.Background.api.servlet.history.GetLogInfoServlet;
-import cn.DoO.Background.api.servlet.post.recommend.DelreCommendServlet;
 import cn.DoO.Utils.NetCode.NetCodeUtils;
+
 /**
- * @desc     获取后台日志信息
+ * @desc 获取后台日志信息
  * @author 云尧
  *
  */
 @SuppressWarnings("serial")
 @WebServlet("/api/history/getloginfo")
-public class GetLogInfoController extends HttpServlet{
-	NetCodeUtils nUtil=new NetCodeUtils();
-	GetLogInfoServlet getLogInfoServlet=new GetLogInfoServlet();
-		@Override
-		protected void service(HttpServletRequest request , HttpServletResponse response ) throws ServletException, IOException {
-			
-			PrintWriter out = response.getWriter();
-			
-			try {
-				getLogInfoServlet.getLogInfo(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
-				out.print(nUtil.errorTomCat());
+public class GetLogInfoController extends HttpServlet {
 
-			} finally {
-				out.close();
-			}
+	GetLogInfoServlet getLogInfoServlet = new GetLogInfoServlet();
+
+	@Override
+	protected void service(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		PrintWriter out = response.getWriter();
+
+		try {
+			getLogInfoServlet.getLogInfo(request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+			out.print(NetCodeUtils.errorTomCat());
+		} finally {
+			out.close();
 		}
+	}
 }

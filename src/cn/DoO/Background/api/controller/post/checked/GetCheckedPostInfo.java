@@ -1,7 +1,6 @@
 package cn.DoO.Background.api.controller.post.checked;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,16 +18,19 @@ import cn.DoO.Utils.NetCode.NetCodeUtils;
  * 
  * @Time 2021年3月6日15点52分
  */
+@SuppressWarnings("serial")
 @WebServlet("/api/post/checked/getinfo")
-public class GetCheckedPostInfo extends HttpServlet{
+public class GetCheckedPostInfo extends HttpServlet {
 
 	GetCheckedPostInfoServlet getCheckedPostInfo = new GetCheckedPostInfoServlet();
+
 	@Override
-	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void service(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		try {
 			getCheckedPostInfo.getCheckedPostInfo(request, response);
 		} catch (Exception e) {
-			response.getWriter().write(NetCodeUtils.errorTomCat());//服务器内部错误
+			response.getWriter().write(NetCodeUtils.errorTomCat());// 服务器内部错误
 			return;
 		}
 	}

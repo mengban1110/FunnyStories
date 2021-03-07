@@ -1,7 +1,5 @@
 package cn.DoO.Utils.Dao.Token;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.Map;
@@ -53,10 +51,9 @@ public class TokenDao {
 		return 0;
 	}
 
-	
-	
 	/**
 	 * 根据token查询管理员
+	 * 
 	 * @param token
 	 * @return
 	 */
@@ -72,5 +69,5 @@ public class TokenDao {
 		}
 		return data;
 	}
-	
+
 }

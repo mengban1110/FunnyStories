@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import cn.DoO.Background.api.servlet.post.checked.GetCheckedPostInfoPartServlet;
 import cn.DoO.Utils.NetCode.NetCodeUtils;
 
-
 /**
  * 获取审核过的部分帖子
  * 
@@ -19,22 +18,22 @@ import cn.DoO.Utils.NetCode.NetCodeUtils;
  * 
  * @Time 2021年3月6日15点52分
  */
+@SuppressWarnings("serial")
 @WebServlet("/api/post/checked/getinfopart")
-public class GetCheckedPostInfoPart extends HttpServlet{
+public class GetCheckedPostInfoPart extends HttpServlet {
 
 	GetCheckedPostInfoPartServlet getCheckedPostInfoPartServlet = new GetCheckedPostInfoPartServlet();
+
 	@Override
-	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void service(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		try {
 			getCheckedPostInfoPartServlet.getCheckedPostInfoPart(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.getWriter().write(NetCodeUtils.errorTomCat());//服务器内部错误
+			response.getWriter().write(NetCodeUtils.errorTomCat());// 服务器内部错误
 			return;
 		}
 	}
-	
-	
 
 }

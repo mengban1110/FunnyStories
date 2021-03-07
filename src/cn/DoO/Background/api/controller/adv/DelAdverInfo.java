@@ -1,7 +1,6 @@
 package cn.DoO.Background.api.controller.adv;
 
 import java.io.IOException;
-import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,25 +16,24 @@ import cn.DoO.Utils.NetCode.NetCodeUtils;
  * 
  * @author 孙雨桐
  * 
- * 2021年3月7日11点33分
+ *         2021年3月7日11点33分
  */
-
+@SuppressWarnings("serial")
 @WebServlet("/api/adv/deladv")
-public class DelAdverInfo extends HttpServlet{
-	
+public class DelAdverInfo extends HttpServlet {
+
 	DelAdverInfoServlet delAdverInfoServlet = new DelAdverInfoServlet();
 
 	@Override
-	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void service(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		try {
 			delAdverInfoServlet.delAdverInfo(request, response);
 		} catch (Exception e) {
-			e.printStackTrace();
-			response.getWriter().write(NetCodeUtils.errorTomCat());//服务器内部错误
+			response.getWriter().write(NetCodeUtils.errorTomCat());// 服务器内部错误
 			return;
 		}
 	}
 
-	
 }

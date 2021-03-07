@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.alibaba.fastjson.JSONObject;
-
 import cn.DoO.Background.api.servlet.user.GetUserDateServlet;
 import cn.DoO.Utils.NetCode.NetCodeUtils;
 
@@ -20,16 +18,20 @@ import cn.DoO.Utils.NetCode.NetCodeUtils;
  * 
  * @Time 2021年3月4日21点53分
  */
+@SuppressWarnings("serial")
 @WebServlet("/api/user/getdata")
-public class GetUserDate extends HttpServlet{
+public class GetUserDate extends HttpServlet {
 
 	GetUserDateServlet getUserDateServlet = new GetUserDateServlet();
+
 	@Override
-	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void service(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		try {
 			getUserDateServlet.getUserDate(request, response);
 		} catch (Exception e) {
 			response.getWriter().write(NetCodeUtils.errorTomCat());
+			return;
 		}
 	}
 }

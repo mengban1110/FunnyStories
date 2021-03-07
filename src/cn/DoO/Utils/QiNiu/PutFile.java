@@ -1,6 +1,5 @@
 package cn.DoO.Utils.QiNiu;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
@@ -17,15 +16,16 @@ import com.qiniu.util.Auth;
 /**
  * 
  * @desc 上传文件测试类
- * @author 
- * @time  
- */ 
+ * @author
+ * @time
+ */
+@SuppressWarnings("unused")
 public class PutFile {
 
 	private static String accessKey = null;
 	private static String secretKey = null;
 	private static String bucket = null;
-	
+
 	static {
 		try {
 			Properties prop = new Properties();
@@ -37,7 +37,7 @@ public class PutFile {
 			// TODO: handle exception
 		}
 	}
-	
+
 	/**
 	 * @desc 上传文件
 	 * @param ImgIO  InputStream
@@ -47,13 +47,13 @@ public class PutFile {
 	public static String Putimgs(InputStream ImgIO, String suffix) {
 		Configuration cfg = new Configuration();
 		UploadManager uploadManager = new UploadManager(cfg);
-		
+
 		// 默认不指定key的情况下，以文件内容的hash值作为文件名
 		String key = SendInfo.GetUUID() + System.currentTimeMillis() + "." + suffix;
 		try {
 			// 设置key认证
 			Auth auth = Auth.create(accessKey, secretKey);
-			
+
 			// 获取仓库名
 			String upToken = auth.uploadToken(bucket);
 

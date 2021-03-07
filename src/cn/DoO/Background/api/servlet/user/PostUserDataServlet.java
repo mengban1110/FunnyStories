@@ -35,6 +35,7 @@ public class PostUserDataServlet {
 	TokenDao tokenDao = new TokenDao();
 	UserDao userDao = new UserDao();
 
+	@SuppressWarnings({ "unchecked", "null" })
 	public void postUserData(HttpServletRequest request, HttpServletResponse response)
 			throws ClassNotFoundException, SQLException {
 
@@ -47,7 +48,7 @@ public class PostUserDataServlet {
 			System.out.println("printwriter获取异常");
 		}
 		if ("GET".equals(request.getMethod())) {
-			writer.write(NetCodeUtils.otherErrMsg("-3", "请求方式有误"));//未登录
+			writer.write(NetCodeUtils.otherErrMsg("-3", "请求方式有误"));// 未登录
 			return;
 		}
 		try {
@@ -199,19 +200,18 @@ public class PostUserDataServlet {
 
 			if (password == null || password.equals("")) {
 				password = user.get("password").toString();
-			}else {
-				String verify = VerifyUtils.verify(password,6);
+			} else {
+				String verify = VerifyUtils.verify(password, 6);
 				if (verify == null) {
 					password = Md5Utils.makeMd5(password);
-				}else {
+				} else {
 					System.out.println(password);
 					System.out.println(verify);
 					writer.write(NetCodeUtils.otherErrMsg("-3", "密码不合法"));// 非法调用
 					return;
 				}
 			}
-			
-			
+
 			if (tokenDao.queryRootByToken(token) == null) {
 				writer.write(NetCodeUtils.ErrorParam());// 非法调用
 				return;

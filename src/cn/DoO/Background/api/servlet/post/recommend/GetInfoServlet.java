@@ -83,7 +83,6 @@ public class GetInfoServlet {
 				Map<String, Object> place = null;
 				Map<String, Object> count = null;
 				JSONObject jsonObject2 = null;
-				Date date;
 				for (Map<String, Object> map : dataList) {
 					jsonObject2 = new JSONObject();
 					userinfo = new HashMap<String, Object>();

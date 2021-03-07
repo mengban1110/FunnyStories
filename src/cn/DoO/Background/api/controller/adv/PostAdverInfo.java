@@ -18,6 +18,7 @@ import cn.DoO.Utils.NetCode.NetCodeUtils;
  * 
  * 2021年3月7日11点52分
  */
+@SuppressWarnings("serial")
 @WebServlet("/api/adv/postadv")
 public class PostAdverInfo extends HttpServlet{
 	

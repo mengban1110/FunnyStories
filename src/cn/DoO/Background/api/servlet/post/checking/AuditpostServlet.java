@@ -14,7 +14,6 @@ import com.alibaba.fastjson.JSON;
 import cn.DoO.Background.api.dao.homepage.RootDaoImpl;
 import cn.DoO.Background.api.dao.post.checking.CheckingPostDaolmpl;
 import cn.DoO.Utils.Tools.IPUtils;
-import cn.DoO.WebFilter.CharFilter;
 
 /**
  * @desc 审核指定帖子
@@ -35,10 +34,10 @@ public class AuditpostServlet {
 			throws ClassNotFoundException, SQLException, IOException {
 		// 获取token
 		String token = request.getParameter("token");
-		//帖子id
+		// 帖子id
 		String postid = request.getParameter("postid");
 		System.out.println(postid);
-		//审核状态 (1/审核通过,0审核未通过,未通过则直接delete帖子 直接删除!!!!)
+		// 审核状态 (1/审核通过,0审核未通过,未通过则直接delete帖子 直接删除!!!!)
 		String audit = request.getParameter("audit");
 
 		PrintWriter out = response.getWriter();
@@ -46,11 +45,12 @@ public class AuditpostServlet {
 		Map<String, Object> data = new HashMap<String, Object>();
 
 		// 如果token为空显示 参数无 audit不是1和0
-		if (token == null || token.equals("") || postid == null || audit == null  ||(audit.equals("0")==false && audit.equals("1") ==false)) {
+		if (token == null || token.equals("") || postid == null || audit == null
+				|| (audit.equals("0") == false && audit.equals("1") == false)) {
 			print(out, data, "-2", "非法调用");
 			return;
 		}
-	
+
 		// 获取管理员用户的Map
 		Map<String, Object> rootMap = rootDaoImpl.getUserByToken(token);
 
@@ -69,14 +69,14 @@ public class AuditpostServlet {
 		int rootid = (int) rootMap.get("rootid");// 管理员ID
 
 		String ip = IPUtils.getClientIpAddr(request);// Ip
-		//如果帖子通过审核
+		// 如果帖子通过审核
 		if (audit.equals("1")) {
 			checkingPostDaolmpl.upateAudit(postid);
 			checkingPostDaolmpl.addLog(rootid, System.currentTimeMillis(), "【审核通过】id为:" + postid + "的帖子", ip, "4");
 			print(out, data, "200", "请求成功");
 			return;
 		}
-		//如果帖子不通过 则删除
+		// 如果帖子不通过 则删除
 		else if (audit.equals("0")) {
 			checkingPostDaolmpl.delPost(postid);
 			checkingPostDaolmpl.addLog(rootid, System.currentTimeMillis(), "【未审核通过】id为:" + postid + "的帖子 【已删除】", ip,
