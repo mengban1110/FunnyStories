@@ -71,6 +71,10 @@ public class LoginPoststatusServlet {
 					jsonObject.put("code", "200");
 					jsonObject.put("msg", "请求成功");
 					writer.write(jsonObject.toString());
+					//写入后台日志
+					Map<String, Object> map = tokenDao.queryRootByToken(token);
+					int rid = (int) map.get("rootid");
+					sDao.writerLog(rid,request,"写入登陆状态",7);
 					return;
 				}catch (Exception e) {
 					e.printStackTrace();

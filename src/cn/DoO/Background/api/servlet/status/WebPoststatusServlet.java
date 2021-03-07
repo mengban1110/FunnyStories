@@ -2,6 +2,7 @@ package cn.DoO.Background.api.servlet.status;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -68,6 +69,10 @@ public class WebPoststatusServlet {
 					jsonObject.put("code", "200");
 					jsonObject.put("msg", "请求成功");
 					writer.write(jsonObject.toString());
+					//写入后台日志
+					Map<String, Object> map = tokenDao.queryRootByToken(token);
+					int rid = (int) map.get("rootid");
+					sDao.writerLog(rid,request,"写入开/关站状态",7);
 					return;
 				}catch (Exception e) {
 					e.printStackTrace();

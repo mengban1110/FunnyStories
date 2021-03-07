@@ -4,10 +4,16 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import cn.DoO.Utils.Dao.DataConnect.Dao;
 import cn.DoO.Utils.Dao.DataConnect.DaoImpl;
+import cn.DoO.Utils.Tools.IPUtils;
 /**
  * @desc     网站后台状态
  * @author 云尧
@@ -15,7 +21,7 @@ import cn.DoO.Utils.Dao.DataConnect.DaoImpl;
  */
 public class StatusDao {
 	Dao dao=new DaoImpl();
-	
+	IPUtils ipUtils=new IPUtils();
 	//查询出网站后台的状态
 	public Map<String, Object> query() throws ClassNotFoundException, SQLException {
 		
@@ -54,6 +60,28 @@ public class StatusDao {
 	public void editCommentPoststatus(int status) throws ClassNotFoundException, FileNotFoundException, SQLException, IOException {
 		String sql = "update serviceinfo set comment=?";
 		dao.executeUpdate(sql, new int[]{Types.INTEGER}, new Object[]{status});
+		
+	}
+
+
+	/**
+	 * @desc    写入后台日志中
+	 * @param rid
+	 * @param request 
+	 * @param i 
+	 * @param string 
+	 * @throws IOException 
+	 * @throws SQLException 
+	 * @throws FileNotFoundException 
+	 * @throws ClassNotFoundException 
+	 */
+	@SuppressWarnings("static-access")
+	public void writerLog(int rid, HttpServletRequest request, String content, int type) throws ClassNotFoundException, FileNotFoundException, SQLException, IOException {
+		
+		String date =Calendar.getInstance().getTimeInMillis()+"";
+		String ip=ipUtils.getClientIpAddr(request);
+		String sql ="insert into log (rootid,time,content,ip,type) values (?,?,?,?,?)";
+		dao.executeUpdate(sql, new int[]{Types.INTEGER,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER}, new Object[]{rid,date,content,ip,type});
 		
 	}
 
