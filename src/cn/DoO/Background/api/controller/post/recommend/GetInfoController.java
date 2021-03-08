@@ -18,7 +18,7 @@ import cn.DoO.Utils.NetCode.NetCodeUtils;
  *
  */
 @SuppressWarnings("serial")
-@WebServlet("/api/post/checked/getinfo")
+@WebServlet("/api/post/recommend/getinfo")
 public class GetInfoController extends HttpServlet {
 
 	GetInfoServlet gServlet = new GetInfoServlet();
