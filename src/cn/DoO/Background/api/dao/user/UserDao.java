@@ -89,7 +89,7 @@ public class UserDao {
 	 * @throws ClassNotFoundException 
 	 */
 	public void update(String uid, String username, String useravatar, String usersex, String userbir, String usersign,
-			String userstatus, String password) throws ClassNotFoundException, FileNotFoundException, SQLException, IOException {
+		String userstatus, String password) throws ClassNotFoundException, FileNotFoundException, SQLException, IOException {
 		String sql = "UPDATE `user` SET username = ?,useravatar = ?,usersex = ?,userbirth = ?,usersign = ?,userstatus = ?,`password` = ? WHERE uid = ?";
 		
 		Object[] values = {username,useravatar,usersex,userbir,usersign,userstatus,password,uid};
@@ -157,6 +157,17 @@ public class UserDao {
 		jsonObject.put("msg", "获取成功");
 		jsonObject.put("data", user);
 		**/
+	}
+
+
+	public void delUserById(String uid) throws ClassNotFoundException, FileNotFoundException, SQLException, IOException {
+		String sql = "delete from user where uid = ?";
+		
+		Object[] values = {uid};
+		
+		int [] types = {Types.VARCHAR};
+		
+		dao.executeUpdate(sql, types, values);
 	}
 
 
