@@ -13,33 +13,28 @@ import cn.DoO.Background.api.servlet.os.RestartServlet;
 import cn.DoO.Utils.NetCode.NetCodeUtils;
 
 /**
-* @desc 重启服务器
-* 
-* @author TianShuo
-* 
-* @version 2021年3月7日 下午12:05:52
-*/
+ * @desc 重启服务器
+ * 
+ * @author TianShuo
+ * 
+ * @version 2021年3月7日 下午12:05:52
+ */
 @SuppressWarnings("serial")
 @WebServlet("/api/os/restart")
 public class RestartController extends HttpServlet {
+	
 	RestartServlet restartServlet = new RestartServlet();
+
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException 
-	{
-
+			throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
-		try 
-		{
+		try {
 			restartServlet.Restart(request, response);
-		}
-		catch (Exception e) 
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 			out.print(NetCodeUtils.errorTomCat());
-		} 
-		finally 
-		{
+		} finally {
 			out.close();
 		}
 	}

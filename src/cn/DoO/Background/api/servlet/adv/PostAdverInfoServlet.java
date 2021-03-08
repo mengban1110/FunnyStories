@@ -23,14 +23,16 @@ import cn.DoO.Utils.QiNiu.PutFile;
  * 
  * @author 孙雨桐
  * 
- * 2021年3月7日11点52分
+ *         2021年3月7日11点52分
  */
 public class PostAdverInfoServlet {
 
 	TokenDao tokenDao = new TokenDao();
 	AdvertDao advertDao = new AdvertDao();
+
+	@SuppressWarnings({ "null", "unchecked" })
 	public void postAdverInfo(HttpServletRequest request, HttpServletResponse response) {
-		
+
 		// json对象
 		JSONObject jsonObject = new JSONObject();
 		PrintWriter writer = null;
@@ -39,24 +41,23 @@ public class PostAdverInfoServlet {
 		} catch (IOException e) {
 			System.out.println("printwriter获取异常");
 		}
-		
+
 		if ("GET".equals(request.getMethod())) {
-			writer.write(NetCodeUtils.otherErrMsg("-3", "请求方式有误"));//未登录
+			writer.write(NetCodeUtils.otherErrMsg("-3", "请求方式有误"));// 未登录
 			return;
 		}
 		// 接值
 		String token = null;// token
-		String acontext = null;//广告文本内容
-		
+		String acontext = null;// 广告文本内容
+
 		FileItem aimgItem = null;// 广告图片流
-		String aimg = null;//广告图片地址
-		String prifixTemp = null;//后缀
-		
-		String fileName = null;//文件名
-		String prifix = null;//文件后缀
+		String aimg = null;// 广告图片地址
+		String prifixTemp = null;// 后缀
+
+		String fileName = null;// 文件名
+		String prifix = null;// 文件后缀
 		try {
 
-			
 			// 将本次请求的request封装成DiskFileItemFactory对象
 			DiskFileItemFactory factory = new DiskFileItemFactory();
 
@@ -67,7 +68,7 @@ public class PostAdverInfoServlet {
 
 			// 设定中文处理
 			upload.setHeaderEncoding("utf-8");
-			
+
 			formItemList = upload.parseRequest(request);
 			if ((formItemList != null) || (formItemList.size() > 0)) {
 
@@ -118,21 +119,20 @@ public class PostAdverInfoServlet {
 					}
 				}
 			}
-			
-			
+
 			if (token == null || "".equals(token)) {
-				writer.write(NetCodeUtils.ErrorParam());//非法调用
+				writer.write(NetCodeUtils.ErrorParam());// 非法调用
 				return;
 			}
 			if (acontext == null || "".equals(acontext)) {
-				writer.write(NetCodeUtils.ErrorParam());//非法调用
+				writer.write(NetCodeUtils.ErrorParam());// 非法调用
 				return;
 			}
-			if (tokenDao.queryRootByToken(token)==null) {
-				writer.write(NetCodeUtils.ErrorParam());//非法调用
+			if (tokenDao.queryRootByToken(token) == null) {
+				writer.write(NetCodeUtils.ErrorParam());// 非法调用
 				return;
 			}
-			
+
 			System.out.println("上传文件的名字:" + aimgItem.getName());
 			System.out.println("上传文件的后缀:" + prifixTemp);
 			// 所有判断完毕再上传头像--优化
@@ -140,8 +140,8 @@ public class PostAdverInfoServlet {
 			aimg = PutFile.Putimgs(aimgItem.getInputStream(), prifixTemp);
 			System.out.println("上传成功");
 			System.out.println(aimg);
-			
-			advertDao.saveAdverInfo(acontext,aimg);
+
+			advertDao.saveAdverInfo(acontext, aimg);
 			jsonObject.put("code", "200");
 			jsonObject.put("msg", "发布成功");
 			writer.write(jsonObject.toJSONString());

@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.alibaba.fastjson.JSON;
 
-import cn.DoO.Utils.Tools.Md5Utils;
 
 /**
  * _常见code及msg返回 工具类
@@ -57,7 +56,7 @@ public class NetCodeUtils {
 		data.put("msg", "服务器内部错误");
 		return JSON.toJSONString(data);
 	}
-	
+
 	/**
 	 * @Desc 用户不存在
 	 * @return
@@ -68,12 +67,18 @@ public class NetCodeUtils {
 		data.put("msg", "用户不存在");
 		return JSON.toJSONString(data);
 	}
-	
-	public static String otherErrMsg(String code,String msg) {
+
+	/**
+	 * 其他错误代码工具方法
+	 * @param code
+	 * @param msg
+	 * @return
+	 */
+	public static String otherErrMsg(String code, String msg) {
 		Map<String, Object> data = new HashMap<>();
 		data.put("code", code);
 		data.put("msg", msg);
 		return JSON.toJSONString(data);
 	}
-	
+
 }

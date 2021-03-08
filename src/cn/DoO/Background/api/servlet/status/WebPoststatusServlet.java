@@ -31,7 +31,7 @@ public class WebPoststatusServlet {
 
 		// json对象
 				JSONObject jsonObject = null;
-				PrintWriter writer = null;
+		PrintWriter writer = null;
 				try {
 					writer = response.getWriter();
 				} catch (IOException e) {

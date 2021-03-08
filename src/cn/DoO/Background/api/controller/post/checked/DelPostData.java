@@ -18,18 +18,19 @@ import cn.DoO.Utils.NetCode.NetCodeUtils;
  * 
  * @Time 2021年3月6日21点46分
  */
+@SuppressWarnings("serial")
 @WebServlet("/api/post/checked/delpost")
-public class DelPostData extends HttpServlet{
+public class DelPostData extends HttpServlet {
 
 	DelPostDataServlet delpostDataServlet = new DelPostDataServlet();
 
 	@Override
-	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void service(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		try {
 			delpostDataServlet.delPostData(request, response);
 		} catch (Exception e) {
-			response.getWriter().write(NetCodeUtils.errorTomCat());//服务器内部错误
+			response.getWriter().write(NetCodeUtils.errorTomCat());// 服务器内部错误
 			return;
 		}
 	}

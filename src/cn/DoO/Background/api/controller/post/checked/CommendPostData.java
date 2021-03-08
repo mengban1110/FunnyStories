@@ -18,21 +18,23 @@ import cn.DoO.Utils.NetCode.NetCodeUtils;
  *
  * @Time 2021年3月6日19点08分
  */
+@SuppressWarnings("serial")
 @WebServlet("/api/post/checked/commend")
-public class CommendPostData extends HttpServlet{
+public class CommendPostData extends HttpServlet {
 
 	CommendPostDataServlet commendPostdata = new CommendPostDataServlet();
+
 	@Override
-	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+	protected void service(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		try {
 			commendPostdata.commendPost(request, response);
 		} catch (Exception e) {
-			response.getWriter().write(NetCodeUtils.errorTomCat());//服务器内部错误
+			response.getWriter().write(NetCodeUtils.errorTomCat());// 服务器内部错误
 			return;
 		}
-		
+
 	}
 
-	
 }

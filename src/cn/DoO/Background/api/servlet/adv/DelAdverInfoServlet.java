@@ -22,12 +22,13 @@ import cn.DoO.Utils.NetCode.NetCodeUtils;
  * @Time 2021年3月7日11点03分
  */
 public class DelAdverInfoServlet {
-	
+
 	TokenDao tokenDao = new TokenDao();
 	AdvertDao advertDao = new AdvertDao();
-	
-	public void delAdverInfo(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
-		
+
+	public void delAdverInfo(HttpServletRequest request, HttpServletResponse response)
+			throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
+
 		// json对象
 		JSONObject jsonObject = new JSONObject();
 		PrintWriter writer = null;
@@ -36,35 +37,33 @@ public class DelAdverInfoServlet {
 		} catch (IOException e) {
 			System.out.println("printwriter获取异常");
 		}
-		
+
 		if ("GET".equals(request.getMethod())) {
-			writer.write(NetCodeUtils.otherErrMsg("-3", "请求方式有误"));//未登录
+			writer.write(NetCodeUtils.otherErrMsg("-3", "请求方式有误"));// 未登录
 			return;
 		}
 		// 接值
 		String token = request.getParameter("token");
 		String aid = request.getParameter("aid");
-		
+
 		try {
 			Integer.parseInt(aid);
-			
-			if (token == null || "".equals(token)) {
-				writer.write(NetCodeUtils.isToken());//未登录
-				return;
-			}
-			if (tokenDao.queryRootByToken(token)==null) {
-				writer.write(NetCodeUtils.ErrorParam());//非法调用
-				return;
-			}
-			
 
-			
+			if (token == null || "".equals(token)) {
+				writer.write(NetCodeUtils.isToken());// 未登录
+				return;
+			}
+			if (tokenDao.queryRootByToken(token) == null) {
+				writer.write(NetCodeUtils.ErrorParam());// 非法调用
+				return;
+			}
+
 		} catch (Exception e) {
-			writer.write(NetCodeUtils.ErrorParam());//非法调用
+			writer.write(NetCodeUtils.ErrorParam());// 非法调用
 			return;
 		}
 		advertDao.delAdvertById(aid);
-		
+
 		jsonObject.put("code", 200);
 		jsonObject.put("msg", "删除成功");
 		writer.write(jsonObject.toJSONString());

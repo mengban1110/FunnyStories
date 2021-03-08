@@ -2,7 +2,6 @@ package cn.DoO.Utils.QiNiu;
 
 import java.util.UUID;
 
-
 public class SendInfo {
 
 	/**
@@ -16,6 +15,5 @@ public class SendInfo {
 	public static String getTimeMillis() {
 		return System.currentTimeMillis() + "";
 	}
-	
 
 }

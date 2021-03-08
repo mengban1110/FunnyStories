@@ -13,39 +13,31 @@ import cn.DoO.Background.api.servlet.homepage.GetPostPartCountServlet;
 import cn.DoO.Utils.NetCode.NetCodeUtils;
 
 /**
-* @desc 各个板块帖子数
-* 
-* @author TianShuo
-* 
-* @version 2021年3月5日 下午3:44:57
-*/
-
+ * @desc 各个板块帖子数
+ * 
+ * @author TianShuo
+ * 
+ * @version 2021年3月5日 下午3:44:57
+ */
 
 @SuppressWarnings("serial")
 @WebServlet("/api/home/getpostpartcount")
 public class GetPostPartCount extends HttpServlet {
-	
+
 	GetPostPartCountServlet getPostPartCountServlet = new GetPostPartCountServlet();
-	
+
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException 
-	{
+			throws ServletException, IOException {
 
 		PrintWriter out = response.getWriter();
-		try 
-		{
+		try {
 			getPostPartCountServlet.getPostPartCount(request, response);
-		}
-		catch (Exception e) 
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 			out.print(NetCodeUtils.errorTomCat());
-		} 
-		finally 
-		{
+		} finally {
 			out.close();
 		}
 	}
 }
-

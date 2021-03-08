@@ -13,27 +13,24 @@ import cn.DoO.Background.api.servlet.post.recommend.GetInfoServlet;
 import cn.DoO.Utils.NetCode.NetCodeUtils;
 
 /**
- * @desc     获取推荐的全部帖子
+ * @desc 获取推荐的全部帖子
  * @author 云尧
  *
  */
 @SuppressWarnings("serial")
-
 @WebServlet("/api/post/checked/getinfo")
-public class GetInfoController extends HttpServlet{
-NetCodeUtils nUtil=new NetCodeUtils();
-	
+public class GetInfoController extends HttpServlet {
+
+	GetInfoServlet gServlet = new GetInfoServlet();
+
 	@Override
-	protected void service(HttpServletRequest request , HttpServletResponse response ) throws ServletException, IOException {
-		GetInfoServlet gServlet = new GetInfoServlet();
+	protected void service(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
-		
 		try {
 			gServlet.getInfo(request, response);
 		} catch (Exception e) {
-			e.printStackTrace();
-			out.print(nUtil.errorTomCat());
-
+			out.print(NetCodeUtils.errorTomCat());
 		} finally {
 			out.close();
 		}

@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.alibaba.fastjson.JSONObject;
-
 import cn.DoO.Background.api.servlet.user.GetUserInfoServlet;
 import cn.DoO.Utils.NetCode.NetCodeUtils;
 
@@ -20,21 +18,20 @@ import cn.DoO.Utils.NetCode.NetCodeUtils;
  * 
  * @Time 2021年3月4日21点52分
  */
+@SuppressWarnings("serial")
 @WebServlet("/api/user/getinfo")
-public class Getinfo extends HttpServlet{
+public class Getinfo extends HttpServlet {
 
 	GetUserInfoServlet getUserInfoServlet = new GetUserInfoServlet();
-	
+
 	@Override
-	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void service(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		try {
-			
 			getUserInfoServlet.getUserInfo(request, response);
-			
 		} catch (Exception e) {
-			e.printStackTrace();
 			response.getWriter().write(NetCodeUtils.errorTomCat());
+			return;
 		}
 	}
-
 }

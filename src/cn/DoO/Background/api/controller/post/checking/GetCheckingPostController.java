@@ -13,33 +13,27 @@ import cn.DoO.Background.api.servlet.post.checking.GetCheckingPostServlet;
 import cn.DoO.Utils.NetCode.NetCodeUtils;
 
 /**
-* @desc 获取待审核的所有帖子
-* 
-* @author TianShuo
-* 
-* @version 2021年3月6日 下午1:53:49
-*/
+ * @desc 获取待审核的所有帖子
+ * 
+ * @author TianShuo
+ * 
+ * @version 2021年3月6日 下午1:53:49
+ */
 @SuppressWarnings("serial")
 @WebServlet("/api/post/checking/getinfo")
 public class GetCheckingPostController extends HttpServlet {
-	GetCheckingPostServlet  getCheckingPostServlet = new GetCheckingPostServlet();
+	
+	GetCheckingPostServlet getCheckingPostServlet = new GetCheckingPostServlet();
+
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException 
-	{
-
+			throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
-		try 
-		{
+		try {
 			getCheckingPostServlet.getCheckingPost(request, response);
-		}
-		catch (Exception e) 
-		{
-			e.printStackTrace();
+		} catch (Exception e) {
 			out.print(NetCodeUtils.errorTomCat());
-		} 
-		finally 
-		{
+		} finally {
 			out.close();
 		}
 	}

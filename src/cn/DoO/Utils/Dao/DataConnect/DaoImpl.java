@@ -2,7 +2,6 @@ package cn.DoO.Utils.Dao.DataConnect;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -18,8 +17,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle;
-import java.util.Set;
 
+@SuppressWarnings("unused")
 public class DaoImpl implements Dao {
 
 //	private String sDBDriver = "org.gjt.mm.mysql.Driver";
@@ -423,8 +422,9 @@ public class DaoImpl implements Dao {
 			throw new SQLException("关闭连接异常！");
 		}
 	}
+
 	public static void main(String[] args) {
-		
+
 	}
 
 }

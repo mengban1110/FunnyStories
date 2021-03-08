@@ -11,28 +11,28 @@ import javax.servlet.http.HttpServletResponse;
 
 import cn.DoO.Background.api.servlet.post.recommend.DelreCommendServlet;
 import cn.DoO.Utils.NetCode.NetCodeUtils;
+
 /**
- * @desc     取消推荐
+ * @desc 取消推荐
  * @author 云尧
  *
  */
 @SuppressWarnings("serial")
 @WebServlet("/api/post/checked/delrecommend")
-public class DelreCommendController extends HttpServlet{
-	NetCodeUtils nUtil=new NetCodeUtils();
-		@Override
-		protected void service(HttpServletRequest request , HttpServletResponse response ) throws ServletException, IOException {
-			DelreCommendServlet delreCommendServlet = new DelreCommendServlet();
-			PrintWriter out = response.getWriter();
-			
-			try {
-				delreCommendServlet.delreCommend(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
-				out.print(nUtil.errorTomCat());
+public class DelreCommendController extends HttpServlet {
 
-			} finally {
-				out.close();
-			}
+	DelreCommendServlet delreCommendServlet = new DelreCommendServlet();
+
+	@Override
+	protected void service(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		PrintWriter out = response.getWriter();
+		try {
+			delreCommendServlet.delreCommend(request, response);
+		} catch (Exception e) {
+			out.print(NetCodeUtils.errorTomCat());
+		} finally {
+			out.close();
 		}
+	}
 }

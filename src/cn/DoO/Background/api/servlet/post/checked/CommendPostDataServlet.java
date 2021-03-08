@@ -25,9 +25,10 @@ public class CommendPostDataServlet {
 
 	TokenDao tokenDao = new TokenDao();
 	CheckedPostDao checkedPostDao = new CheckedPostDao();
-	
-	public void commendPost(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, FileNotFoundException, SQLException, IOException {
-		
+
+	public void commendPost(HttpServletRequest request, HttpServletResponse response)
+			throws ClassNotFoundException, FileNotFoundException, SQLException, IOException {
+
 		// json对象
 		JSONObject jsonObject = new JSONObject();
 		PrintWriter writer = null;
@@ -36,34 +37,32 @@ public class CommendPostDataServlet {
 		} catch (IOException e) {
 			System.out.println("printwriter获取异常");
 		}
-		
+
 		if ("GET".equals(request.getMethod())) {
-			writer.write(NetCodeUtils.otherErrMsg("-3", "请求方式有误"));//未登录
+			writer.write(NetCodeUtils.otherErrMsg("-3", "请求方式有误"));// 未登录
 			return;
 		}
 		// 接值
 		String token = request.getParameter("token");
 		String postid = request.getParameter("postid");
-		
+
 		try {
 			Integer.parseInt(postid);
-			
-			if (token == null || "".equals(token)) {
-				writer.write(NetCodeUtils.isToken());//未登录
-				return;
-			}
-			if (tokenDao.queryRootByToken(token)==null) {
-				writer.write(NetCodeUtils.ErrorParam());//非法调用
-				return;
-			}
-			
 
-			
+			if (token == null || "".equals(token)) {
+				writer.write(NetCodeUtils.isToken());// 未登录
+				return;
+			}
+			if (tokenDao.queryRootByToken(token) == null) {
+				writer.write(NetCodeUtils.ErrorParam());// 非法调用
+				return;
+			}
+
 		} catch (Exception e) {
-			writer.write(NetCodeUtils.ErrorParam());//非法调用
+			writer.write(NetCodeUtils.ErrorParam());// 非法调用
 			return;
 		}
-		
+
 		checkedPostDao.commendPost(postid);
 		jsonObject.put("code", 200);
 		jsonObject.put("msg", "推荐成功");

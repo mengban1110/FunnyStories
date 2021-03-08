@@ -13,34 +13,28 @@ import cn.DoO.Background.api.servlet.post.checking.GetInfopartPostServlet;
 import cn.DoO.Utils.NetCode.NetCodeUtils;
 
 /**
-* @desc  获取待审核的部分帖子
-* 
-* @author TianShuo
-* 
-* @version 2021年3月6日 下午10:42:31
-*
-*/
+ * @desc 获取待审核的部分帖子
+ * 
+ * @author TianShuo
+ * 
+ * @version 2021年3月6日 下午10:42:31
+ *
+ */
 @SuppressWarnings("serial")
 @WebServlet("/api/post/checking/getinfopart")
 public class GetInfopartPostController extends HttpServlet {
+	
 	GetInfopartPostServlet getInfopartPostServlet = new GetInfopartPostServlet();
 
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException 
-	{
+			throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
-		try 
-		{
+		try {
 			getInfopartPostServlet.getInfopartPost(request, response);
-		}
-		catch (Exception e) 
-		{
-			e.printStackTrace();
+		} catch (Exception e) {
 			out.print(NetCodeUtils.errorTomCat());
-		} 
-		finally 
-		{
+		} finally {
 			out.close();
 		}
 	}
