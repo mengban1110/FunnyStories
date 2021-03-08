@@ -53,21 +53,21 @@ public class GetUserInfoServlet {
 
 		try {
 			if (token == null || "".equals(token)) {
-				writer.write(NetCodeUtils.isToken());// 未登录
-				return;
-			}
-			if (tokenDao.queryRootByToken(token) == null) {
 				writer.write(NetCodeUtils.ErrorParam());// 非法调用
 				return;
 			}
+			if (tokenDao.queryRootByToken(token) == null) {
+				writer.write(NetCodeUtils.isToken());// 未登录
+				return;
+			}
 			// 判断page 和 size 是否为空
-			if (pagestr == null) {
+			if (pagestr == null || "".equals(pagestr)) {
 				pagestr = "1";
 				page = Integer.parseInt(pagestr);
 			} else {
 				page = Integer.parseInt(pagestr);
 			}
-			if (sizestr == null) {
+			if (sizestr == null || "".equals(sizestr)) {
 				sizestr = "20";
 				size = Integer.parseInt(sizestr);
 			} else {
