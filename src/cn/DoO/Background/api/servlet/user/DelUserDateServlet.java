@@ -10,6 +10,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import cn.DoO.Background.api.dao.user.UserDao;
 import cn.DoO.Utils.Dao.Token.TokenDao;
+import cn.DoO.Utils.LogUtils.WriterLogUtil;
 import cn.DoO.Utils.NetCode.NetCodeUtils;
 
 public class DelUserDateServlet {
@@ -37,7 +38,7 @@ public class DelUserDateServlet {
 		// 判断参数
 		try {
 			if (token == null || "".equals(token)) {
-				writer.write(NetCodeUtils.ErrorParam());// 非法调用
+				writer.write(NetCodeUtils.isToken());// 未登录
 				return;
 			}
 			if (tokenDao.queryRootByToken(token) == null) {
@@ -56,11 +57,15 @@ public class DelUserDateServlet {
 			}
 			
 			userDao.delUserById(uid);
+			
+			WriterLogUtil.writeLog(token, request, "-删除-uid:"+uid+"-用户信息 ", 1);
+			
 			jsonObject.put("code", 200);
 			jsonObject.put("msg", "删除成功");
 			writer.write(jsonObject.toJSONString());
 			
 		}catch (Exception e) {
+			e.printStackTrace();
 			jsonObject = new JSONObject();
 			jsonObject.put("code", "-2");
 			jsonObject.put("msg", "非法调用");

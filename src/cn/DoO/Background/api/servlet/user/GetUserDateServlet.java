@@ -47,7 +47,7 @@ public class GetUserDateServlet {
 		// 判断参数
 		try {
 			if (token == null || "".equals(token)) {
-				writer.write(NetCodeUtils.ErrorParam());// 非法调用
+				writer.write(NetCodeUtils.isToken());// 未登录
 				return;
 			}
 			if (tokenDao.queryRootByToken(token) == null) {
@@ -80,7 +80,7 @@ public class GetUserDateServlet {
 			user.put("email", map.get("email"));
 			user.put("usersign", map.get("usersign"));
 			user.put("usersex", map.get("usersex"));
-
+			user.put("userstatus", map.get("userstatus"));
 			jsonObject.put("code", 200);
 			jsonObject.put("msg", "获取成功");
 			jsonObject.put("data", user);

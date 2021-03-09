@@ -117,7 +117,7 @@ public class AdvertDao {
 
 		String sql = "INSERT INTO advert VALUES(0,?,?,?,1,NULL)";
 
-		Object[] values = { acontext, aimg, System.currentTimeMillis() };
+		Object[] values = { acontext, aimg, (System.currentTimeMillis()/1000) };
 
 		int[] types = { Types.VARCHAR, Types.VARCHAR, Types.VARCHAR };
 

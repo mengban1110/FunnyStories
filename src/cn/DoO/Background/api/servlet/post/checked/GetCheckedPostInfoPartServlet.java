@@ -119,7 +119,7 @@ public class GetCheckedPostInfoPartServlet {
 
 			try {
 				jsonObject2.put("createtime",
-						formatter.format(new Date(Long.parseLong((String) map.get("createtime")))));
+						formatter.format(new Date(Long.parseLong((String) map.get("createtime"))*1000)));
 			} catch (Exception e) {
 				jsonObject2.put("createtime", "");
 			}
