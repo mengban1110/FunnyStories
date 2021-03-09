@@ -18,7 +18,7 @@ import cn.DoO.Utils.NetCode.NetCodeUtils;
  *
  */
 @SuppressWarnings("serial")
-@WebServlet("/api/post/checked/delrecommend")
+@WebServlet("/api/post/recommend/delrecommend")
 public class DelreCommendController extends HttpServlet {
 
 	DelreCommendServlet delreCommendServlet = new DelreCommendServlet();

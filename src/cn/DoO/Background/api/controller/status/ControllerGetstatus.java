@@ -18,7 +18,7 @@ import cn.DoO.Utils.NetCode.NetCodeUtils;
  *
  */
 @SuppressWarnings("serial")
-@WebServlet("/api/controller/status/controllergetstatus")
+@WebServlet("/api/controller/getstatus")
 public class ControllerGetstatus extends HttpServlet {
 
 	ControllerGetstatusServlet controller = new ControllerGetstatusServlet();

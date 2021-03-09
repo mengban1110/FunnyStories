@@ -76,13 +76,17 @@ public class StatusDao {
 	@SuppressWarnings("static-access")
 	public void writerLog(int rid, HttpServletRequest request, String content, int type) throws ClassNotFoundException, FileNotFoundException, SQLException, IOException {
 		
-		String date =Calendar.getInstance().getTimeInMillis()+"";
+		int date =(int) Calendar.getInstance().getTimeInMillis();
+		String timestamp = String.valueOf(date/1000);  
+	 
 		String ip=ipUtils.getClientIpAddr(request);
 		String sql ="insert into log (rootid,time,content,ip,type) values (?,?,?,?,?)";
-		dao.executeUpdate(sql, new int[]{Types.INTEGER,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER}, new Object[]{rid,date,content,ip,type});
+		dao.executeUpdate(sql, new int[]{Types.INTEGER,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER}, new Object[]{rid,timestamp,content,ip,type});
 		
 	}
-
+public static void main(String[] args) {
+	
+}
 	
 
 }

@@ -19,7 +19,7 @@ import cn.DoO.Utils.NetCode.NetCodeUtils;
  */
 @SuppressWarnings("serial")
 
-@WebServlet("/api/controller/status/commentpoststatus")
+@WebServlet("/api/controller/comment/poststatus")
 public class CommentPoststatus extends HttpServlet {
 
 	CommentPoststatusServlet comment = new CommentPoststatusServlet();

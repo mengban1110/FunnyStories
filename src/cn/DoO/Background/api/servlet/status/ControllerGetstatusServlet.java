@@ -13,6 +13,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import cn.DoO.Background.api.dao.status.StatusDao;
 import cn.DoO.Utils.Dao.Token.TokenDao;
+import cn.DoO.Utils.NetCode.NetCodeUtils;
 
 /**
  * @desc 控制状态
@@ -35,6 +36,11 @@ public class ControllerGetstatusServlet {
 			System.out.println("printwriter获取异常");
 		}
 
+		if (!"GET".equals(request.getMethod())) {
+			writer.write(NetCodeUtils.otherErrMsg("-404", "请求方式有误"));//请求方式错误
+			return;
+		}
+		
 		// 接值
 		String token = request.getParameter("token");
 

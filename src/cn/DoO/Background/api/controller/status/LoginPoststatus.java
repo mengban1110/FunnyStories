@@ -18,7 +18,7 @@ import cn.DoO.Utils.NetCode.NetCodeUtils;
  *
  */
 @SuppressWarnings("serial")
-@WebServlet("/api/controller/status/loginpoststatus")
+@WebServlet("/api/controller/login/poststatus")
 public class LoginPoststatus extends HttpServlet {
 
 	LoginPoststatusServlet loginServlet = new LoginPoststatusServlet();

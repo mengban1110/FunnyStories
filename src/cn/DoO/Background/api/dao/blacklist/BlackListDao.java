@@ -49,7 +49,7 @@ public class BlackListDao {
 			word = "";
 		}
 
-		String sql = "select u.uid,u.username,u.useravatar,b.bid,b.createtime from blacklist b left join user u on u.uid=b.uid where u.username like ? LIMIT ?,?";
+		String sql = "select u.uid,u.username,u.useravatar,b.bid,b.createtime from blacklist b left join user u on u.uid=b.uid where u.username like ? and display!=0 LIMIT ?,?";
 
 		return dao.executeQueryForList(sql, new int[] { Types.VARCHAR, Types.INTEGER, Types.INTEGER },
 				new Object[] { "%" + word + "%", (page - 1) * size, size });

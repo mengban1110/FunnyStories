@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.alibaba.fastjson.JSON;
 
 import cn.DoO.Background.api.dao.login.loginDao;
+import cn.DoO.Background.api.dao.status.StatusDao;
+import cn.DoO.Utils.NetCode.NetCodeUtils;
 import cn.DoO.Utils.Token.TokenUtils;
 import cn.DoO.Utils.Tools.Md5Utils;
 
@@ -24,7 +26,7 @@ import cn.DoO.Utils.Tools.Md5Utils;
 public class RootLoginServlet {
 	loginDao loginDao = new loginDao();
 	Md5Utils md5 = new Md5Utils();
-	TokenUtils token = new TokenUtils();
+	
 
 	/**
 	 * @desc 登陆
@@ -39,7 +41,13 @@ public class RootLoginServlet {
 			throws IOException, ClassNotFoundException, SQLException {
 		PrintWriter out = response.getWriter();
 		Map<String, Object> dataP = new HashMap<String, Object>();
-
+		
+		
+		if (!"POST".equals(request.getMethod())) {
+			out.write(NetCodeUtils.otherErrMsg("-404", "请求方式有误"));//请求方式错误
+			return;
+		}
+		
 		// 获取管理员名称和密码
 		String rootName = request.getParameter("rootname");
 		String rootpassWord = request.getParameter("rootpassword");
@@ -55,29 +63,34 @@ public class RootLoginServlet {
 		}
 
 		// 查询是否存在该用户
-
-		int rootuserNumber = loginDao.getUserByU(rootName);
-		if (rootuserNumber != 1) {
-			print(out, dataP, "-4", "请输入正确的密码");
+		Map<String, Object> root = loginDao.getpasswordByU(rootName);
+		
+		if (root == null) {
+			print(out, dataP, "-3", "请输入正确的账号");
 			return;
 		}
 		// md5加密
 		String newrootPassWord = md5.makeMd5(rootpassWord);
 		System.out.println(newrootPassWord);
 		// 判断密码是否正确
-		Map<String, Object> root = loginDao.getpasswordByU(rootName);
+		
 		String oldrootpassword = root.get("rootpassword") + "";
 		System.out.println(oldrootpassword);
 		if (!oldrootpassword.equals(newrootPassWord)) {
 			print(out, dataP, "-4", "请输入正确的密码");
 			return;
 		}
-
+		
+		String rootid = root.get("rootid")+"";
 		String oldtoken = root.get("token") + "";
 		String email = root.get("email") + "";
-		token.updateToken(oldtoken, email);
+		TokenUtils.updateToken(oldtoken, email);
 
 		print(out, dataP, "200", "登陆成功");
+		
+		//添加到登陆记录
+		loginDao.addRootLogin(rootid,request);
+		
 		return;
 
 	}

@@ -19,7 +19,7 @@ import cn.DoO.Utils.NetCode.NetCodeUtils;
  */
 @SuppressWarnings("serial")
 
-@WebServlet("/api/controller/status/webpoststatus")
+@WebServlet("/api/controller/web/poststatus")
 public class WebPoststatus extends HttpServlet {
 
 	WebPoststatusServlet webPoststatusServlet = new WebPoststatusServlet();

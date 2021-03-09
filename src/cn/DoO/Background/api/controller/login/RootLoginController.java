@@ -19,7 +19,7 @@ import cn.DoO.Utils.NetCode.NetCodeUtils;
  */
 @SuppressWarnings("serial")
 
-@WebServlet("/api/controller/login/rootlogincontroller")
+@WebServlet("/api/controller/login")
 public class RootLoginController extends HttpServlet {
 
 	RootLoginServlet login = new RootLoginServlet();

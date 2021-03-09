@@ -24,10 +24,10 @@ import cn.DoO.Utils.NetCode.NetCodeUtils;
 
 public class GetInfoServlet {
 
-	TokenDao tDao = new TokenDao();
-	BlackListDao bDao = new BlackListDao();
+	static TokenDao tDao = new TokenDao();
+	static BlackListDao bDao = new BlackListDao();
 
-	public void getInfo(HttpServletRequest request, HttpServletResponse response)
+	public static void getInfo(HttpServletRequest request, HttpServletResponse response)
 			throws ClassNotFoundException, SQLException {
 		// json对象
 		JSONObject jsonObject = new JSONObject();
@@ -37,7 +37,10 @@ public class GetInfoServlet {
 		} catch (IOException e) {
 			System.out.println("printwriter获取异常");
 		}
-
+		if (!"GET".equals(request.getMethod())) {
+			writer.write(NetCodeUtils.otherErrMsg("-404", "请求方式有误"));//请求方式错误
+			return;
+		}
 		// 接值
 		String token = request.getParameter("token");
 		String word = request.getParameter("word");
@@ -75,6 +78,7 @@ public class GetInfoServlet {
 			writer.write(NetCodeUtils.ErrorParam());// 非法调用
 			return;
 		}
+	
 		List<Map<String, Object>> dataList = bDao.findBypart(word, page, size);
 		System.out.println(dataList);
 
@@ -84,7 +88,7 @@ public class GetInfoServlet {
 			jsonObject2 = new JSONObject();
 
 			jsonObject2.put("bid", map.get("bid"));
-			jsonObject2.put("uid", map.get("uid"));
+			jsonObject2.put("userid", map.get("uid"));
 			jsonObject2.put("username", map.get("username"));
 			jsonObject2.put("useravatar", map.get("useravatar"));
 			jsonObject2.put("createtime", map.get("createtime"));

@@ -175,5 +175,15 @@ public class PostDao {
 		
 		return dao.executeQueryForMap(sql, new int[]{Types.INTEGER}, new Object[]{postid});
 	}
+
+
+	public Map<String, Object> getRootId(String token) throws ClassNotFoundException, SQLException {
+		String sql="select rootid from root where token=?";
+		Map<String, Object> map = dao.executeQueryForMap(sql, new int[]{Types.VARCHAR}, new Object[]{token});
+		return map;
+	}
+	
+	
+	
 	
 }

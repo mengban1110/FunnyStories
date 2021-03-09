@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.alibaba.fastjson.JSONObject;
 
+
 import cn.DoO.Background.api.dao.blacklist.BlackListDao;
 import cn.DoO.Background.api.dao.status.StatusDao;
 import cn.DoO.Utils.Dao.Token.TokenDao;
@@ -36,7 +37,10 @@ public class DeLinfoServlet {
 		} catch (IOException e) {
 			System.out.println("printwriter获取异常");
 		}
-
+		if (!"POST".equals(request.getMethod())) {
+			writer.write(NetCodeUtils.otherErrMsg("-404", "请求方式有误"));//请求方式错误
+			return;
+		}
 		// 接值
 		String token = request.getParameter("token");
 
@@ -70,7 +74,7 @@ public class DeLinfoServlet {
 		// 写入后台日志
 		Map<String, Object> map1 = tDao.queryRootByToken(token);
 		int rid = (int) map1.get("rootid");
-		sDao.writerLog(rid, request, "移除用户黑名单", 2);
+		sDao.writerLog(rid, request, "移除用户黑名单-uid:"+uid, 2);
 		return;
 	}
 }

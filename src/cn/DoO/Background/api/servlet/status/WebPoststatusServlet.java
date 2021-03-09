@@ -11,6 +11,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import cn.DoO.Background.api.dao.status.StatusDao;
 import cn.DoO.Utils.Dao.Token.TokenDao;
+import cn.DoO.Utils.NetCode.NetCodeUtils;
 
 /**
  * @desc     写入开/关站控制状态
@@ -38,7 +39,10 @@ public class WebPoststatusServlet {
 					System.out.println("printwriter获取异常");
 				}
 				
-		
+				if (!"POST".equals(request.getMethod())) {
+					writer.write(NetCodeUtils.otherErrMsg("-404", "请求方式有误"));//请求方式错误
+					return;
+				}
 		
 		
 		//判断参数
@@ -63,6 +67,23 @@ public class WebPoststatusServlet {
 						
 					}
 					
+					//判断status的取值
+					String text;
+					if(status==0){
+						text="开启";
+					}else if(status==1){
+						text="关闭";
+					}else{
+						jsonObject = new JSONObject();
+						jsonObject.put("code", "-2");
+						jsonObject.put("msg", "非法调用");
+						writer.write(jsonObject.toJSONString());
+						return;
+					}
+					
+					
+					
+					
 					//修改开/关站状态
 					sDao.editWebPoststatus(status);
 					jsonObject = new JSONObject();
@@ -72,7 +93,7 @@ public class WebPoststatusServlet {
 					//写入后台日志
 					Map<String, Object> map = tokenDao.queryRootByToken(token);
 					int rid = (int) map.get("rootid");
-					sDao.writerLog(rid,request,"写入开/关站状态",7);
+					sDao.writerLog(rid,request,"修改全站权限(rootid:"+rid+text+" 全站运营状态) ",7);
 					return;
 				}catch (Exception e) {
 					e.printStackTrace();

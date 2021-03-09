@@ -39,7 +39,10 @@ public class GetInfoPartServlet {
 		} catch (IOException e) {
 			System.out.println("printwriter获取异常");
 		}
-
+		if (!"GET".equals(request.getMethod())) {
+			writer.write(NetCodeUtils.otherErrMsg("-404", "请求方式有误"));//请求方式错误
+			return;
+		}
 		// 接值
 		String token = request.getParameter("token");
 		String word = request.getParameter("word");

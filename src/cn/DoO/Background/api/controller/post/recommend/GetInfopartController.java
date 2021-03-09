@@ -17,7 +17,7 @@ import cn.DoO.Utils.NetCode.NetCodeUtils;
  *
  */
 @SuppressWarnings("serial")
-@WebServlet("/api/controller/login/getinfopart")
+@WebServlet("/api/post/recommend/getinfopart")
 public class GetInfopartController extends HttpServlet {
 
 	GetInfoPartServlet getInfopartServlet = new GetInfoPartServlet();
