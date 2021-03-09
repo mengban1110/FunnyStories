@@ -16,7 +16,7 @@ import java.util.Date;
  * 5 : 获取当前时间 格式：yyyy年MM月dd日 HH:mm:ss---CurrentYMDHSMTime()<br>
  * 6 : 求两个日期相差的天数---differentDaysByMillisecond(String strDate, String
  * strDate2)<br>
- * 
+ * 7 : 获取精确到秒的时间戳 --- getSecondTimestamp( Date date )<br>
  * @author 梦伴
  *
  */
@@ -136,5 +136,21 @@ public class DateUtils {
 		Date date = new Date(time);
 		SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return sd.format(date);
+	}
+	/** 
+	 * 获取精确到秒的时间戳 
+	 * @return 
+	 */  
+	public static int getSecondTimestamp(Date date) {
+		if (null == date) {
+			return 0;
+		}
+		String timestamp = String.valueOf(date.getTime());
+		int length = timestamp.length();
+		if (length > 3) {
+			return Integer.valueOf(timestamp.substring(0, length - 3));
+		} else {
+			return 0;
+		}
 	}
 }

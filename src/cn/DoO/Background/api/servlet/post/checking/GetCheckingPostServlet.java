@@ -15,6 +15,7 @@ import com.alibaba.fastjson.JSON;
 
 import cn.DoO.Background.api.dao.homepage.RootDaoImpl;
 import cn.DoO.Background.api.dao.post.checking.CheckingPostDaolmpl;
+import cn.DoO.Utils.NetCode.NetCodeUtils;
 import cn.DoO.Utils.Tools.DateUtils;
 
 /**
@@ -33,10 +34,16 @@ public class GetCheckingPostServlet {
 
 	public void getCheckingPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ClassNotFoundException, SQLException {
+		
+		PrintWriter out = response.getWriter();
+		
+		if (!"GET".equals(request.getMethod())) {
+			out.write(NetCodeUtils.otherErrMsg("-404", "请求方式有误"));//请求方式错误
+			return;
+		}
 		// 获取token
 		String token = request.getParameter("token");
 
-		PrintWriter out = response.getWriter();
 
 		Map<String, Object> data = new HashMap<String, Object>();
 

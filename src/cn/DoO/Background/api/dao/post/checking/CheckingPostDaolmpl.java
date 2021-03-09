@@ -29,7 +29,7 @@ public class CheckingPostDaolmpl {
 	 */
 	public List<Map<String,Object>> getAllCheckingPost(int page, int size) throws ClassNotFoundException, SQLException{	
 
-		String sql = "SELECT * FROM post LEFT JOIN USER ON(post.uid = user.uid) LEFT JOIN postplace ON(post.placeid = postplace.placeid) LEFT JOIN postdata ON(post.postid = postdata.postid) where postdata.isaudit = 0 LIMIT ?,?" ;
+		String sql = "SELECT * FROM post LEFT JOIN USER ON(post.uid = user.uid) LEFT JOIN postplace ON(post.placeid = postplace.placeid) LEFT JOIN postdata ON(post.postid = postdata.postid) where postdata.isaudit=0 LIMIT ?,?" ;
 		List<Map<String,Object>> data = dao.executeQueryForList
 				(
 				sql, 
@@ -48,7 +48,7 @@ public class CheckingPostDaolmpl {
 	 */
 	public List<Map<String,Object>> getNotTextPost(int page, int size) throws ClassNotFoundException, SQLException{	
 
-		String sql = "SELECT * FROM post LEFT JOIN USER ON(post.uid = user.uid) LEFT JOIN postplace ON(post.placeid = postplace.placeid) LEFT JOIN postdata ON(post.postid = postdata.postid) where postdata.isaudit=0 AND post.posttext is null LIMIT ?,?" ;
+		String sql = "SELECT * FROM post LEFT JOIN USER ON(post.uid = user.uid) LEFT JOIN postplace ON(post.placeid = postplace.placeid) LEFT JOIN postdata ON(post.postid = postdata.postid) where postdata.isaudit=0 AND LENGTH(post.posttext) > 0 LIMIT ?,?" ;
 		List<Map<String,Object>> data = dao.executeQueryForList
 				(
 				sql, 
@@ -143,7 +143,7 @@ public class CheckingPostDaolmpl {
 	 * @throws SQLException
 	 * @throws IOException
 	 */
-	public void addLog(int rootid,long time ,String content , String ip ,String type ) throws ClassNotFoundException, FileNotFoundException, SQLException, IOException
+	public void addLog(int rootid,int time ,String content , String ip ,String type ) throws ClassNotFoundException, FileNotFoundException, SQLException, IOException
 	{
 
 		String sql  = "insert into log values(0,?,?,?,?,?,?)";

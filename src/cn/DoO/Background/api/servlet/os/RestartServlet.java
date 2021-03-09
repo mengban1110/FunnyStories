@@ -3,6 +3,7 @@ package cn.DoO.Background.api.servlet.os;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,6 +14,8 @@ import com.alibaba.fastjson.JSON;
 
 import cn.DoO.Background.api.dao.homepage.RootDaoImpl;
 import cn.DoO.Background.api.dao.post.checking.CheckingPostDaolmpl;
+import cn.DoO.Utils.NetCode.NetCodeUtils;
+import cn.DoO.Utils.Tools.DateUtils;
 import cn.DoO.Utils.Tools.IPUtils;
 
 /**
@@ -30,10 +33,15 @@ public class RestartServlet {
 
 	public void Restart(HttpServletRequest request, HttpServletResponse response)
 			throws ClassNotFoundException, SQLException, IOException {
+		PrintWriter out = response.getWriter();
+
+		if (!"GET".equals(request.getMethod())) {
+			out.write(NetCodeUtils.otherErrMsg("-404", "请求方式有误"));//请求方式错误
+			return;
+		}
 		// 获取token
 		String token = request.getParameter("token");
 
-		PrintWriter out = response.getWriter();
 
 		Map<String, Object> data = new HashMap<String, Object>();
 
@@ -58,7 +66,7 @@ public class RestartServlet {
 			// 将此条重启记录写到后台记录中
 			int rootid = (int) rootMap.get("rootid");// 管理员ID
 			String ip = IPUtils.getClientIpAddr(request);// Ip
-			checkingPostDaolmpl.addLog(rootid, System.currentTimeMillis(), "重启服务器", ip, "8");// 写入
+			checkingPostDaolmpl.addLog(rootid, DateUtils.getSecondTimestamp(new Date()), "重启服务器", ip, "8");// 写入
 
 			String strcmd = "shutdown -r -t 0"; // 重启服务器
 			String result = run_cmd(strcmd);

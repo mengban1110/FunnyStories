@@ -3,6 +3,7 @@ package cn.DoO.Background.api.servlet.post.checking;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,6 +14,8 @@ import com.alibaba.fastjson.JSON;
 
 import cn.DoO.Background.api.dao.homepage.RootDaoImpl;
 import cn.DoO.Background.api.dao.post.checking.CheckingPostDaolmpl;
+import cn.DoO.Utils.NetCode.NetCodeUtils;
+import cn.DoO.Utils.Tools.DateUtils;
 import cn.DoO.Utils.Tools.IPUtils;
 
 /**
@@ -32,6 +35,12 @@ public class AuditpostServlet {
 
 	public void auditPost(HttpServletRequest request, HttpServletResponse response)
 			throws ClassNotFoundException, SQLException, IOException {
+		PrintWriter out = response.getWriter();
+
+		if (!"POST".equals(request.getMethod())) {
+			out.write(NetCodeUtils.otherErrMsg("-404", "请求方式有误"));//请求方式错误
+			return;
+		}
 		// 获取token
 		String token = request.getParameter("token");
 		// 帖子id
@@ -40,8 +49,8 @@ public class AuditpostServlet {
 		// 审核状态 (1/审核通过,0审核未通过,未通过则直接delete帖子 直接删除!!!!)
 		String audit = request.getParameter("audit");
 
-		PrintWriter out = response.getWriter();
-
+	
+		
 		Map<String, Object> data = new HashMap<String, Object>();
 
 		// 如果token为空显示 参数无 audit不是1和0
@@ -72,14 +81,14 @@ public class AuditpostServlet {
 		// 如果帖子通过审核
 		if (audit.equals("1")) {
 			checkingPostDaolmpl.upateAudit(postid);
-			checkingPostDaolmpl.addLog(rootid, System.currentTimeMillis(), "【审核通过】id为:" + postid + "的帖子", ip, "4");
+			checkingPostDaolmpl.addLog(rootid, DateUtils.getSecondTimestamp(new Date()), "审核-postid:" + postid + "的帖子", ip, "4");
 			print(out, data, "200", "请求成功");
 			return;
 		}
 		// 如果帖子不通过 则删除
 		else if (audit.equals("0")) {
 			checkingPostDaolmpl.delPost(postid);
-			checkingPostDaolmpl.addLog(rootid, System.currentTimeMillis(), "【未审核通过】id为:" + postid + "的帖子 【已删除】", ip,
+			checkingPostDaolmpl.addLog(rootid, DateUtils.getSecondTimestamp(new Date()), "删除-postid:" + postid + "的帖子 【已删除】", ip,
 					"6");
 			print(out, data, "200", "请求成功");
 			return;
