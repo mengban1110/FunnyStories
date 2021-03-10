@@ -1,5 +1,8 @@
 package cn.DoO.Utils.Token;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.UUID;
 
 import cn.DoO.Utils.Dao.Token.TokenDao;
@@ -29,9 +32,16 @@ public class TokenUtils {
 	/**
 	 * @Desc 更新 token
 	 * @param token
+	 * @return 
+	 * @throws IOException 
+	 * @throws SQLException 
+	 * @throws FileNotFoundException 
+	 * @throws ClassNotFoundException 
 	 */
-	public static void updateToken(String token, String email) {
-		t.updateToken(token, getToken(email));
+	public static String updateToken(String token, String email) throws ClassNotFoundException, FileNotFoundException, SQLException, IOException {
+		String newtoken = getToken(email);
+		t.updateToken(token, newtoken);
+		return newtoken;
 	}
 
 }

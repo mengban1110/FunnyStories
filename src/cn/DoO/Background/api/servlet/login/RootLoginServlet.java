@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.alibaba.fastjson.JSON;
 
 import cn.DoO.Background.api.dao.login.loginDao;
-import cn.DoO.Background.api.dao.status.StatusDao;
 import cn.DoO.Utils.NetCode.NetCodeUtils;
 import cn.DoO.Utils.Token.TokenUtils;
 import cn.DoO.Utils.Tools.Md5Utils;
@@ -83,9 +82,15 @@ public class RootLoginServlet {
 		
 		String rootid = root.get("rootid")+"";
 		String oldtoken = root.get("token") + "";
-		String email = root.get("email") + "";
-		TokenUtils.updateToken(oldtoken, email);
-
+		String rootname = root.get("rootname") + "";
+		String rootavatar = root.get("rootavatar") + "";
+		
+		String updateToken = TokenUtils.updateToken(oldtoken, rootname);
+		Map<String, Object> mapzz = new HashMap<String, Object>();
+		mapzz.put("managername", rootname);
+		mapzz.put("manageravatar", rootavatar);
+		mapzz.put("token", updateToken);
+		dataP.put("data", mapzz);
 		print(out, dataP, "200", "登陆成功");
 		
 		//添加到登陆记录
