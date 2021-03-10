@@ -12,6 +12,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import cn.DoO.Background.api.dao.post.checked.CheckedPostDao;
 import cn.DoO.Utils.Dao.Token.TokenDao;
+import cn.DoO.Utils.LogUtils.WriterLogUtil;
 import cn.DoO.Utils.NetCode.NetCodeUtils;
 
 /**
@@ -64,6 +65,9 @@ public class CommendPostDataServlet {
 		}
 
 		checkedPostDao.commendPost(postid);
+		
+		WriterLogUtil.writeLog(token, request, "-推荐-postid:"+postid+"-帖子 ", 5);
+		
 		jsonObject.put("code", 200);
 		jsonObject.put("msg", "推荐成功");
 		writer.write(jsonObject.toJSONString());

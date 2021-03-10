@@ -12,6 +12,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import cn.DoO.Background.api.dao.adv.AdvertDao;
 import cn.DoO.Utils.Dao.Token.TokenDao;
+import cn.DoO.Utils.LogUtils.WriterLogUtil;
 import cn.DoO.Utils.NetCode.NetCodeUtils;
 
 /**
@@ -64,6 +65,8 @@ public class DelAdverInfoServlet {
 		}
 		advertDao.delAdvertById(aid);
 
+		WriterLogUtil.writeLog(token, request, "-删除-aid:"+aid+"-公告 ", 9);
+		
 		jsonObject.put("code", 200);
 		jsonObject.put("msg", "删除成功");
 		writer.write(jsonObject.toJSONString());

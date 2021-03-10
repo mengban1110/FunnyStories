@@ -12,6 +12,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import cn.DoO.Background.api.dao.post.checked.CheckedPostDao;
 import cn.DoO.Utils.Dao.Token.TokenDao;
+import cn.DoO.Utils.LogUtils.WriterLogUtil;
 import cn.DoO.Utils.NetCode.NetCodeUtils;
 
 /**
@@ -64,6 +65,9 @@ public class DelCommentDataServlet {
 		}
 
 		checkedPostDao.deleteComment(commentid);
+		
+		
+		
 		jsonObject.put("code", 200);
 		jsonObject.put("msg", "删除成功");
 		writer.write(jsonObject.toJSONString());

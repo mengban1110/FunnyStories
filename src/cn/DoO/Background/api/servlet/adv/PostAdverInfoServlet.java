@@ -15,6 +15,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import cn.DoO.Background.api.dao.adv.AdvertDao;
 import cn.DoO.Utils.Dao.Token.TokenDao;
+import cn.DoO.Utils.LogUtils.WriterLogUtil;
 import cn.DoO.Utils.NetCode.NetCodeUtils;
 import cn.DoO.Utils.QiNiu.PutFile;
 
@@ -142,6 +143,9 @@ public class PostAdverInfoServlet {
 			System.out.println(aimg);
 
 			advertDao.saveAdverInfo(acontext, aimg);
+			
+			WriterLogUtil.writeLog(token, request, "-发布公告 ", 9);
+			
 			jsonObject.put("code", "200");
 			jsonObject.put("msg", "发布成功");
 			writer.write(jsonObject.toJSONString());

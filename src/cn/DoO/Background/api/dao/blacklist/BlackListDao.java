@@ -54,5 +54,24 @@ public class BlackListDao {
 		return dao.executeQueryForList(sql, new int[] { Types.VARCHAR, Types.INTEGER, Types.INTEGER },
 				new Object[] { "%" + word + "%", (page - 1) * size, size });
 	}
+	
+	/**
+	 * 添加指定用户到黑名单
+	 * @param uid
+	 * @throws ClassNotFoundException
+	 * @throws FileNotFoundException
+	 * @throws SQLException
+	 * @throws IOException
+	 */
+	public void addBlackUser(Integer uid) throws ClassNotFoundException, FileNotFoundException, SQLException, IOException {
+		
+		String sql = "INSERT INTO blacklist VALUES(0,?,?,1,NULL)";
+		
+		int []types = {Types.VARCHAR,Types.VARCHAR};
+		
+		Object[]values = {uid,System.currentTimeMillis()/1000};
+		
+		dao.executeUpdate(sql, types, values);
+	}
 
 }

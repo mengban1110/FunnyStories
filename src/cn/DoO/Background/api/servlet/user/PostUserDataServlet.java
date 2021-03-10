@@ -16,8 +16,10 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import com.alibaba.fastjson.JSONObject;
 
+import cn.DoO.Background.api.dao.blacklist.BlackListDao;
 import cn.DoO.Background.api.dao.user.UserDao;
 import cn.DoO.Utils.Dao.Token.TokenDao;
+import cn.DoO.Utils.LogUtils.WriterLogUtil;
 import cn.DoO.Utils.NetCode.NetCodeUtils;
 import cn.DoO.Utils.QiNiu.PutFile;
 import cn.DoO.Utils.Tools.Md5Utils;
@@ -34,7 +36,8 @@ public class PostUserDataServlet {
 
 	TokenDao tokenDao = new TokenDao();
 	UserDao userDao = new UserDao();
-
+	BlackListDao blackListDao = new BlackListDao();
+	
 	@SuppressWarnings({ "unchecked", "null" })
 	public void postUserData(HttpServletRequest request, HttpServletResponse response)
 			throws ClassNotFoundException, SQLException {
@@ -243,6 +246,11 @@ public class PostUserDataServlet {
 
 			userDao.update(uid, username, useravatar, usersex, userbir, usersign, userstatus, password);
 
+			if ("2".equals(userstatus) && !user.get("userstatus").equals("2")) {
+				blackListDao.addBlackUser(Integer.parseInt(uid));
+			}
+			
+			WriterLogUtil.writeLog(token, request, "-修改-uid:"+uid+"-用户信息 ", 0);
 			jsonObject.put("code", "200");
 			jsonObject.put("msg", "修改成功调用");
 			writer.write(jsonObject.toJSONString());
