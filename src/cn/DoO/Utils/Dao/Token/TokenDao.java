@@ -1,5 +1,7 @@
 package cn.DoO.Utils.Dao.Token;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.Map;
@@ -46,9 +48,21 @@ public class TokenDao {
 	/**
 	 * @Desc 更新token
 	 * @return
+	 * @throws IOException 
+	 * @throws SQLException 
+	 * @throws FileNotFoundException 
+	 * @throws ClassNotFoundException 
 	 */
-	public int updateToken(String utoken, String nuoken) {
-		return 0;
+	public int updateToken(String oldtoken, String newtoken) {
+		String sql = "Update `root` set token=? WHERE token = ?";
+		int result = 0;
+		try {
+			result = dao.executeUpdate(sql, new int[] { Types.VARCHAR,Types.VARCHAR }, new Object[] { newtoken,oldtoken });
+		} catch (ClassNotFoundException | SQLException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	/**
