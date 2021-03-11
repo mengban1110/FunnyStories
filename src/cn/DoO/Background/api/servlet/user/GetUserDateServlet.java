@@ -78,6 +78,7 @@ public class GetUserDateServlet {
 			user.put("useravatar", map.get("useravatar"));
 			user.put("userbir", map.get("userbirth"));
 			user.put("email", map.get("email"));
+			user.put("password", map.get("password"));
 			user.put("usersign", map.get("usersign"));
 			user.put("usersex", map.get("usersex"));
 			user.put("userstatus", map.get("userstatus"));

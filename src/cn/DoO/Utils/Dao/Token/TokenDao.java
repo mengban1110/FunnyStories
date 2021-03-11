@@ -78,7 +78,6 @@ public class TokenDao {
 		try {
 			data = dao.executeQueryForMap(sql, new int[] { Types.VARCHAR }, new Object[] { token });
 		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return data;

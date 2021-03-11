@@ -167,9 +167,14 @@ public class PostUserDataServlet {
 			// 判断值是否为空
 			if (uid == null) {
 				writer.write(NetCodeUtils.ErrorParam());// 非法调用
-				System.out.println("uid 未null");
+				System.out.println("uid 为 null");
 				return;
-
+			}
+			if (userDao.findUserById(uid) == null) {
+				writer.write(NetCodeUtils.userIsNo());// 没有此用户
+				return;
+			} else {
+				user = userDao.findUserById(uid);
 			}
 			if (usersex == null || usersex.equals("")) {
 				usersex = user.get("usersex").toString();
@@ -215,10 +220,6 @@ public class PostUserDataServlet {
 				}
 			}
 
-			if (tokenDao.queryRootByToken(token) == null) {
-				writer.write(NetCodeUtils.ErrorParam());// 非法调用
-				return;
-			}
 
 			try {
 				Integer.parseInt(uid);
@@ -226,12 +227,7 @@ public class PostUserDataServlet {
 				writer.write(NetCodeUtils.ErrorParam());// 非法调用
 				return;
 			}
-			if (userDao.findUserById(uid) == null) {
-				writer.write(NetCodeUtils.userIsNo());// 没有此用户
-				return;
-			} else {
-				user = userDao.findUserById(uid);
-			}
+
 
 			if (username == null || username.equals("")) {
 				username = user.get("username").toString();

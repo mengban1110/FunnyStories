@@ -19,7 +19,9 @@ public class WriterLogUtil {
 	static IPUtils ipUtils=new IPUtils();
 	public static void writeLog(String token,HttpServletRequest request,String content,int type) throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
 		
+		System.out.println(token);
 		Integer rootid = (Integer) dao.executeQueryForMap("select * from root where token = ?", new int[]{Types.VARCHAR}, new Object[]{token}).get("rootid");
+		
 		String ip=ipUtils.getClientIpAddr(request);
 		String time =System.currentTimeMillis()/1000+"";
 		
