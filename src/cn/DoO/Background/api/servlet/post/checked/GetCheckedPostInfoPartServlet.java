@@ -83,7 +83,8 @@ public class GetCheckedPostInfoPartServlet {
 			writer.write(NetCodeUtils.ErrorParam());// 非法调用
 			return;
 		}
-
+		System.out.println("word------------"+word);
+		
 		List<Map<String, Object>> dataList = checkedPostDao.findAllByWord(page, size, word);
 		System.out.println(dataList);
 		SimpleDateFormat formatter;

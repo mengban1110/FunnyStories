@@ -171,6 +171,11 @@ public class UserDao {
 	}
 
 
+	public int getcount() throws ClassNotFoundException, SQLException {
+		return dao.executeQueryForInt("select count(*) from user");
+	}
+
+
 
 
 

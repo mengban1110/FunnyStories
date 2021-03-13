@@ -124,4 +124,8 @@ public class AdvertDao {
 		dao.executeUpdate(sql, types, values);
 	}
 
+	public int getCount() throws ClassNotFoundException, SQLException {
+		return dao.executeQueryForInt("SELECT count(*) FROM advert WHERE display !=0");
+	}
+
 }
