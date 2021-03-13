@@ -153,6 +153,17 @@ public class CheckingPostDaolmpl {
 		
 		dao.executeUpdate(sql, types, values);
 	}
+	/**
+	 * @desc 获取待审核帖子的数量
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public  int getCount() throws ClassNotFoundException, SQLException {
+		
+		return dao.executeQueryForInt("SELECT count(*) FROM post LEFT JOIN USER ON(post.uid = user.uid) LEFT JOIN postplace ON(post.placeid = postplace.placeid) LEFT JOIN postdata ON(post.postid = postdata.postid) where postdata.isaudit=0");
+		
+	}
 	
 
 }

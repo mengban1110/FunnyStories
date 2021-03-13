@@ -50,7 +50,8 @@ public class RootLoginServlet {
 		// 获取管理员名称和密码
 		String rootName = request.getParameter("rootname");
 		String rootpassWord = request.getParameter("rootpassword");
-
+		System.out.println("rootname:"+rootName);
+		System.out.println("rootpassword:"+rootpassWord);
 		// 判断管理员名称和密码是否为空
 		if (rootName == null || "".equals(rootName)) {
 			print(out, dataP, "-3", "请输入正确的账号");

@@ -136,7 +136,7 @@ public class RootDaoImpl {
 	 */
 	public Map<String, Object> getPostVideoCount() throws ClassNotFoundException, SQLException {
 		Map<String, Object> data = dao.executeQueryForMap(
-				"SELECT\n" + "	Count(*) \n" + "FROM\n" + "	post \n" + "WHERE\n" + "	postvideo IS NOT NULL");
+				"SELECT\n" + "	Count(*) \n" + "FROM\n" + "	post \n" + "WHERE\n" + "	LENGTH(postvideo) > 1  ");
 		return data;
 	}
 
@@ -148,7 +148,7 @@ public class RootDaoImpl {
 	 */
 	public Map<String, Object> getPostTextCount() throws ClassNotFoundException, SQLException {
 		Map<String, Object> data = dao.executeQueryForMap("SELECT\n" + "	Count(*) \n" + "FROM\n" + "	post \n"
-				+ "WHERE\n" + "	postvideo IS  NULL and\n" + "	postimg is NULL\n" + "	");
+				+ "WHERE\n" + "	LENGTH(postvideo) < 1 and\n" + "	LENGTH(postimg) < 1 \n" + "	");
 
 		return data;
 	}
@@ -161,7 +161,7 @@ public class RootDaoImpl {
 	 */
 	public Map<String, Object> getPostImgCount() throws ClassNotFoundException, SQLException {
 		Map<String, Object> data = dao.executeQueryForMap("SELECT\n" + "	Count(*) \n" + "FROM\n" + "	post \n"
-				+ "WHERE\n" + "	postvideo IS  NULL and\n" + "	postimg is not NULL");
+				+ "WHERE\n" + "	LENGTH(postvideo) < 1 and\n" + "	LENGTH(postimg)  > 1");
 		return data;
 	}
 

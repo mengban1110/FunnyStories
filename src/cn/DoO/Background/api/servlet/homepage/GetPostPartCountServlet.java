@@ -70,7 +70,7 @@ public class GetPostPartCountServlet {
 //			视频帖子
 			Map<String, Object> postVideoCountMap = new HashMap<>();
 			postVideoCountMap.put("name", "视频板块");
-			postVideoCountMap.put("value", rootDaoImpl.getPostImgCount().get("Count(*)"));
+			postVideoCountMap.put("value", rootDaoImpl.getPostVideoCount().get("Count(*)"));
 			
 			dataList.add(postVideoCountMap);
 			dataList.add(postTextCountMap);
