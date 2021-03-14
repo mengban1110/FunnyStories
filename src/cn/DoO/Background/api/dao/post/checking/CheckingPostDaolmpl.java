@@ -57,7 +57,17 @@ public class CheckingPostDaolmpl {
 				);
 		return data;
 	}
-	
+	/**
+	 * @desc 获取待审核的部分帖子的【非文本帖子】的数量
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public int getNotTextPostNum() throws ClassNotFoundException, SQLException{	
+
+		
+		return dao.executeQueryForInt("SELECT COUNT(*) FROM post LEFT JOIN USER ON(post.uid = user.uid) LEFT JOIN postplace ON(post.placeid = postplace.placeid) LEFT JOIN postdata ON(post.postid = postdata.postid) where postdata.isaudit=0 AND LENGTH(post.posttext) > 0");
+	}
 	/**
 	 * @desc 获取待审核的【带关键字文本帖子】
 	 * @param page
@@ -77,6 +87,13 @@ public class CheckingPostDaolmpl {
 					);
 		return data;
 	}
+	public int getInfopartTextPostNum(String word) throws ClassNotFoundException, SQLException{	
+		String sql = "SELECT COUNT(*) FROM post LEFT JOIN USER ON(post.uid = user.uid) LEFT JOIN postplace ON(post.placeid = postplace.placeid) LEFT JOIN postdata ON(post.postid = postdata.postid) where postdata.isaudit=0 AND  post.posttext like \"%" +word +"%\"" ;
+		return dao.executeQueryForInt(sql);
+	}
+	
+
+	
 	/**
 	 * @desc 根据帖子id查询这个贴子信息
 	 * @param postid

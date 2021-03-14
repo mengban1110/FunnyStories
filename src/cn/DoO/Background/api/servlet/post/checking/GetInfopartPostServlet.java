@@ -102,7 +102,6 @@ public class GetInfopartPostServlet {
 
 		// 初始结果集
 		List<Map<String, Object>> postList = null;
-
 		// 如果关键字是空 则查询不是文本的帖子
 		if (word.equals("")) {
 			postList = checkingPostDaolmpl.getNotTextPost(page, size);
