@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.alibaba.fastjson.JSONObject;
 
+import cn.DoO.Background.api.dao.getpage.GetPage;
 import cn.DoO.Background.api.dao.post.PostDao;
 import cn.DoO.Utils.Dao.Token.TokenDao;
 import cn.DoO.Utils.NetCode.NetCodeUtils;
@@ -109,7 +110,7 @@ public class GetInfoServlet {
 					jsonObject2.put("posttext", map.get("posttext"));
 					jsonObject2.put("postimg", map.get("postimg"));
 					jsonObject2.put("postvideo", map.get("postvideo"));
-					
+					jsonObject2.put("isaudit", map.get("isaudit"));
 					try {
 						jsonObject2.put("createtime", formatter.format(new Date(Long.parseLong((String)map.get("createtime")))));
 					} catch (Exception e) {
@@ -129,4 +130,30 @@ public class GetInfoServlet {
 				writer.write(jsonObject.toJSONString());
 				
 	}
+	
+	/**
+	 * @desc    获取总页数
+	 * @param request
+	 * @param response
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
+	 */
+	public static void GetInfoPartPage(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException{
+		// json对象
+				JSONObject jsonObject = new JSONObject();
+				PrintWriter writer = null;
+				try {
+					writer = response.getWriter();
+				} catch (IOException e) {
+					System.out.println("printwriter获取异常");
+				}
+				
+				int count = GetPage.getInfoPartPage();
+				System.out.println(count);
+				jsonObject.put("data", count);
+				writer.write(jsonObject.toJSONString());
+	}
+
+	
+	
 }

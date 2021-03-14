@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.alibaba.fastjson.JSONObject;
 
 import cn.DoO.Background.api.dao.blacklist.BlackListDao;
+import cn.DoO.Background.api.dao.getpage.GetPage;
 import cn.DoO.Utils.Dao.Token.TokenDao;
 import cn.DoO.Utils.NetCode.NetCodeUtils;
 
@@ -106,4 +107,32 @@ public class GetInfoServlet {
 		writer.write(jsonObject.toJSONString());
 
 	}
+	
+
+	/**
+	 * @desc    获取总页数
+	 * @param request
+	 * @param response
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
+	 */
+	public static void getBlackListPage(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException{
+		// json对象
+				JSONObject jsonObject = new JSONObject();
+				PrintWriter writer = null;
+				try {
+					writer = response.getWriter();
+				} catch (IOException e) {
+					System.out.println("printwriter获取异常");
+				}
+				String word = request.getParameter("word");
+				int count = GetPage.getBlackListPage(word);
+				System.out.println(count);
+				jsonObject.put("data", count);
+				writer.write(jsonObject.toJSONString());
+	}
+
+	
+	
+	
 }

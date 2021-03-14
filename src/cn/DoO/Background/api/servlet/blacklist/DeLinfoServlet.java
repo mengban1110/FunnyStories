@@ -46,7 +46,7 @@ public class DeLinfoServlet {
 
 		int uid = 0;
 		try {
-			uid = Integer.parseInt(request.getParameter("uid"));
+			uid = Integer.parseInt(request.getParameter("userid"));
 			if (token == null || "".equals(token)) {
 				writer.write(NetCodeUtils.ErrorParam());// 非法调用
 

@@ -110,7 +110,7 @@ public class PostDao {
 
 	public List<Map<String, Object>> findAllByIsrecommend(int page, int size) throws ClassNotFoundException, SQLException {
 		
-		String sql = "SELECT u.username,u.useravatar,pp.placeid,pp.placename,p.postid,p.posttext,p.postimg,p.postvideo,p.createtime,pd.postlike,pd.postshare,pd.postcomment FROM post p LEFT JOIN `user` u ON p.uid=u.uid LEFT JOIN postplace pp ON  p.placeid =pp.placeid LEFT JOIN postdata pd ON pd.postid = p.postid WHERE p.display!=0 AND pd.isrecommend =1 LIMIT ?,?";
+		String sql = "SELECT u.username,u.useravatar,pp.placeid,pp.placename,p.postid,p.posttext,p.postimg,p.postvideo,p.createtime,pd.postlike,pd.postshare,pd.postcomment,pd.isaudit FROM post p LEFT JOIN `user` u ON p.uid=u.uid LEFT JOIN postplace pp ON  p.placeid =pp.placeid LEFT JOIN postdata pd ON pd.postid = p.postid WHERE p.display!=0 AND pd.isrecommend =1 LIMIT ?,?";
 		
 		int [] types = {Types.INTEGER,Types.INTEGER};
 		
@@ -136,11 +136,11 @@ public class PostDao {
 		Object [] values=null;
 		int[] types = null;
 		if (word ==null || "".equals(word)) {
-			sql = "SELECT u.username,u.useravatar,pp.placeid,pp.placename,p.postid,p.posttext,p.postimg,p.postvideo,p.createtime,pd.postlike,pd.postshare,pd.postcomment FROM post p LEFT JOIN `user` u ON p.uid=u.uid LEFT JOIN postplace pp ON pp.placeid =p.placeid LEFT JOIN postdata pd ON pd.postid = p.postid WHERE p.display!=0 AND pd.isrecommend =1 AND p.posttext = '' OR ISNULL(p.posttext)  LIMIT ?,?";
+			sql = "SELECT u.username,u.useravatar,pp.placeid,pp.placename,p.postid,p.posttext,p.postimg,p.postvideo,p.createtime,pd.postlike,pd.postshare,pd.postcomment,pd.isaudit FROM post p LEFT JOIN `user` u ON p.uid=u.uid LEFT JOIN postplace pp ON pp.placeid =p.placeid LEFT JOIN postdata pd ON pd.postid = p.postid WHERE p.display!=0 AND pd.isrecommend =1 AND p.posttext = '' OR ISNULL(p.posttext)  LIMIT ?,?";
 			types =new int[]{Types.INTEGER,Types.INTEGER};
 			values = new Object[]{(page-1)*size, size};
 		}else{
-			sql = "SELECT u.username,u.useravatar,pp.placeid,pp.placename,p.postid,p.posttext,p.postimg,p.postvideo,p.createtime,pd.postlike,pd.postshare,pd.postcomment FROM post p LEFT JOIN `user` u ON p.uid=u.uid LEFT JOIN postplace pp ON pp.placeid =p.placeid LEFT JOIN postdata pd ON pd.postid = p.postid WHERE p.display!=0 AND pd.isrecommend =1 AND p.posttext LIKE ? LIMIT ?,?";
+			sql = "SELECT u.username,u.useravatar,pp.placeid,pp.placename,p.postid,p.posttext,p.postimg,p.postvideo,p.createtime,pd.postlike,pd.postshare,pd.postcomment,pd.isaudit FROM post p LEFT JOIN `user` u ON p.uid=u.uid LEFT JOIN postplace pp ON pp.placeid =p.placeid LEFT JOIN postdata pd ON pd.postid = p.postid WHERE p.display!=0 AND pd.isrecommend =1 AND p.posttext LIKE ? LIMIT ?,?";
 			types =new int[]{Types.VARCHAR,Types.INTEGER,Types.INTEGER};
 			values = new Object[]{"%"+word+"%",(page-1)*size, size};
 		}
