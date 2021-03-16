@@ -171,8 +171,12 @@ public class UserDao {
 	}
 
 
-	public int getcount() throws ClassNotFoundException, SQLException {
-		return dao.executeQueryForInt("select count(*) from user");
+	public int getcount(String word) throws ClassNotFoundException, SQLException {
+		
+		if (word == null || "".equals(word)) {
+			return dao.executeQueryForInt("select count(*) from user");
+		}
+		return dao.executeQueryForInt("select count(*) from user where username like ?",new int[]{Types.VARCHAR},new Object[]{"%"+word+"%"});
 	}
 
 

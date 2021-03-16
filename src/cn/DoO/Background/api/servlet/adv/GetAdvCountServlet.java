@@ -25,8 +25,8 @@ public class GetAdvCountServlet {
 		} catch (IOException e) {
 			System.out.println("printwriter获取异常");
 		}
-		
-		int count = advertDao.getCount();
+		String word = request.getParameter("word");
+		int count = advertDao.getCount(word);
 		System.out.println(count);
 		jsonObject.put("data", count);
 		writer.write(jsonObject.toJSONString());

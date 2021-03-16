@@ -124,8 +124,12 @@ public class AdvertDao {
 		dao.executeUpdate(sql, types, values);
 	}
 
-	public int getCount() throws ClassNotFoundException, SQLException {
-		return dao.executeQueryForInt("SELECT count(*) FROM advert WHERE display !=0");
+	public int getCount(String word) throws ClassNotFoundException, SQLException {
+		
+		if (word == null || "".equals(word)) {
+			return dao.executeQueryForInt("SELECT count(*) FROM advert WHERE display != 0");
+		}
+		return dao.executeQueryForInt("SELECT count(*) FROM advert WHERE display !=0 AND acontext LIKE ? ",new int[]{Types.VARCHAR},new Object[]{"%"+word+"%"});
 	}
 
 }
