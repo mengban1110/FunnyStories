@@ -164,5 +164,14 @@ public class RootDaoImpl {
 				+ "WHERE\n" + "	LENGTH(postvideo) < 1 and\n" + "	LENGTH(postimg)  > 1");
 		return data;
 	}
-
+	public List<Map<String, Object>> getPostCount() throws ClassNotFoundException, SQLException {
+		List<Map<String, Object>> data = dao.executeQueryForList("SELECT\n" +
+				"*,count(*) as num\n" +
+				"FROM\n" +
+				"	post\n" +
+				"	JOIN postplace on(post.placeid=postplace.placeid)\n" +
+				"	GROUP BY\n" +
+				"	post.placeid");
+		return data;
+	}
 }

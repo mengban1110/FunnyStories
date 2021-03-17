@@ -59,22 +59,19 @@ public class GetPostPartCountServlet {
 			}
 			
 			List<Map<String, Object>> dataList = new ArrayList<Map<String, Object>>  ();
-//			图片帖子
-			Map<String, Object> postImgCountMap = new HashMap<>();
-			postImgCountMap.put("name", "图片板块");
-			postImgCountMap.put("value", rootDaoImpl.getPostImgCount().get("Count(*)"));
-//			文字帖子
-			Map<String, Object> postTextCountMap = new HashMap<>();
-			postTextCountMap.put("name", "文字板块");
-			postTextCountMap.put("value", rootDaoImpl.getPostTextCount().get("Count(*)"));
-//			视频帖子
-			Map<String, Object> postVideoCountMap = new HashMap<>();
-			postVideoCountMap.put("name", "视频板块");
-			postVideoCountMap.put("value", rootDaoImpl.getPostVideoCount().get("Count(*)"));
+
+		
 			
-			dataList.add(postVideoCountMap);
-			dataList.add(postTextCountMap);
-			dataList.add(postImgCountMap);
+			List<Map<String, Object>>  list = rootDaoImpl.getPostCount();
+			
+			for(int i = 0 ; i < list.size();i++)
+			{
+				Map<String, Object> postCountMap = new HashMap<>();
+				postCountMap.put("name", list.get(i).get("placename"));
+				postCountMap.put("value",list.get(i).get("num"));
+				dataList.add(postCountMap);
+			}
+			
 			
 			data.put("code", "200");
 			data.put("msg", "请求成功");
