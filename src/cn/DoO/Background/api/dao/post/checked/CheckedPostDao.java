@@ -270,8 +270,15 @@ public class CheckedPostDao {
 		dao.executeUpdate(sql, types, values);
 	}
 
-	public int getCount() throws ClassNotFoundException, SQLException {
-		return dao.executeQueryForInt("SELECT count(*) FROM post p LEFT JOIN `user` u ON p.uid=u.uid LEFT JOIN postplace pp ON pp.placeid =p.placeid LEFT JOIN postdata pd ON pd.postid = p.postid WHERE p.display!=0 AND pd.isrecommend !=1 AND pd.isaudit !=0");
+	public int getCount(String word) throws ClassNotFoundException, SQLException {
+		if (word == null || "".equals(word)) {
+			return dao.executeQueryForInt("SELECT count(*) FROM post p LEFT JOIN `user` u ON p.uid=u.uid LEFT JOIN postplace pp ON pp.placeid =p.placeid LEFT JOIN postdata pd ON pd.postid = p.postid WHERE p.display!=0 AND pd.isrecommend !=1 AND pd.isaudit !=0");
+		}
+		return dao.executeQueryForInt("SELECT count(*) FROM post p LEFT JOIN `user` u ON p.uid=u.uid LEFT JOIN postplace pp ON pp.placeid =p.placeid LEFT JOIN postdata pd ON pd.postid = p.postid WHERE p.display!=0 AND pd.isrecommend !=1 AND pd.isaudit !=0 AND p.posttext LIKE ?",new int[]{Types.VARCHAR},new Object[]{"%"+word+"%"});
+	}
+
+	public int getCommentCount(String word) {
+		return 0;
 	}
 
 }

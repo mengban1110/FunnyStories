@@ -24,8 +24,9 @@ public class GetPostCountServlet {
 		} catch (IOException e) {
 			System.out.println("printwriter获取异常");
 		}
+		String word = request.getParameter("word");
 		
-		int count = checkedPostDao.getCount();
+		int count = checkedPostDao.getCount(word);
 		System.out.println(count);
 		jsonObject.put("data", count);
 		writer.write(jsonObject.toJSONString());

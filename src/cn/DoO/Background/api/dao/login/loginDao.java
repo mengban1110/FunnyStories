@@ -38,15 +38,13 @@ public class loginDao {
 	
 	public void addRootLogin(String rootid, HttpServletRequest request) throws ClassNotFoundException, FileNotFoundException, SQLException, IOException {
 
-		int date =(int) Calendar.getInstance().getTimeInMillis();
-		String timestamp = String.valueOf(date/1000);  
+		
+		String timestamp =System.currentTimeMillis() / 1000+"";
 	 
 		String ip=ipUtils.getClientIpAddr(request);
 		String sql = "insert into rootlogin (rootid,logintime,rootip) values(?,?,?) ";
 		dao.executeUpdate(sql,new int[]{Types.VARCHAR,Types.VARCHAR,Types.VARCHAR} , new Object[]{rootid,timestamp,ip});
 	}
 
-	
-	
 	
 }

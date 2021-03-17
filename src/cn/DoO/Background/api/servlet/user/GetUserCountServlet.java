@@ -25,8 +25,10 @@ public class GetUserCountServlet {
 			System.out.println("printwriter获取异常");
 		}
 		
+		String word = request.getParameter("word");
+
 		
-		int count = userDao.getcount();
+		int count = userDao.getcount(word);
 		jsonObject.put("data", count);
 		writer.write(jsonObject.toJSONString());
 	}
