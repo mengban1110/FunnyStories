@@ -199,8 +199,8 @@ public class PostUserDataServlet {
 
 			if (userstatus == null || userstatus.equals("")) {
 				userstatus = user.get("userstatus").toString();
-			} else if (!userstatus.equals("0") && !userstatus.equals("1") && !userstatus.equals("2")
-					&& !userstatus.equals("3") && !userstatus.equals("4")) {
+			} else if (!userstatus.equals("1") && !userstatus.equals("2") && !userstatus.equals("3")
+					&& !userstatus.equals("4") && !userstatus.equals("5")) {
 				writer.write(NetCodeUtils.ErrorParam());// 非法调用
 				System.out.println("状态只能为 0 1 2 3 4");
 				return;
@@ -242,7 +242,7 @@ public class PostUserDataServlet {
 
 			userDao.update(uid, username, useravatar, usersex, userbir, usersign, userstatus, password);
 
-			if ("2".equals(userstatus) && !user.get("userstatus").equals("2")) {
+			if ("5".equals(userstatus) && !user.get("userstatus").equals("5")) {
 				blackListDao.addBlackUser(Integer.parseInt(uid));
 			}
 			
