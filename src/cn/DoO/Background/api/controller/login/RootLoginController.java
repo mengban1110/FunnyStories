@@ -33,7 +33,7 @@ public class RootLoginController extends HttpServlet {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			out.print(NetCodeUtils.errorTomCat());
+//			out.print(NetCodeUtils.errorTomCat());
 
 		} finally {
 			out.close();
