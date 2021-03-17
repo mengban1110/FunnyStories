@@ -76,8 +76,7 @@ public class StatusDao {
 	@SuppressWarnings("static-access")
 	public void writerLog(int rid, HttpServletRequest request, String content, int type) throws ClassNotFoundException, FileNotFoundException, SQLException, IOException {
 		
-		int date =(int) Calendar.getInstance().getTimeInMillis();
-		String timestamp = String.valueOf(date/1000);  
+		String timestamp =System.currentTimeMillis() / 1000+"";
 	 
 		String ip=ipUtils.getClientIpAddr(request);
 		String sql ="insert into log (rootid,time,content,ip,type) values (?,?,?,?,?)";
