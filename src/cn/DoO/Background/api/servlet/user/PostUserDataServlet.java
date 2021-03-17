@@ -202,7 +202,7 @@ public class PostUserDataServlet {
 			} else if (!userstatus.equals("1") && !userstatus.equals("2") && !userstatus.equals("3")
 					&& !userstatus.equals("4") && !userstatus.equals("5")) {
 				writer.write(NetCodeUtils.ErrorParam());// 非法调用
-				System.out.println("状态只能为 0 1 2 3 4");
+				System.out.println("状态只能为 1 2 3 4 5");
 				return;
 			}
 
