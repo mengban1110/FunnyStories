@@ -3,7 +3,9 @@ package cn.DoO.Background.api.servlet.blacklist;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -92,7 +94,7 @@ public class GetInfoServlet {
 			jsonObject2.put("userid", map.get("uid"));
 			jsonObject2.put("username", map.get("username"));
 			jsonObject2.put("useravatar", map.get("useravatar"));
-			jsonObject2.put("createtime", map.get("createtime"));
+			jsonObject2.put("createtime", timeStamp2Date(map.get("createtime")+"",""));
 
 			blacklist.add(jsonObject2);
 		}
@@ -132,7 +134,15 @@ public class GetInfoServlet {
 				writer.write(jsonObject.toJSONString());
 	}
 
-	
-	
+	public static String timeStamp2Date(String seconds,String format) {  
+        if(seconds == null || seconds.isEmpty() || seconds.equals("null")){  
+            return "";  
+        }  
+        if(format == null || format.isEmpty()){
+            format = "yyyy-MM-dd HH:mm:ss";
+        }   
+        SimpleDateFormat sdf = new SimpleDateFormat(format);  
+        return sdf.format(new Date(Long.valueOf(seconds+"000")));  
+    }  
 	
 }
