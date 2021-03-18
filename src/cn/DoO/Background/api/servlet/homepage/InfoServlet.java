@@ -127,13 +127,19 @@ public class InfoServlet {
 
 			List<Map<String, Object>> log = rootDaoImpl.getAllShop();
 			for (Map<String, Object> map : log) {
-				// 创建返回的数据 的容器
-				Map<String, Object> logMap = new HashMap<String, Object>();
-				logMap.put("username", rootDaoImpl.getRootById(map.get("rootid").toString()).get("rootname"));
-				logMap.put("ip", map.get("ip"));
-				logMap.put("content", map.get("content"));
-				logMap.put("time", DateUtils.MillToHourAndMin(map.get("time").toString()));
-				rootlogs.add(logMap);
+				try {
+						// 创建返回的数据 的容器
+						Map<String, Object> logMap = new HashMap<String, Object>();
+						logMap.put("username", rootDaoImpl.getRootById(map.get("rootid").toString()).get("rootname"));
+						logMap.put("ip", map.get("ip"));
+						logMap.put("content", map.get("content"));
+						logMap.put("time", DateUtils.MillToHourAndMin(map.get("time").toString()));
+						rootlogs.add(logMap);
+					}
+				catch (Exception e) 
+				{
+					continue;
+				}
 			}
 			// 添加数据
 			data.put("rootlogs", rootlogs);
@@ -149,13 +155,22 @@ public class InfoServlet {
 
 			List<Map<String, Object>> logs = rootDaoImpl.getAllUserlogs();
 			for (Map<String, Object> map : logs) {
-				// 创建返回的数据 的容器
-				Map<String, Object> logMap = new HashMap<String, Object>();
-				logMap.put("username", rootDaoImpl.getUserById(map.get("uid").toString()).get("username"));
-				logMap.put("ip", map.get("userip"));
-				logMap.put("time", DateUtils.MillToHourAndMin(map.get("logintime").toString()));
-				userlogs.add(logMap);
+				try {
+						// 创建返回的数据 的容器
+						Map<String, Object> logMap = new HashMap<String, Object>();
+						logMap.put("username", rootDaoImpl.getUserById(map.get("uid").toString()).get("username"));
+						logMap.put("ip", map.get("userip"));
+						logMap.put("time", DateUtils.MillToHourAndMin(map.get("logintime").toString()));
+						userlogs.add(logMap);
+					}
+				 
+					catch (Exception e) 
+					{
+						continue;
+					}
 			}
+			
+			
 			// 添加数据
 			data.put("userlogs", userlogs);
 
@@ -167,7 +182,13 @@ public class InfoServlet {
 			// 获取5个热词
 			List<Map<String, Object>> hots = rootDaoImpl.getAllSearchFrom5();
 			for (Map<String, Object> map : hots) {
-				hotwords.add(map.get("word").toString());
+				try 
+				{
+					hotwords.add(map.get("word").toString());
+				} catch (Exception e) {
+					continue;
+				}
+				
 			}
 
 			data.put("hotwords", hotwords);
