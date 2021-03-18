@@ -86,6 +86,7 @@ public class GetLogInfoServlet {
 			jsonObject2.put("rootname", map.get("rootname"));
 			jsonObject2.put("rootavatar", map.get("rootavatar"));
 			jsonObject2.put("content", map.get("content"));
+			jsonObject2.put("createtime", map.get("createtime"));
 			jsonObject2.put("ip", map.get("ip"));
 			logs.add(jsonObject2);
 		}

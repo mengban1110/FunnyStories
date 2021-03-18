@@ -25,8 +25,8 @@ public class WriterLogUtil {
 		String ip=ipUtils.getClientIpAddr(request);
 		String time =System.currentTimeMillis()/1000+"";
 		
-		String sql ="insert into log (rootid,time,content,ip,type) values (?,?,?,?,?)";
-		dao.executeUpdate(sql, new int[]{Types.INTEGER,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER}, new Object[]{rootid,time,"管理员"+rootid+content,ip,type});
+		String sql ="insert into log (rootid,content,ip,type,createtime) values (?,?,?,?,?)";
+		dao.executeUpdate(sql, new int[]{Types.INTEGER,Types.VARCHAR,Types.VARCHAR,Types.INTEGER,Types.VARCHAR}, new Object[]{rootid,"管理员"+rootid+content,ip,type,time});
 	}
 	
 }
