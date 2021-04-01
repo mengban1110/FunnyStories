@@ -25,6 +25,7 @@ public class UserLoginServlet {
 	
 	StatusDao statusDao = new StatusDao();
 	UserDao userDao = new UserDao();
+	
 	public void userLogin(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
 		
 		// json对象
@@ -91,6 +92,8 @@ public class UserLoginServlet {
 		
 		userDao.updateTokenByid((Integer)user.get("uid"),token);
 	}
+	
+	
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		StatusDao statusDao = new StatusDao();
 		UserDao userDao = new UserDao();
