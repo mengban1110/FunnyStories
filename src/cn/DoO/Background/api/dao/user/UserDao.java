@@ -180,6 +180,30 @@ public class UserDao {
 	}
 
 
+	public Map<String, Object> findByUnameOrEmail(String username) throws ClassNotFoundException, SQLException {
+		
+		String sql = "SELECT * FROM `user` WHERE username = ? OR email = ? ";
+		
+		Object[] values = {username,username};
+		
+		int [] types = {Types.VARCHAR,Types.VARCHAR};
+		
+		return dao.executeQueryForMap(sql, types, values);
+	}
+
+
+	public void updateTokenByid(Integer uid, String token) throws ClassNotFoundException, FileNotFoundException, SQLException, IOException {
+		
+		String sql = "UPDATE `user` SET usertoken = ? WHERE uid = ?";
+		
+		int [] types = {Types.VARCHAR,Types.INTEGER};
+		
+		Object[] values = {token,uid};
+		
+		dao.executeUpdate(sql, types, values);
+	}
+
+
 
 
 
