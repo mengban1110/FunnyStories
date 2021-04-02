@@ -203,6 +203,18 @@ public class UserDao {
 		dao.executeUpdate(sql, types, values);
 	}
 
+	/**
+	 * 查询黑名单
+	 * @param string
+	 * @return
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
+	 * @throws NumberFormatException 
+	 */
+	public Map<String, Object> queryUserByBlack(String string) throws NumberFormatException, ClassNotFoundException, SQLException {
+		return dao.executeQueryForMap("select * from blacklist where uid=?",new int[]{Types.INTEGER},new Object[]{Integer.parseInt(string)});
+	}
+
 
 
 

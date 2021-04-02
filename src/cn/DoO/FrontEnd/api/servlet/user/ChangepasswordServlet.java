@@ -111,7 +111,7 @@ public class ChangepasswordServlet {
 			}
 			
 			//判断完成修改密码
-			int count = userDao.updatePwd(newPwd,token);
+			int count = userDao.updatePwd(newPwd,map.get("uid").toString());
 			if(count == 0){
 				jsonObject.put("code", "-1");
 				jsonObject.put("msg", "修改失败");

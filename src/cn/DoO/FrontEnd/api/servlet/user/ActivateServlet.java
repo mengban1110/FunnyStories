@@ -60,7 +60,7 @@ public class ActivateServlet {
 			//id
 			int id =Integer.parseInt(user.get("uid").toString()); 
 			//获取code
-			Map<String, Object> codeTemp = userDao.queryCodeById(id);
+			Map<String, Object> codeTemp = userDao.queryCodeById(id,code);
 			if(codeTemp == null){//没有激活码
 				jsonObject.put("code", "-1");
 				jsonObject.put("msg", "请重新获取验证码");

@@ -67,11 +67,11 @@ public class GetphotopostServlet {
 				map2.put("count", count);
 				map2.put("postid", map.get("postid").toString());
 					//图片
-					if(map.get("postimg") != null){
-						map2.put("postimg", map.get("posttext").toString());
+					if(map.get("postimg") != null && !map.get("postimg").toString().equals("")){
+						map2.put("postimg", map.get("postimg").toString());
 					}
 					//视频
-					if(map.get("postvideo") != null){
+					if(map.get("postvideo") != null  && !map.get("postvideo").toString().equals("")){
 						map2.put("postvideo", map.get("postvideo").toString());
 					}
 					if(map.get("posttext") != null){
@@ -81,7 +81,7 @@ public class GetphotopostServlet {
 						map2.put("posttext", "暂无文本");
 					}
 				//时间
-				map2.put("createtime", DateUtil.getHaoMiaoToShiJian(map.get("createtime").toString()));
+				map2.put("createtime", DateUtil.getHaoMiaoToShiJian(map.get("ptime").toString()));
 				postinfo.add(map2);
 			}
 			

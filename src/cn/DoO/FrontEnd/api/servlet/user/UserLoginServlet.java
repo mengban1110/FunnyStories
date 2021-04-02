@@ -63,6 +63,8 @@ public class UserLoginServlet {
 			return;
 		}
 		
+		
+		
 		Map<String, Object> user = userDao.findByUnameOrEmail(username);
 		if (user == null) {
 			jsonObject.put("code", -3);
@@ -77,6 +79,15 @@ public class UserLoginServlet {
 			writer.write(jsonObject.toJSONString());
 			return;
 		}
+		//验证黑名单
+		Map<String, Object> blackName = userDao.queryUserByBlack(user.get("uid").toString());
+		if (blackName != null) {
+			jsonObject.put("code", -5);
+			jsonObject.put("msg", "账户已被封禁");
+			writer.write(jsonObject.toJSONString());
+			return;
+		}
+		
 		if ((Integer)(user.get("userstatus")) != 1) {
 			jsonObject.put("code", -5);
 			jsonObject.put("msg", "账户已被封禁");

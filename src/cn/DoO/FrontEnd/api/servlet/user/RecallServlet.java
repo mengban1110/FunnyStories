@@ -37,12 +37,7 @@ public class RecallServlet {
 		
 		try {
 			//判空
-			if(code == null || code.equals("")){
-				jsonObject.put("code", "-1");
-				jsonObject.put("msg", "请输入验证码");
-				writer.write(jsonObject.toJSONString());
-				return;
-			}
+			
 			Map<String, Object> map = userDao.queryUserByEmail(email);
 			if(map == null){
 				jsonObject.put("code", "-5");
@@ -59,6 +54,12 @@ public class RecallServlet {
 			if(newpassword == null || newpassword.equals("")){
 				jsonObject.put("code", "-1");
 				jsonObject.put("msg", "请输入新密码");
+				writer.write(jsonObject.toJSONString());
+				return;
+			}
+			if(code == null || code.equals("")){
+				jsonObject.put("code", "-1");
+				jsonObject.put("msg", "请输入验证码");
 				writer.write(jsonObject.toJSONString());
 				return;
 			}
@@ -90,7 +91,7 @@ public class RecallServlet {
 			}
 			
 			
-			Map<String, Object> codeTemp = userDao.queryCodeById(Integer.parseInt(map.get("uid").toString()));
+			Map<String, Object> codeTemp = userDao.queryCodeById(Integer.parseInt(map.get("uid").toString()),code);
 			if(codeTemp == null){//没有激活码
 				jsonObject.put("code", "-1");
 				jsonObject.put("msg", "请重新获取验证码");
@@ -112,7 +113,7 @@ public class RecallServlet {
 				jsonObject.put("code", "-1");
 				jsonObject.put("msg", "激活码失效");
 				//修改激活码状态
-				int count = userDao.updateCode(Integer.parseInt(map.get("uid").toString()),codeTemp.get("createtime").toString());
+				int count = userDao.updateCode(Integer.parseInt(map.get("uid").toString()),codeTemp.get("code").toString());
 				writer.write(jsonObject.toJSONString());
 				return;
 			}
@@ -129,7 +130,7 @@ public class RecallServlet {
 			}
 			
 			//判断完成修改密码
-			int count = userDao.updatePwd(newPwd,map.get("usertoken").toString());
+			int count = userDao.updatePwd(newPwd,map.get("uid").toString());
 			if(count == 0){
 				jsonObject.put("code", "-1");
 				jsonObject.put("msg", "修改失败");

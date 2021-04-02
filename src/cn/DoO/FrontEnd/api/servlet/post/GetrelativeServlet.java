@@ -56,11 +56,11 @@ public class GetrelativeServlet {
 				map2.put("count", count);
 				map2.put("postid", map.get("postid").toString());
 					//图片
-					if(map.get("postimg") != null){
-						map2.put("postimg", map.get("posttext").toString());
+					if(map.get("postimg") != null && !map.get("postimg").toString().equals("")){
+						map2.put("postimg", map.get("postimg").toString());
 					}
 					//视频
-					if(map.get("postvideo") != null){
+					if(map.get("postvideo") != null && !map.get("postvideo").toString().equals("")){
 						map2.put("postvideo", "https://static.qiushibaike.com/images/web/v4/textDefault.png?v=12eaf94cfd4d3ae0423a3925bb5bbf9c");
 					}
 					if(map.get("posttext") != null){
