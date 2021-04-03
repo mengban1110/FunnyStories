@@ -37,7 +37,9 @@ public class RegisterServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String email = request.getParameter("email");
-		
+		System.out.println(username);
+		System.out.println(password);
+		System.out.println(email);
 		try {
 			//验证是否可以注册
 			Map<String, Object> status = statusDao.query();

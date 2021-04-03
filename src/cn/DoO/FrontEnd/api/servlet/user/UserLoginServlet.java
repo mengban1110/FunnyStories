@@ -40,8 +40,8 @@ public class UserLoginServlet {
 		// 接值
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		
-		
+		System.out.println(username);
+		System.out.println(password);
 		if (username == null || "".equals(username)) {
 			jsonObject.put("code", -3);
 			jsonObject.put("msg", "请输入正确的账号");
@@ -94,25 +94,18 @@ public class UserLoginServlet {
 			writer.write(jsonObject.toJSONString());
 			return;
 		}
+		String token = TokenUtils.getToken((String)user.get("email"));
+		userDao.updateTokenByid((Integer)user.get("uid"),token);
 		
 		jsonObject.put("code", 200);
 		jsonObject.put("msg", "登录成功");
+		jsonObject.put("username", user.get("username"));
+		jsonObject.put("token", token);
+		jsonObject.put("useravatar", user.get("useravatar"));
 		writer.write(jsonObject.toJSONString());
 		
-		String token = TokenUtils.getToken((String)user.get("email"));
 		
-		userDao.updateTokenByid((Integer)user.get("uid"),token);
 	}
 	
 	
-	public static void main(String[] args) throws ClassNotFoundException, SQLException {
-		StatusDao statusDao = new StatusDao();
-		UserDao userDao = new UserDao();
-		System.out.println(statusDao.query());
-		
-		System.out.println(statusDao.query().get("open"));
-		Map<String, Object> user = userDao.findByUnameOrEmail("梦伴");
-		System.out.println();
-		System.out.println(Md5Utils.makeMd5("123"));
-	}
 }
