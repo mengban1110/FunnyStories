@@ -92,7 +92,7 @@ public class GetpostbyidServlet {
 			postinfo.put("postid", post2.get("postid").toString());
 			//图片
 			if(post2.get("postimg") != null){
-				postinfo.put("postimg", post2.get("posttext").toString());
+				postinfo.put("postimg", post2.get("postimg").toString());
 			}
 			//视频
 			if(post2.get("postvideo") != null){

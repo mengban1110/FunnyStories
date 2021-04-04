@@ -186,4 +186,28 @@ public class UserDao {
 	public Map<String, Object> queryUserByEmailZero(String email) throws ClassNotFoundException, SQLException {
 		return dao.executeQueryForMap("select * from user where email=? and userstatus!=0", new int[]{Types.VARCHAR}, new Object[]{email});
 	}
+	/**
+	 * @desc 修改用户信息
+	 * @param uid
+	 * @param username
+	 * @param useravatar
+	 * @param usersex
+	 * @param userbirth
+	 * @param usersign
+	 * @throws IOException 
+	 * @throws SQLException 
+	 * @throws FileNotFoundException 
+	 * @throws ClassNotFoundException 
+	 */
+	public void updateUser(String uid, String username, String useravatar, String usersex, String userbirth,
+			String usersign) throws ClassNotFoundException, FileNotFoundException, SQLException, IOException {
+		
+		String sql = "UPDATE `user` SET username = ? ,useravatar = ?,usersex = ?,userbirth = ?,usersign = ? WHERE uid = ?";
+		
+		int [] types = {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
+		
+		Object[] values = {username,useravatar,usersex,userbirth,usersign,uid};
+		
+		dao.executeUpdate(sql, types, values);
+	}
 }
