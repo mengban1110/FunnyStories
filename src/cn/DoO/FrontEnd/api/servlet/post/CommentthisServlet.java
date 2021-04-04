@@ -64,6 +64,7 @@ public class CommentthisServlet {
 			try {
 				int  uid = (Integer) userMap.get("uid");
 				postDaoImpl.comment(uid,postid,commenttext);
+				postDaoImpl.addComment(postid);
 				print(out, data, "200", "评论成功");
 				
 			} catch (Exception e) {

@@ -70,9 +70,11 @@ public class LikethisServlet {
 		try {
 			int  uid = (Integer) userMap.get("uid");
 			likethisDaolmpl.likethis(uid,postid);
+			likethisDaolmpl.addlikethis(postid);
 			print(out, data, "200", "点赞成功");
 			
 		} catch (Exception e) {
+			e.printStackTrace();
 			print(out, data, "-3", "点赞失败");
 			
 		}

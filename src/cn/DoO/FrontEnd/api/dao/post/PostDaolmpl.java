@@ -88,4 +88,22 @@ public class PostDaolmpl {
 				return false;
 			}
 		}
+
+
+	public void addlikethis(String postid) throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
+		String sql = "SELECT postlike	 FROM	 `postdata` WHERE postid=? ";
+		int postlike =  (int) dao.executeQueryForMap(sql, new int[] { Types.INTEGER }, new Object[] { postid }).get("postlike");
+		postlike =postlike +1;
+		System.out.println(postlike);
+		sql = "UPDATE `postdata` SET postlike = ?  WHERE postid = ?";
+		dao.executeUpdate(sql, new int[] { Types.INTEGER,Types.INTEGER }, new Object[]{postlike,postid});
+	}
+	public void addComment(String postid) throws ClassNotFoundException, SQLException, FileNotFoundException, IOException {
+		String sql = "SELECT postcomment	 FROM	 `postdata` WHERE postid=? ";
+		int postcomment =  (int) dao.executeQueryForMap(sql, new int[] { Types.INTEGER }, new Object[] { postid }).get("postcomment");
+		postcomment =postcomment +1;
+		System.out.println(postcomment);
+		sql = "UPDATE `postdata` SET postcomment = ?  WHERE postid = ?";
+		dao.executeUpdate(sql, new int[] { Types.INTEGER,Types.INTEGER }, new Object[]{postcomment,postid});
+	}
 }
