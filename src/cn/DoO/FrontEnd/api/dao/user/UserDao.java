@@ -202,7 +202,7 @@ public class UserDao {
 	public void updateUser(String uid, String username, String useravatar, String usersex, String userbirth,
 			String usersign) throws ClassNotFoundException, FileNotFoundException, SQLException, IOException {
 		
-		String sql = "UPDATE `user` SET username = ? ,usersex = ?,userbirth = ?,useravatar = ?,usersign = ? WHERE uid = ?";
+		String sql = "UPDATE `user` SET username = ? ,useravatar = ?,usersex = ?,userbirth = ?,usersign = ? WHERE uid = ?";
 		
 		int [] types = {Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER};
 		
