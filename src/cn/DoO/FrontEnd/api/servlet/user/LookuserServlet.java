@@ -148,7 +148,7 @@ public class LookuserServlet {
 				map2.put("postid", map.get("postid").toString());
 				//图片
 				if(map.get("postimg") != null && !map.get("postimg").toString().equals("")){
-					map2.put("postimg", map.get("posttext").toString());
+					map2.put("postimg", map.get("postimg").toString());
 				}
 				//视频
 				if(map.get("postvideo") != null && !map.get("postvideo").toString().equals("")){
@@ -165,8 +165,9 @@ public class LookuserServlet {
 			
 			//评论
 			List<Map<String, Object>> postcommentTemp = postDao.queryCommentById(userid);
-			List<Map<String, Object>> postcomment = postDao.queryCommentById(userid);
+			List<Map<String, Object>> postcomment = new ArrayList<>();
 			for (Map<String, Object> map : postcommentTemp) {
+				
 				Map<String, Object> map2 = new HashMap<>();
 				Map<String, Object> userinfo2 = new HashMap<>();
 					userinfo2.put("username", user.get("username").toString());
@@ -177,6 +178,7 @@ public class LookuserServlet {
 				map2.put("commentid", map.get("commentid").toString());
 				map2.put("commenttext", map.get("commenttext").toString());
 				postcomment.add(map2);
+				System.out.println(postcomment.toString());
 			}
 			
 			data.put("postinfo", postinfo);
