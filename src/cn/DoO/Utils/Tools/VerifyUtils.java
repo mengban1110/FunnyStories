@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
  * 2 : 正则匹配是否邮箱号---isEmail(String email) <br>
  * 3 : 验证字符串长度---isStrSize(String str, int size) <br>
  * 4 : 判断 密码是否 合法---verify(String passwordLowerCase, int limitCount)<br>
- * 
+ * 5 : 判断是否为整数 ---  boolean isInteger(String str)
  * @author 梦伴
  *
  */
@@ -175,5 +175,16 @@ public class VerifyUtils {
 	public static void main(String[] args) {
 		System.out.println(verify("Wushang816", 6));
 	}
+    /*
+     * 判断是否为整数
+     * @param str 传入的字符串
+     * @return 是整数返回true,否则返回false
+     */
+
+
+    public static boolean isInteger(String str) {
+        Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
+        return pattern.matcher(str).matches();
+    }
 
 }
