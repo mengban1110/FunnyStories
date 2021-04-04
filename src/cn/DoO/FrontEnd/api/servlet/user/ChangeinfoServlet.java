@@ -168,6 +168,10 @@ public class ChangeinfoServlet {
 					userDao.updateUser(uid,username,useravatar,usersex,userbirth,usersign);
 					print(out, data, "200", "修改成功");
 				}
+				else 
+				{
+					print(out, data, "-2", "非法调用");
+				}
 			} catch (Exception e2) {
 				print(out, data, "-2", "有参数错误不支持修改");
 			}
