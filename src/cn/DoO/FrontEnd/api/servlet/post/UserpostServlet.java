@@ -203,8 +203,8 @@ public class UserpostServlet {
 				Thread thread = new Thread(sendPostThread);
 				thread.start();
 			}
-			
-			
+			System.out.println(token);
+			System.out.println(text);
 			jsonObject = new JSONObject();
 			jsonObject.put("code", "200");
 			jsonObject.put("msg", "发布成功,请等待数据传输~");
