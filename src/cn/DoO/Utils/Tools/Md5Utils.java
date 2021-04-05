@@ -35,6 +35,6 @@ public class Md5Utils {
 	}
 
 	public static void main(String[] args) {
-		 System.out.println(makeMd5("QWEqwe123."));
+		 System.out.println(makeMd5("123"));
 	}
 }

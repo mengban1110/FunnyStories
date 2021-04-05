@@ -161,8 +161,8 @@ public class UserDao {
 	 * @throws ClassNotFoundException 
 	 * @throws NumberFormatException 
 	 */
-	public Map<String, Object> queryUserByTokenAndId(String token, String userid) throws NumberFormatException, ClassNotFoundException, SQLException {
-		return dao.executeQueryForMap("select * from user where uid=? and usertoken=?", new int[]{Types.INTEGER,Types.VARCHAR}, new Object[]{Integer.parseInt(userid),token});
+	public Map<String, Object> queryUserByTokenAndId(String token) throws NumberFormatException, ClassNotFoundException, SQLException {
+		return dao.executeQueryForMap("select * from user where usertoken=?", new int[]{Types.VARCHAR}, new Object[]{token});
 	}
 	
 	/**
@@ -209,5 +209,10 @@ public class UserDao {
 		Object[] values = {username,useravatar,usersex,userbirth,usersign,uid};
 		
 		dao.executeUpdate(sql, types, values);
+	}
+
+	public Map<String, Object> queryUserById(String userid) throws NumberFormatException, ClassNotFoundException, SQLException {
+		// TODO Auto-generated method stub
+		return dao.executeQueryForMap("select * from user where uid=?", new int[]{Types.INTEGER}, new Object[]{Integer.parseInt(userid)});
 	}
 }

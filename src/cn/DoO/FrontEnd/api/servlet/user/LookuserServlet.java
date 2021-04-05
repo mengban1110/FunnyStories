@@ -55,7 +55,7 @@ public class LookuserServlet {
 				return;
 			}
 			//验证
-			Map<String, Object> user = userDao.queryUserByTokenAndId(token,userid);
+			Map<String, Object> user = userDao.queryUserByTokenAndId(token);
 			if(user == null){
 				jsonObject.put("code", "-1");
 				jsonObject.put("msg", "登录失效");
@@ -63,36 +63,39 @@ public class LookuserServlet {
 				return;
 			}
 			
+			Map<String, Object> userInfoz = userDao.queryUserById(userid);
+			
+			
 			//获取信息
-			int postcount = postDao.queryUserPostCount(user.get("uid").toString());
-			int postlikecount = postDao.queryUserPostZanCount(user.get("uid").toString());
-			int commentcount = postDao.queryUserCommentCount(user.get("uid").toString());
+			int postcount = postDao.queryUserPostCount(userInfoz.get("uid").toString());
+			int postlikecount = postDao.queryUserPostZanCount(userInfoz.get("uid").toString());
+			int commentcount = postDao.queryUserCommentCount(userInfoz.get("uid").toString());
 			
 			Map<String, Object> data = new HashMap<String, Object>();
 			Map<String, Object> postinfo = new HashMap<String, Object>();
 			Map<String, Object> userinfo = new HashMap<>();
-				userinfo.put("uname", user.get("username").toString());
-				userinfo.put("uid",user.get("uid").toString());
-				userinfo.put("useravatar",user.get("useravatar").toString());
+				userinfo.put("uname", userInfoz.get("username").toString());
+				userinfo.put("uid",userInfoz.get("uid").toString());
+				userinfo.put("useravatar",userInfoz.get("useravatar").toString());
 				if(user.get("usersex") == null){//性别
 					userinfo.put("usersex","");
 				}
 				else{
-					userinfo.put("usersex",user.get("usersex").toString());
+					userinfo.put("usersex",userInfoz.get("usersex").toString());
 				}
 				
-				if(user.get("usersign") == null){//签名
+				if(userInfoz.get("usersign") == null){//签名
 					userinfo.put("usersign","");
 				}
 				else{
 					userinfo.put("usersign",user.get("usersign").toString());
 				}
 				
-				if(user.get("userbirth") == null){//生日
+				if(userInfoz.get("userbirth") == null){//生日
 					userinfo.put("userbirth","");
 				}
 				else{
-					userinfo.put("userbirth",user.get("userbirth").toString());
+					userinfo.put("userbirth",userInfoz.get("userbirth").toString());
 				}
 			postinfo.put("userinfo", userinfo);
 			Map<String, Object> count = new HashMap<>();
