@@ -3,7 +3,9 @@ package cn.DoO.Background.api.servlet.post.checking;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -109,10 +111,10 @@ public class GetInfopartPostServlet {
 		{
 			postList = checkingPostDaolmpl.getInfopartTextPost(page, size, word);
 		}
-
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		// 遍历结果集
 		for (Map<String, Object> map : postList) {
-
+		
 			Map<String, Object> maps = new HashMap<>();
 
 			Map<String, Object> userinfo = new HashMap<>();
@@ -131,8 +133,10 @@ public class GetInfopartPostServlet {
 			maps.put("posttext", map.get("posttext"));// 文本数值
 			maps.put("postimg", map.get("postimg"));// 图片Url
 			maps.put("postvideo", map.get("postvideo"));// 视频 如果有视频的话就没有图片了
-			maps.put("createtime", DateUtils.MillToHourAndMin(map.get("createtime").toString()));// 时间
-
+			System.out.println(map.get("createtime"));
+			System.out.println(formatter.format(new Date(Long.parseLong((String) map.get("createtime")))));
+			maps.put("createtime", formatter.format(new Date(Long.parseLong((String) map.get("createtime")))));// 时间
+			
 			postinfoList.add(maps);
 		}
 

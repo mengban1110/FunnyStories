@@ -29,7 +29,7 @@ public class CheckingPostDaolmpl {
 	 */
 	public List<Map<String,Object>> getAllCheckingPost(int page, int size) throws ClassNotFoundException, SQLException{	
 
-		String sql = "SELECT * FROM post LEFT JOIN USER ON(post.uid = user.uid) LEFT JOIN postplace ON(post.placeid = postplace.placeid) LEFT JOIN postdata ON(post.postid = postdata.postid) where postdata.isaudit=0 LIMIT ?,?" ;
+		String sql = "SELECT 	post.* ,postplace.placeid,postplace.placename,postplace.placesign,postdata.*,`USER`.*  FROM post LEFT JOIN `USER` ON(post.uid = user.uid) LEFT JOIN postplace ON(post.placeid = postplace.placeid) LEFT JOIN postdata ON(post.postid = postdata.postid) where postdata.isaudit=0 LIMIT ?,?" ;
 		List<Map<String,Object>> data = dao.executeQueryForList
 				(
 				sql, 
@@ -48,7 +48,7 @@ public class CheckingPostDaolmpl {
 	 */
 	public List<Map<String,Object>> getNotTextPost(int page, int size) throws ClassNotFoundException, SQLException{	
 
-		String sql = "SELECT * FROM post LEFT JOIN USER ON(post.uid = user.uid) LEFT JOIN postplace ON(post.placeid = postplace.placeid) LEFT JOIN postdata ON(post.postid = postdata.postid) where postdata.isaudit=0 AND LENGTH(post.posttext) > 0 LIMIT ?,?" ;
+		String sql = "SELECT 	post.* ,postplace.placeid,postplace.placename,postplace.placesign,postdata.*,`USER`.*  FROM post LEFT JOIN USER ON(post.uid = user.uid) LEFT JOIN postplace ON(post.placeid = postplace.placeid) LEFT JOIN postdata ON(post.postid = postdata.postid) where postdata.isaudit=0 AND LENGTH(post.posttext) > 0 LIMIT ?,?" ;
 		List<Map<String,Object>> data = dao.executeQueryForList
 				(
 				sql, 
@@ -66,7 +66,7 @@ public class CheckingPostDaolmpl {
 	public int getNotTextPostNum() throws ClassNotFoundException, SQLException{	
 
 		
-		return dao.executeQueryForInt("SELECT COUNT(*) FROM post LEFT JOIN USER ON(post.uid = user.uid) LEFT JOIN postplace ON(post.placeid = postplace.placeid) LEFT JOIN postdata ON(post.postid = postdata.postid) where postdata.isaudit=0 AND LENGTH(post.posttext) > 0");
+		return dao.executeQueryForInt("SELECT COUNT(*) FROM post LEFT JOIN `USER` ON(post.uid = user.uid) LEFT JOIN postplace ON(post.placeid = postplace.placeid) LEFT JOIN postdata ON(post.postid = postdata.postid) where postdata.isaudit=0 AND LENGTH(post.posttext) > 0");
 	}
 	/**
 	 * @desc 获取待审核的【带关键字文本帖子】
@@ -78,7 +78,7 @@ public class CheckingPostDaolmpl {
 	 */
 	public List<Map<String,Object>> getInfopartTextPost(int page, int size,String word) throws ClassNotFoundException, SQLException{	
 
-		String sql = "SELECT * FROM post LEFT JOIN USER ON(post.uid = user.uid) LEFT JOIN postplace ON(post.placeid = postplace.placeid) LEFT JOIN postdata ON(post.postid = postdata.postid) where postdata.isaudit=0 AND  post.posttext like \"%" +word +"%\"  LIMIT ?,?" ;
+		String sql = "SELECT 	post.* ,postplace.placeid,postplace.placename,postplace.placesign,postdata.*,`USER`.*   FROM post LEFT JOIN `USER` ON(post.uid = user.uid) LEFT JOIN postplace ON(post.placeid = postplace.placeid) LEFT JOIN postdata ON(post.postid = postdata.postid) where postdata.isaudit=0 AND  post.posttext like \"%" +word +"%\"  LIMIT ?,?" ;
 		List<Map<String,Object>> data = dao.executeQueryForList
 				(
 						sql, 
