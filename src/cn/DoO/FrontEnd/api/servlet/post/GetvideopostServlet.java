@@ -60,6 +60,7 @@ public class GetvideopostServlet {
 					if(map.get("username") == null ) continue;
 					userinfo.put("uname", map.get("username").toString());
 					userinfo.put("useravatar", map.get("useravatar").toString());
+					userinfo.put("uid", map.get("uid").toString());
 				map2.put("userinfo", userinfo);
 				Map<String, Object> count = new HashMap<>();
 					count.put("like", map.get("postlike").toString());

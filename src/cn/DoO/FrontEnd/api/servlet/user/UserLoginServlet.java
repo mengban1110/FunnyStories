@@ -102,9 +102,9 @@ public class UserLoginServlet {
 		jsonObject.put("username", user.get("username"));
 		jsonObject.put("token", token);
 		jsonObject.put("useravatar", user.get("useravatar"));
+		jsonObject.put("uid", user.get("uid"));
 		writer.write(jsonObject.toJSONString());
-		
-		
+
 	}
 	
 	
