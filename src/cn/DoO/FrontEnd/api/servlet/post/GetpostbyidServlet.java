@@ -71,7 +71,7 @@ public class GetpostbyidServlet {
 			Map<String, Object> post2 = postDao.queryPostInfoById(postid);
 			//评论信息
 			List<Map<String, Object>> pingLun = postDao.queryPingLunByPostId(postid);
-			
+			System.out.println("==========="+pingLun);
 			Map<String, Object> data = new HashMap<String, Object>();
 			Map<String, Object> postinfo = new HashMap<String, Object>();
 			Map<String, Object> userinfo = new HashMap<String, Object>();

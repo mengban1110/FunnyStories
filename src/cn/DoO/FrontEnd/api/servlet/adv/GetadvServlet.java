@@ -33,12 +33,13 @@ public class GetadvServlet {
 		}
 		// 获取token
 		String token = request.getParameter("token");
+		System.out.println("token"+token);
 		Map<String, Object> data = new HashMap<String, Object>();
 		Map<String, Object> dataMap= new HashMap<>();
 	
 		data.put("code", "200");
 		data.put("msg", "请求成功");
-		if ( token == null  ) 
+		if ( token == null || token.equals("")) 
 		{
 			dataMap.put("advinfo", advDaolmpl.getAllAdv());
 		}

@@ -117,7 +117,7 @@ public class PostDao {
 	 * @throws NumberFormatException 
 	 */
 	public List<Map<String, Object>> queryPingLunByPostId(String postid) throws NumberFormatException, ClassNotFoundException, SQLException {
-		String sql = "select * from comment left join user on comment.uid=user.uid where comment.postid=? and comment.display=1 group by comment.postid desc";
+		String sql = "select * from comment left join user on comment.uid=user.uid where comment.postid=? and comment.display=1";
 		return dao.executeQueryForList(sql, new int[]{Types.INTEGER},new Object[]{Integer.parseInt(postid)});
 	}
 	
