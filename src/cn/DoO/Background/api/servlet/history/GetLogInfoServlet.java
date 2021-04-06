@@ -16,6 +16,7 @@ import cn.DoO.Background.api.dao.getpage.GetPage;
 import cn.DoO.Background.api.dao.history.HistoryDao;
 import cn.DoO.Utils.Dao.Token.TokenDao;
 import cn.DoO.Utils.NetCode.NetCodeUtils;
+import cn.DoO.Utils.Tools.DateUtils;
 
 /**
  * @desc 获取后台日志
@@ -86,7 +87,8 @@ public class GetLogInfoServlet {
 			jsonObject2.put("rootname", map.get("rootname"));
 			jsonObject2.put("rootavatar", map.get("rootavatar"));
 			jsonObject2.put("content", map.get("content"));
-			jsonObject2.put("createtime", map.get("createtime"));
+			//String	createtime = DateUtils.MillToHourAndMin();
+			jsonObject2.put("createtime", map.get("createtime").toString());
 			jsonObject2.put("ip", map.get("ip"));
 			logs.add(jsonObject2);
 		}

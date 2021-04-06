@@ -65,9 +65,9 @@ public class CommentPoststatusServlet {
 			}
 			
 			String text;
-			if(status==0){
+			if(status==1){
 				text="开启";
-			}else if(status==1){
+			}else if(status==0){
 				text="关闭";
 			}else{
 				jsonObject = new JSONObject();
