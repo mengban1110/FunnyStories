@@ -251,15 +251,19 @@ public class PostDao {
 	public Map<String, Object> addPost(String uid, String content, String video, String image) throws NumberFormatException, ClassNotFoundException, FileNotFoundException, SQLException, IOException {
 		int placeid = 0;
 		String createtime = System.currentTimeMillis()+"";
-		if(image != null || !image.equals("")){
+		System.out.println(image);
+		System.out.println(video);
+		System.out.println(content);
+		if(image != null && !image.equals("[]")){
 			placeid = 2;
 		}
-		else if(video != null || !video.equals("")){
+		else if(video != null && !video.equals("")){
 			placeid = 3;
 		}
-		else{
+		else if(content != null && !content.equals("")){
 			placeid = 1;
 		}
+		System.out.println("所属专区:"+placeid);
 		// 添加帖子
 			// 有文本有图片
 			if (content != null && !image.equals("[]") && video == null) {
