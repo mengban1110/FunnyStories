@@ -88,7 +88,7 @@ public class GetLogInfoServlet {
 			jsonObject2.put("rootavatar", map.get("rootavatar"));
 			jsonObject2.put("content", map.get("content"));
 			//String	createtime = DateUtils.MillToHourAndMin();
-			jsonObject2.put("createtime", map.get("createtime").toString());
+			jsonObject2.put("createtime", map.get("time").toString());
 			jsonObject2.put("ip", map.get("ip"));
 			logs.add(jsonObject2);
 		}

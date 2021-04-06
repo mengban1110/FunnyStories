@@ -79,7 +79,7 @@ public class StatusDao {
 		String timestamp =System.currentTimeMillis() / 1000+"";
 	 
 		String ip=ipUtils.getClientIpAddr(request);
-		String sql ="insert into log (rootid,createtime,content,ip,type) values (?,?,?,?,?)";
+		String sql ="insert into log (rootid,time,content,ip,type) values (?,?,?,?,?)";
 		dao.executeUpdate(sql, new int[]{Types.INTEGER,Types.VARCHAR,Types.VARCHAR,Types.VARCHAR,Types.INTEGER}, new Object[]{rid,timestamp,content,ip,type});
 		
 	}
