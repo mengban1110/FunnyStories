@@ -99,7 +99,7 @@ public class RegisterServlet {
 			}
 			System.out.println(ziMu);
 			System.out.println(shuZi);
-			if(password.length() < 11 || ziMu == false || shuZi == false){
+			if(password.length() < 8 || ziMu == false || shuZi == false){
 				jsonObject.put("code", "-1");
 				jsonObject.put("msg", "密码过于简单");
 				writer.write(jsonObject.toJSONString());
