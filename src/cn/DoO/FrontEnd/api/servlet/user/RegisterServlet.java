@@ -49,7 +49,12 @@ public class RegisterServlet {
 				writer.write(jsonObject.toJSONString());
 				return;
 			}
-			
+			if(status.get("open").toString().equals("0")){
+				jsonObject.put("code", "-1");
+				jsonObject.put("msg", "程序维护中");
+				writer.write(jsonObject.toJSONString());
+				return;
+			}
 			//判空
 			if(username == null || username.equals("")){
 				jsonObject.put("code", "-1");

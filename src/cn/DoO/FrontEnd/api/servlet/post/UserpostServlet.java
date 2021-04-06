@@ -15,6 +15,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import com.alibaba.fastjson.JSONObject;
 
+import cn.DoO.Background.api.dao.status.StatusDao;
 import cn.DoO.FrontEnd.api.dao.post.PostDao;
 import cn.DoO.FrontEnd.api.dao.user.UserDao;
 
@@ -26,6 +27,7 @@ import cn.DoO.FrontEnd.api.dao.user.UserDao;
 public class UserpostServlet {
 	PostDao postDao = new PostDao();
 	UserDao userDao = new UserDao();
+	StatusDao statusDao = new StatusDao();
 	public void sendPost(HttpServletRequest request, HttpServletResponse response) {
 		// json对象
 		JSONObject jsonObject = null;
@@ -132,7 +134,22 @@ public class UserpostServlet {
 					}
 				}
 			}
-
+			//判断app状态
+			Map<String, Object> teMap = statusDao.query();
+			if(teMap.get("open").toString().equals("0")){
+				jsonObject = new JSONObject();
+				jsonObject.put("code", "-1");
+				jsonObject.put("msg", "程序维护中");
+				writer.write(jsonObject.toJSONString());
+				return;
+			}
+			if(teMap.get("post").toString().equals("0")){
+				jsonObject = new JSONObject();
+				jsonObject.put("code", "-1");
+				jsonObject.put("msg", "发帖功能维护中");
+				writer.write(jsonObject.toJSONString());
+				return;
+			}
 			// 获取完信息后
 			// 判空
 			if (token == null || token.equals("")) {
