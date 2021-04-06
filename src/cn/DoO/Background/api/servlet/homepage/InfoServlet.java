@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.management.ManagementFactory;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -120,7 +118,7 @@ public class InfoServlet {
 			/**
 			 * =======================countinfo【结束】=======================
 			 */
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
 			/**
 			 * ============================rootlogs========================
 			 */
@@ -135,14 +133,11 @@ public class InfoServlet {
 						logMap.put("username", rootDaoImpl.getRootById(map.get("rootid").toString()).get("rootname"));
 						logMap.put("ip", map.get("ip"));
 						logMap.put("content", map.get("content"));
-						String time = formatter.format(new Date(Long.parseLong((String) map.get("time"))*1000));// 时间
-						
-						logMap.put("time", time);
+						logMap.put("time", DateUtils.MillToHourAndMin(map.get("time").toString()));
 						rootlogs.add(logMap);
 					}
 				catch (Exception e) 
 				{
-					e.printStackTrace();
 					continue;
 				}
 			}
@@ -165,9 +160,7 @@ public class InfoServlet {
 						Map<String, Object> logMap = new HashMap<String, Object>();
 						logMap.put("username", rootDaoImpl.getUserById(map.get("uid").toString()).get("username"));
 						logMap.put("ip", map.get("userip"));
-						String time = formatter.format(new Date(Long.parseLong((String) map.get("logintime"))*1000));// 时间
-						
-						logMap.put("time", time);
+						logMap.put("time", DateUtils.MillToHourAndMin(map.get("logintime").toString()));
 						userlogs.add(logMap);
 					}
 				 

@@ -123,7 +123,9 @@ public class GetCheckingPostServlet {
 			maps.put("posttext", map.get("posttext"));// 文本数值
 			maps.put("postimg", map.get("postimg"));// 图片Url
 			maps.put("postvideo", map.get("postvideo"));// 视频 如果有视频的话就没有图片了
-			maps.put("createtime", formatter.format(new Date(Long.parseLong((String) map.get("createtime"))*1000)));// 时间
+			System.out.println(map.get("createtime"));
+			System.out.println(formatter.format(new Date(Long.parseLong((String) map.get("createtime")))));
+			maps.put("createtime", formatter.format(new Date(Long.parseLong((String) map.get("createtime")))));// 时间
 			postinfoList.add(maps);
 		}
 
