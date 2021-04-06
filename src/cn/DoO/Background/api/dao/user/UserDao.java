@@ -212,7 +212,7 @@ public class UserDao {
 	 * @throws NumberFormatException 
 	 */
 	public Map<String, Object> queryUserByBlack(String string) throws NumberFormatException, ClassNotFoundException, SQLException {
-		return dao.executeQueryForMap("select * from blacklist where uid=?",new int[]{Types.INTEGER},new Object[]{Integer.parseInt(string)});
+		return dao.executeQueryForMap("select * from blacklist where uid=? and display!=0",new int[]{Types.INTEGER},new Object[]{Integer.parseInt(string)});
 	}
 
 
