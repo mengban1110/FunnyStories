@@ -106,4 +106,23 @@ public class PostDaolmpl {
 		sql = "UPDATE `postdata` SET postcomment = ?  WHERE postid = ?";
 		dao.executeUpdate(sql, new int[] { Types.INTEGER,Types.INTEGER }, new Object[]{postcomment,postid});
 	}
+	/**
+	 * @throws SQLException 
+	 * @throws ClassNotFoundException 
+	 * @desc 当前是否能评论帖子
+	 */
+	public boolean isNotComment() throws ClassNotFoundException, SQLException{
+		
+		  Map<String, Object> map = dao.executeQueryForMap("SELECT `comment` FROM serviceinfo WHERE serviceinfoid = 1 ");
+		  int comment = (int)map.get("comment");
+		  if (comment==0) 
+		  {
+			  return false;
+		  }
+		  else 
+		  {
+			  return true;
+		  }
+		
+	}
 }
