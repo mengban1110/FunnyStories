@@ -55,14 +55,19 @@ public class UserLoginServlet {
 			writer.write(jsonObject.toJSONString());
 			return;
 		}
-		
+		Map<String, Object> status = statusDao.query();
 		if (!((Integer)(statusDao.query().get("login")) == 1)) {
 			jsonObject.put("code", 1);
 			jsonObject.put("msg", "网站暂时关闭登录功能");
 			writer.write(jsonObject.toJSONString());
 			return;
 		}
-		
+		if(status.get("open").toString().equals("0")){
+			jsonObject.put("code", "-1");
+			jsonObject.put("msg", "程序维护中");
+			writer.write(jsonObject.toJSONString());
+			return;
+		}
 		
 		
 		Map<String, Object> user = userDao.findByUnameOrEmail(username);

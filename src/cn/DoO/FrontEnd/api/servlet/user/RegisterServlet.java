@@ -49,7 +49,12 @@ public class RegisterServlet {
 				writer.write(jsonObject.toJSONString());
 				return;
 			}
-			
+			if(status.get("open").toString().equals("0")){
+				jsonObject.put("code", "-1");
+				jsonObject.put("msg", "程序维护中");
+				writer.write(jsonObject.toJSONString());
+				return;
+			}
 			//判空
 			if(username == null || username.equals("")){
 				jsonObject.put("code", "-1");
@@ -99,7 +104,7 @@ public class RegisterServlet {
 			}
 			System.out.println(ziMu);
 			System.out.println(shuZi);
-			if(password.length() < 11 || ziMu == false || shuZi == false){
+			if(password.length() < 8 || ziMu == false || shuZi == false){
 				jsonObject.put("code", "-1");
 				jsonObject.put("msg", "密码过于简单");
 				writer.write(jsonObject.toJSONString());
