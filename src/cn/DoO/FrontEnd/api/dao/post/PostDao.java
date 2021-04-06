@@ -195,7 +195,7 @@ public class PostDao {
 	 * @throws NumberFormatException 
 	 */
 	public List<Map<String, Object>> queryUserPostById(String userid) throws NumberFormatException, ClassNotFoundException, SQLException {
-		String sql= "select *,post.createtime ptime from post LEFT JOIN postdata on post.postid=postdata.postid where post.uid=? and post.display=1 and postdata.isaudit=1";
+		String sql= "select *,post.createtime ptime from post LEFT JOIN postdata on post.postid=postdata.postid where post.uid=? and post.display=1 and postdata.isaudit=1 group by post.postid desc";
 		return dao.executeQueryForList(sql, new int[]{Types.INTEGER}, new Object[]{Integer.parseInt(userid)});
 	}
 	
