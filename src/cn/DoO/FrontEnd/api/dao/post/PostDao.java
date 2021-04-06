@@ -130,7 +130,7 @@ public class PostDao {
 	 * @throws NumberFormatException 
 	 */ 	
 	public int queryUserPostCount(String id) throws NumberFormatException, ClassNotFoundException, SQLException {
-		return dao.executeQueryForInt("select count(*) from post where postid=? and display=1", new int[]{Types.INTEGER}, new Object[]{Integer.parseInt(id)});
+		return dao.executeQueryForInt("select count(*) from post where uid=? and display=1", new int[]{Types.INTEGER}, new Object[]{Integer.parseInt(id)});
 	}
 	
 	/**
@@ -142,7 +142,7 @@ public class PostDao {
 	 * @throws NumberFormatException 
 	 */
 	public int queryUserPostZanCount(String id) throws NumberFormatException, ClassNotFoundException, SQLException {
-		return dao.executeQueryForInt("select count(*) from `like` where postid=? and display=1", new int[]{Types.INTEGER}, new Object[]{Integer.parseInt(id)});
+		return dao.executeQueryForInt("select count(*) from `like` where uid=? and display=1", new int[]{Types.INTEGER}, new Object[]{Integer.parseInt(id)});
 	}
 	
 	/**

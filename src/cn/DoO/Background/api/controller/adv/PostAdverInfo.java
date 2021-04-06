@@ -30,6 +30,7 @@ public class PostAdverInfo extends HttpServlet{
 		try {
 			postAdverInfoServlet.postAdverInfo(request, response);
 		} catch (Exception e) {
+			e.printStackTrace();
 			response.getWriter().write(NetCodeUtils.errorTomCat());//服务器内部错误
 			return;
 		}
