@@ -18,7 +18,7 @@ public class AdvDaolmpl {
 	Dao dao = new DaoImpl();
 	public List<Map<String, Object>> getAllAdv() throws ClassNotFoundException, SQLException {
 
-		return dao.executeQueryForList("select acontext,aimg from advert");
+		return dao.executeQueryForList("select acontext,aimg from advert where display=1");
 	}
 	
 }
