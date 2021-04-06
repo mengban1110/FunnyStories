@@ -95,7 +95,7 @@ public class GetAdvertInfoServlet {
 			jsonObject2.put("aid", map.get("aid"));
 			jsonObject2.put("acontext", map.get("acontext"));
 			jsonObject2.put("aimg", map.get("aimg"));
-			jsonObject2.put("createtime", formatter.format(new Date(Long.parseLong((String) map.get("createtime"))*1000)));
+			jsonObject2.put("createtime", formatter.format(new Date(Long.parseLong((String) map.get("createtime")))));
 
 			advert.add(jsonObject2);
 		}
