@@ -214,6 +214,7 @@ public class EmailUtils {
 	private static Session getSession() {
 		//创建参数配置, 用于连接邮件服务器的参数配置
 		Properties props = new Properties();
+		props.setProperty("mail.smtp.port", "587");//阿里云上服务器
 	  	props.setProperty("mail.transport.protocol","smtp");// 使用的协议（JavaMail规范要求）
 	  	props.setProperty("mail.smtp.host","smtp.qq.com"); // 发件人的邮箱的 SMTP 服务器地址
 	  	props.setProperty("mail.smtp.auth", "true");    // 需要请求认证
