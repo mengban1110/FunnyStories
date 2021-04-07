@@ -1,11 +1,14 @@
 package cn.DoO.FrontEnd.api.servlet.user;
 
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.Map;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -70,7 +73,7 @@ public class RegisterServlet {
 				return;
 			}
 			Map<String , Object> user = userDao.queryUserByNameZero(username);
-			if(user != null){
+			if(user != null && !user.get("userstatus").toString().equals("0")){
 				jsonObject.put("code", "-3");
 				jsonObject.put("msg", "昵称已被注册");
 				writer.write(jsonObject.toJSONString());
@@ -118,7 +121,7 @@ public class RegisterServlet {
 			}
 			//验证邮箱是否合法
 			Map<String, Object> userForEmail = userDao.queryUserByEmailZero(email);
-			if(userForEmail != null){
+			if(userForEmail != null && !userForEmail.get("userstatus").toString().equals("0")){
 				jsonObject.put("code", "-4");
 				jsonObject.put("msg", "邮箱已被使用");
 				writer.write(jsonObject.toJSONString());
@@ -129,14 +132,26 @@ public class RegisterServlet {
 			//验证完成=======================================================================
 			//新建用户
 			String pwd = Md5Utils.makeMd5(password);
-			if(user == null){
+			if(user == null && userForEmail == null){
 				int addUser = userDao.addUser(username,pwd,email);
 			}
 			//获取用户信息
 			Map<String, Object> newUser = userDao.queryUserByEmail(email);
 			//发送邮件
 			String code = CodeUtils.createdCode();
-			EmailUtils.createMimeMessage(email, code, new Date());
+			//开启线程
+			new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						EmailUtils.createMimeMessage(email, code, new Date());
+					} catch (UnsupportedEncodingException | MessagingException e) {
+						e.printStackTrace();
+					}
+				}
+			}).start();
+			
 			
 			//将验证码存到数据库
 			int codeTemp = userDao.codeInDataBase(code,newUser.get("uid").toString());

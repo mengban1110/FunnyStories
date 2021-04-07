@@ -173,7 +173,7 @@ public class UserDao {
 	 * @throws ClassNotFoundException 
 	 */
 	public Map<String, Object> queryUserByNameZero(String username) throws ClassNotFoundException, SQLException {
-		return dao.executeQueryForMap("select * from user where username=? and userstatus!=0", new int[]{Types.VARCHAR}, new Object[]{username});
+		return dao.executeQueryForMap("select * from user where username=?", new int[]{Types.VARCHAR}, new Object[]{username});
 	}
 	
 	/**
@@ -184,7 +184,7 @@ public class UserDao {
 	 * @throws ClassNotFoundException 
 	 */
 	public Map<String, Object> queryUserByEmailZero(String email) throws ClassNotFoundException, SQLException {
-		return dao.executeQueryForMap("select * from user where email=? and userstatus!=0", new int[]{Types.VARCHAR}, new Object[]{email});
+		return dao.executeQueryForMap("select * from user where email=?", new int[]{Types.VARCHAR}, new Object[]{email});
 	}
 	/**
 	 * @desc 修改用户信息

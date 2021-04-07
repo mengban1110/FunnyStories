@@ -33,7 +33,7 @@ public class PostDao {
 		int pageTemp = (Integer.parseInt(page)-1)*Integer.parseInt(size);
 		int sizeTemp = Integer.parseInt(size);
 		
-		String sql = "SELECT *,post.createtime ptime FROM post LEFT JOIN postdata ON post.postid=postdata.postid LEFT JOIN USER ON post.uid=user.uid WHERE post.display=1 and postdata.isaudit=1 ORDER BY RAND() LIMIT ?,?";
+		String sql = "SELECT *,post.createtime ptime FROM post LEFT JOIN postdata ON post.postid=postdata.postid LEFT JOIN `user` ON post.uid=user.uid WHERE post.display=1 and postdata.isaudit=1 ORDER BY RAND() LIMIT ?,?";
 		return dao.executeQueryForList(sql, new int[]{Types.INTEGER,Types.INTEGER}, new Object[]{pageTemp,sizeTemp});
 	
 	}
@@ -49,7 +49,7 @@ public class PostDao {
 	public List<Map<String, Object>> queryVideoPost(String page, String size) throws ClassNotFoundException, SQLException {
 		int pageTemp = (Integer.parseInt(page)-1)*Integer.parseInt(size);
 		int sizeTemp = Integer.parseInt(size);
-		String sql = "SELECT *,post.createtime ptime FROM post LEFT JOIN postdata ON post.postid=postdata.postid LEFT JOIN USER ON post.uid=user.uid WHERE postdata.isaudit=1 and post.display=1 AND post.placeid=3 GROUP BY post.postid DESC LIMIT ?,?";
+		String sql = "SELECT *,post.createtime ptime FROM post LEFT JOIN postdata ON post.postid=postdata.postid LEFT JOIN `user` ON post.uid=user.uid WHERE postdata.isaudit=1 and post.display=1 AND post.placeid=3 GROUP BY post.postid DESC LIMIT ?,?";
 		return dao.executeQueryForList(sql, new int[]{Types.INTEGER,Types.INTEGER}, new Object[]{pageTemp,sizeTemp});
 	}	
 
@@ -64,7 +64,7 @@ public class PostDao {
 	public List<Map<String, Object>> queryPhotoPost(String page, String size) throws ClassNotFoundException, SQLException {
 		int pageTemp = (Integer.parseInt(page)-1)*Integer.parseInt(size);
 		int sizeTemp = Integer.parseInt(size);
-		String sql = "SELECT *,post.createtime ptime FROM post LEFT JOIN postdata ON post.postid=postdata.postid LEFT JOIN USER ON post.uid=user.uid WHERE post.display=1 and postdata.isaudit=1 AND post.placeid=2 GROUP BY post.postid DESC LIMIT ?,?";
+		String sql = "SELECT *,post.createtime ptime FROM post LEFT JOIN postdata ON post.postid=postdata.postid LEFT JOIN `user` ON post.uid=user.uid WHERE post.display=1 and postdata.isaudit=1 AND post.placeid=2 GROUP BY post.postid DESC LIMIT ?,?";
 		return dao.executeQueryForList(sql, new int[]{Types.INTEGER,Types.INTEGER}, new Object[]{pageTemp,sizeTemp});
 	}
 	
@@ -79,7 +79,7 @@ public class PostDao {
 	public List<Map<String, Object>> queryTextPost(String page, String size) throws ClassNotFoundException, SQLException {
 		int pageTemp = (Integer.parseInt(page)-1)*Integer.parseInt(size);
 		int sizeTemp = Integer.parseInt(size);
-		String sql = "SELECT *,post.createtime ptime FROM post LEFT JOIN postdata ON post.postid=postdata.postid LEFT JOIN USER ON post.uid=user.uid WHERE post.display=1 AND post.placeid=1  and postdata.isaudit=1 GROUP BY post.postid DESC LIMIT ?,?";
+		String sql = "SELECT *,post.createtime ptime FROM post LEFT JOIN postdata ON post.postid=postdata.postid LEFT JOIN `user` ON post.uid=user.uid WHERE post.display=1 AND post.placeid=1  and postdata.isaudit=1 GROUP BY post.postid DESC LIMIT ?,?";
 		return dao.executeQueryForList(sql, new int[]{Types.INTEGER,Types.INTEGER}, new Object[]{pageTemp,sizeTemp});
 	}
 	
@@ -104,7 +104,7 @@ public class PostDao {
 	 * @throws NumberFormatException 
 	 */
 	public Map<String, Object> queryPostInfoById(String postid) throws NumberFormatException, ClassNotFoundException, SQLException {
-		String sql = "SELECT *,post.createtime ptime FROM post LEFT JOIN postdata ON post.postid=postdata.postid LEFT JOIN USER ON post.uid=user.uid WHERE post.display=1 and post.postid=? and postdata.isaudit=1";
+		String sql = "SELECT *,post.createtime ptime FROM post LEFT JOIN postdata ON post.postid=postdata.postid LEFT JOIN `user` ON post.uid=user.uid WHERE post.display=1 and post.postid=? and postdata.isaudit=1";
 		return dao.executeQueryForMap(sql, new int[]{Types.INTEGER}, new Object[]{Integer.parseInt(postid)});
 	}
 	

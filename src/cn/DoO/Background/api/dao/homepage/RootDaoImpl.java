@@ -27,7 +27,7 @@ public class RootDaoImpl {
 	public Map<String, Object> getUserByToken(String token) throws ClassNotFoundException, SQLException {
 		Map<String, Object> data = null;
 
-		String sql = "SELECT *	 FROM	 `root` WHERE token=? ";
+		String sql = "SELECT * FROM `root` WHERE token=? ";
 		data = dao.executeQueryForMap(sql, new int[] { Types.VARCHAR }, new Object[] { token });
 		return data;
 	}
