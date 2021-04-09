@@ -17,8 +17,11 @@ import cn.DoO.Utils.Dao.DataConnect.DaoImpl;
 public class AdvDaolmpl {
 	Dao dao = new DaoImpl();
 	public List<Map<String, Object>> getAllAdv() throws ClassNotFoundException, SQLException {
-
-		return dao.executeQueryForList("select acontext,aimg from advert where display=1 order by rand()");
+		
+		/**
+		 * 只随机返回三条广告
+		 */
+		return dao.executeQueryForList("select acontext,aimg from advert where display=1 order by rand() limit 0,3");
 	}
 	
 }
